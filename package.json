@@ -1,0 +1,46 @@
+{
+  "name": "macaca-wd",
+  "version": "1.0.1",
+  "description": "macaca-wd",
+  "keywords": [
+    "macaca",
+    "wd"
+  ],
+  "main": "./lib/macaca-wd.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/macacajs/macaca-wd.git"
+  },
+  "dependencies": {
+    "archiver": "~0.14.0",
+    "async": "~1.0.0",
+    "lodash": "~3.9.3",
+    "q": "~1.4.1",
+    "request": "~2.55.0",
+    "underscore.string": "~3.0.3",
+    "vargs": "~0.1.0"
+  },
+  "devDependencies": {
+    "co-mocha": "*",
+    "istanbul": "*",
+    "jsdoc": "3.4.0",
+    "jshint": "*",
+    "macaca-minami": "^1.0.0",
+    "mocha": "*",
+    "pre-commit": "1.1.1",
+    "should": "*",
+    "startserver": "^1.2.3"
+  },
+  "scripts": {
+    "test": "make test",
+    "jshint": "make jshint"
+  },
+  "pre-commit": [
+    "jshint"
+  ],
+  "homepage": "https://github.com/macacajs/macaca-wd",
+  "author": "macacajs",
+  "email": "macacajs@126.com",
+  "blog": "http://xdf.me",
+  "license": "MIT"
+}

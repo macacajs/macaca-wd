@@ -1,0 +1,16 @@
+{
+  "source": {
+    "include": ["lib"]
+  },
+  "opts": {
+    "destination": "./docs/",
+    "template": "node_modules/macaca-minami",
+    "private": false,
+    "destination": "docs",
+    "readme": "./README.md"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
