@@ -13,7 +13,7 @@ body {
   color: #4d4e53;
   background-color: white;
   margin: 0 auto;
-  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 160%;
 }
@@ -102,6 +102,7 @@ tt, code, kbd, samp {
 
 #main {
   float: right;
+  padding-top: 48px;
   min-width: 360px;
   width: calc(100% - 250px);
 }
@@ -138,7 +139,8 @@ nav {
   background: #fff;
   overflow: auto;
   position: fixed;
-  height: 100%;
+  top: 48px;
+  height: calc(100% - 48px);
 }
 
 nav h3 {
@@ -576,6 +578,7 @@ dl.param-type {
   #main {
     width: 100%;
     min-width: 360px;
+    padding-top: 96px;
   }
 
   #main h1.page-title {
@@ -607,6 +610,9 @@ header start
 
 header {
   background-color: #000000;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 header p,
 header ul,
@@ -654,6 +660,7 @@ header ul.ma-nav a {
   line-height: 48px;
   border-bottom: 3px solid #000000;
   color: #ffffff;
+  font-size: 14px;
 }
 header ul.ma-nav a:hover,
 header ul.ma-nav a.active {
