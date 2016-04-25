@@ -13,8 +13,6 @@ body {
   color: #4d4e53;
   background-color: white;
   margin: 0 auto;
-  padding: 0 20px;
-
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 16px;
   line-height: 160%;
@@ -116,6 +114,10 @@ section {
   display: block;
   background-color: #fff;
   padding: 0 30px;
+}
+
+.container {
+  padding: 0 15px;
 }
 
 .variation {
@@ -457,7 +459,7 @@ dl.param-type {
   position: relative;
   width: 2.5em;
   height: .3125rem;
-  background: #000;
+  background: #ffffff;
   transition: 0.3s;
   border-radius: 2.5rem;
 }
@@ -466,7 +468,7 @@ dl.param-type {
   content: "";
   height: .3125rem;
   width: 2.5rem;
-  background: #000;
+  background: #ffffff;
   position: absolute;
   z-index: -1;
   transition: 0.3s 0.25s;
@@ -566,8 +568,8 @@ dl.param-type {
   .navicon-button {
     display: inline-block;
     position: fixed;
-    top: 1.5em;
-    right: 0;
+    top: -10px;;
+    right: -10px;
     z-index: 2;
   }
 
@@ -588,3 +590,92 @@ dl.param-type {
     margin-left: 0;
   }
 }
+
+/* 
+add by shuaiji.tsj
+header start 
+*/
+.clearfix:before, 
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+header {
+  background-color: #000000;
+}
+header p,
+header ul,
+header ol,
+header li,
+header h1,
+header h2,
+header h3 {
+  padding: 0;
+  margin: 0;
+}
+header .ma-logo {
+  float: left;
+}
+header .ma-logo a {
+  color: #ffffff;
+}
+header .ma-logo a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+header .ma-logo a::selection,
+header .ma-logo a:focus {
+  text-decoration: none;
+}
+header .ma-logo a h1 {
+  font-size: 20px;
+  line-height: 48px;
+  color: #ffffff;
+  padding-left: 15px;
+}
+header ul.ma-nav {
+  float: right;
+  margin-right: 150px;
+}
+header ul.ma-nav li {
+  float: left;
+  list-style: none;
+  padding: 0 10px;
+}
+header ul.ma-nav a {
+  display: inline-block;
+  padding: 0 10px;
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 3px solid #000000;
+  color: #ffffff;
+}
+header ul.ma-nav a:hover,
+header ul.ma-nav a.active {
+  border-color: #a00;
+  text-decoration: none;
+}
+header ul.ma-nav a::selection,
+header ul.ma-nav a:focus {
+  text-decoration: none;
+}
+@media screen and (max-width: 600px) {
+  header .ma-logo {
+    float: none;
+    text-align: center;
+  }
+  header ul.ma-nav {
+    float: left;
+    margin-right: 0;
+    margin-left: 25px;
+  }
+  .macaca-ribbon {
+    display: none;
+  }
+}
+/* header end */
