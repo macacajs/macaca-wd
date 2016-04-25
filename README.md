@@ -16,19 +16,60 @@
 
 macaca wd client inspired by [admc/wd](//github.com/admc/wd).
 
-## Documentation
-
-[docs](//macacajs.github.io/macaca-wd/docs)
-
-## Demo
-
-[macaca guide](//macacajs.github.io/macaca/guide.html)
-
 ## Installment
 
 ```shell
 $ npm i macaca-wd --save-dev
 ```
+
+## Documentation
+
+### Initial
+
+```javascript
+var wd = require('macaca-wd');
+
+var remoteConfig = {
+  host: 'localhost',
+  port: 3456
+};
+
+var driver = wd.promiseChainRemote(remoteConfig);
+
+before(function() {
+  return driver.init({
+    platformName: 'desktop', // iOS, Android, Desktop
+    browserName: 'chrome'    // Chrome, Electron
+    app: path/to/app         // Only for mobile
+  });
+});
+
+after(function() {
+  return driver
+    .sleep(1000)
+    .quit();
+});
+
+it('#1 should', function() {
+
+  ...
+
+});
+
+...
+
+```
+
+### Extend
+
+```javascript
+wd.addPromiseChainMethod(name, method);
+```
+[API](//macacajs.github.io/macaca-wd/docs)
+
+## Demo
+
+[macaca guide](//macacajs.github.io/macaca/guide.html)
 
 ## License
 

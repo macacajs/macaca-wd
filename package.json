@@ -1,9 +1,10 @@
 {
   "name": "macaca-wd",
-  "version": "1.0.1",
-  "description": "macaca-wd",
+  "version": "1.0.2",
+  "description": "macaca wd client",
   "keywords": [
     "macaca",
+    "webdriver",
     "wd"
   ],
   "main": "./lib/macaca-wd.js",
@@ -39,8 +40,5 @@
     "jshint"
   ],
   "homepage": "https://github.com/macacajs/macaca-wd",
-  "author": "macacajs",
-  "email": "macacajs@126.com",
-  "blog": "http://xdf.me",
   "license": "MIT"
 }
