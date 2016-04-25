@@ -1,9 +1,9 @@
 # macaca-wd
 
+[![Gitter Chat][gitter-image]][gitter-url]
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![node version][node-image]][node-url]
-[![Gitter Chat][gitter-image]][gitter-url]
 
 [npm-image]: https://img.shields.io/npm/v/macaca-wd.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/macaca-wd
