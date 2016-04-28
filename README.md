@@ -70,7 +70,3 @@ wd.addPromiseChainMethod(name, method);
 ## Demo
 
 [macaca guide](//macacajs.github.io/macaca/guide.html)
-
-## License
-
-The MIT License (MIT)
