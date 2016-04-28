@@ -14,7 +14,7 @@
 [gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square
 [gitter-url]: https://gitter.im/alibaba/macaca
 
-macaca wd client inspired by [admc/wd](//github.com/admc/wd).
+Macaca wd client inspired by [admc/wd](//github.com/admc/wd), according to W3 [Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html).
 
 ## Installment
 
