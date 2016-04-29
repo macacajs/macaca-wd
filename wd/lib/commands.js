@@ -1689,6 +1689,33 @@ commands.click = function() {
 };
 
 /**
+ * swipe(StartX, StartY, EndX, EndY, cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/element/:id/swipe
+ */
+commands.swipe = function() {
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+    startX = fargs.all[0],
+    startY = fargs.all[1],
+    endX = fargs.all[2],
+    endY = fargs.all[3],
+    duration = fargs.all[4];
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: `/element/${startX}/swipe`,
+    data: {
+      startX: startX,
+      startY: startY,
+      endX: endX,
+      endY: endY,
+      duration: duration
+    },
+    cb: simpleCallback(cb)
+  });
+};
+
+/**
  * doubleclick(cb) -> cb(err)
  *
  * @jsonWire POST /session/:sessionId/doubleclick
