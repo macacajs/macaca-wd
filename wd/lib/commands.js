@@ -1464,8 +1464,14 @@ commands.swipe = function() {
     duration = fargs.all[4];
   this._jsonWireCall({
     method: 'POST',
-    relPath: '/element/' + startX + '/swipe',
-    data: {startX: startX, startY: startY, endX: endX, endY: endY, duration: duration},
+    relPath: `/element/${startX}/swipe`,
+    data: {
+      startX: startX,
+      startY: startY,
+      endX: endX,
+      endY: endY,
+      duration: duration
+    },
     cb: simpleCallback(cb)
   });
 };
