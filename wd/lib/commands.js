@@ -1689,7 +1689,7 @@ commands.click = function() {
 };
 
 /**
- * swipe(StartX, StartY, EndX, EndY, cb) -> cb(err)
+ * swipe(startX, startY, endX, endY, cb) -> cb(err)
  *
  * @jsonWire POST /session/:sessionId/element/:id/swipe
  */
