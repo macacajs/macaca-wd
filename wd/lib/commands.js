@@ -1463,10 +1463,10 @@ commands.swipe = function() {
     endY = fargs.all[3],
     duration = fargs.all[4];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + startX + '/scrollInto'
-    , data: {startX: startX, startY: startY, endX: endX, endY: endY, duration: duration}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/element/' + startX + '/swipe',
+    data: {startX: startX, startY: startY, endX: endX, endY: endY, duration: duration},
+    cb: simpleCallback(cb)
   });
 };
 
