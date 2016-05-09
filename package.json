@@ -26,7 +26,6 @@
     "istanbul": "*",
     "jsdoc": "3.4.0",
     "jshint": "*",
-    "macaca-minami": "^1.0.0",
     "mocha": "*",
     "pre-commit": "1.1.1",
     "should": "*",
