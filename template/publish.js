@@ -378,7 +378,7 @@ function buildNav(members) {
             }
             seen[g.longname] = true;
         });
-        nav += '<br/><ul>' + globalNav + '</ul>';
+        nav += '<ul>' + globalNav + '</ul>';
     }
 
     return nav;

@@ -100,13 +100,30 @@ tt, code, kbd, samp {
 
 #main {
   float: right;
-  padding-top: 48px;
+  padding-top: 72px;
   min-width: 360px;
   width: calc(100% - 250px);
 }
 
 header {
-  display: block
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+article {
+  padding: 0;
+}
+
+article h3 {
+  margin: 0;
+}
+
+#nav a:hover::after,
+#nav a.current::after {
+  height: 0;
 }
 
 section {
@@ -130,18 +147,17 @@ section {
   font-weight: lighter;
 }
 
-nav {
+#nav {
   float: left;
   display: block;
   width: 250px;
-  background: #fff;
   overflow: auto;
   position: fixed;
-  top: 48px;
-  height: calc(100% - 48px);
+  top: 80px;
+  height: calc(100% - 80px);
 }
 
-nav h3 {
+#nav h3 {
   margin-top: 12px;
   font-size: 13px;
   text-transform: uppercase;
@@ -153,7 +169,7 @@ nav h3 {
   color: #000;
 }
 
-nav ul {
+#nav ul {
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
   font-size: 100%;
   line-height: 17px;
@@ -162,50 +178,52 @@ nav ul {
   list-style-type: none;
 }
 
-nav ul a,
-nav ul a:active {
+#nav ul a,
+#nav ul a:active {
   font-family: 'Montserrat', sans-serif;
-  line-height: 18px;
+  line-height: 1.5;
   padding: 0;
   display: block;
-  font-size: 12px;
+  font-size: 15px;
+  float: none;
+  text-align: left;
 }
 
-nav ul a:hover,
-nav ul a:active {
+#nav ul a:hover,
+#nav ul a:active {
   color: hsl(200, 100%, 43%);
   text-decoration: none;
 }
 
-nav > ul {
+#nav > ul {
   padding: 0 10px;
 }
 
-nav > ul > li > a {
+#nav > ul > li > a {
   color: #000;
 }
 
-nav ul ul {
+#nav ul ul {
   margin-bottom: 10px
 }
 
-nav ul ul a {
+#nav ul ul a {
   color: hsl(207, 1%, 60%);
   border-left: 1px solid hsl(207, 10%, 86%);
 }
 
-nav ul ul a,
-nav ul ul a:active {
+#nav ul ul a,
+#nav ul ul a:active {
   padding-left: 20px
 }
 
-nav h2 {
+#nav h2 {
    font-size: 12px;
    margin: 0;
    padding: 0;
 }
 
-nav > h2 > a {
+#nav > h2 > a {
    display: block;
    margin: 10px 0 -10px;
    color: hsl(202, 71%, 50%) !important;
