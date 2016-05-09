@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <title>Macaca - Documentation</title>
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="generator" content="Jekyll v3.0.5" />
+    <meta name="description" content="Solution for Automation Test with Ease" />
+    <title>Macaca - Documentation for webdriver</title>
+    <link rel="canonical" href="http://macacajs.github.io/macaca/" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <script src="/assets/polymer/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/assets/polymer/paper-ripple.html" />
 </head>
 <body>
+<!-- macaca header start -->
 <header class="clearfix">
-    <div class="ma-logo">
-        <a href="//macacajs.github.io/macaca">
-        <h1 class="text-capitalize">Macaca</h1>
-        </a>
-    </div>
-    <ul class="ma-nav">
-        <li><a href="//macacajs.github.io/macaca">Home</a></li>
-        <li><a href="//macacajs.github.io/macaca/guide.html#/environment-setup">Guide</a></li>
-        <li><a href="./" class="active" >API</a></li>
-        <li><a href="//macacajs.github.io/macaca/support.html">Support</a></li>
-    </ul>
+  <div class="container">
+    <a href="/macaca/" class="brand">Macaca</a>
+
+    <nav id="nav">
+      <a href="/macaca/" class="current">
+        <paper-ripple class="peach"></paper-ripple>
+        Home
+      </a>
+      <a href="/macaca/environment-setup.html">
+        <paper-ripple class="peach"></paper-ripple>
+        Guide
+      </a>
+      <a href="/macaca-wd/docs/" target="_blank">
+        <paper-ripple class="peach"></paper-ripple>
+        API
+      </a>
+      <a href="/macaca/support.html">
+        <paper-ripple class="peach"></paper-ripple>
+        Support
+      </a>
+      <a href="https://github.com/macacajs" target="_blank">
+        <paper-ripple class="peach"></paper-ripple>
+        GitHub
+      </a>
+    </nav>
+
+    <button id="menu" class="menu"></button>
+  </div>
 </header>
+<script>
+  (function() {
+    var menu = document.getElementById('menu');
+    var nav = document.getElementById('nav');
+    var hidden = true;
+
+    menu.addEventListener('click', function() {
+      nav.style.display = hidden ? 'block' : 'none';
+      hidden = !hidden;
+    }, false);
+  })();
+</script>
+<!-- macaca header end -->
 
 <div class="container">
 <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -36,14 +73,10 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#acceptAlert">acceptAlert</a></li><li><a href="global.html#alertKeys">alertKeys</a></li><li><a href="global.html#alertText">alertText</a></li><li><a href="global.html#back">back</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#click">click</a></li><li><a href="global.html#close">close</a></li><li><a href="global.html#context">context</a></li><li><a href="global.html#contexts">contexts</a></li><li><a href="global.html#currentContext">currentContext</a></li><li><a href="global.html#dismissAlert">dismissAlert</a></li><li><a href="global.html#element">element</a></li><li><a href="global.html#elementByClassName">elementByClassName</a></li><li><a href="global.html#elementByClassNameIfExists">elementByClassNameIfExists</a></li><li><a href="global.html#elementByClassNameOrNull">elementByClassNameOrNull</a></li><li><a href="global.html#elementByCss">elementByCss</a></li><li><a href="global.html#elementByCssIfExists">elementByCssIfExists</a></li><li><a href="global.html#elementByCssOrNull">elementByCssOrNull</a></li><li><a href="global.html#elementByCssSelector">elementByCssSelector</a></li><li><a href="global.html#elementByCssSelectorIfExists">elementByCssSelectorIfExists</a></li><li><a href="global.html#elementByCssSelectorOrNull">elementByCssSelectorOrNull</a></li><li><a href="global.html#elementById">elementById</a></li><li><a href="global.html#elementByIdIfExists">elementByIdIfExists</a></li><li><a href="global.html#elementByIdOrNull">elementByIdOrNull</a></li><li><a href="global.html#elementByLinkText">elementByLinkText</a></li><li><a href="global.html#elementByLinkTextIfExists">elementByLinkTextIfExists</a></li><li><a href="global.html#elementByLinkTextOrNull">elementByLinkTextOrNull</a></li><li><a href="global.html#elementByName">elementByName</a></li><li><a href="global.html#elementByNameIfExists">elementByNameIfExists</a></li><li><a href="global.html#elementByNameOrNull">elementByNameOrNull</a></li><li><a href="global.html#elementByPartialLinkText">elementByPartialLinkText</a></li><li><a href="global.html#elementByPartialLinkTextIfExists">elementByPartialLinkTextIfExists</a></li><li><a href="global.html#elementByPartialLinkTextOrNull">elementByPartialLinkTextOrNull</a></li><li><a href="global.html#elementByTagName">elementByTagName</a></li><li><a href="global.html#elementByTagNameIfExists">elementByTagNameIfExists</a></li><li><a href="global.html#elementByTagNameOrNull">elementByTagNameOrNull</a></li><li><a href="global.html#elementByXPath">elementByXPath</a></li><li><a href="global.html#elementByXPathIfExists">elementByXPathIfExists</a></li><li><a href="global.html#elementByXPathOrNull">elementByXPathOrNull</a></li><li><a href="global.html#elementIfExists">elementIfExists</a></li><li><a href="global.html#elementOrNull">elementOrNull</a></li><li><a href="global.html#elements">elements</a></li><li><a href="global.html#elementsByClassName">elementsByClassName</a></li><li><a href="global.html#elementsByCss">elementsByCss</a></li><li><a href="global.html#elementsByCssSelector">elementsByCssSelector</a></li><li><a href="global.html#elementsById">elementsById</a></li><li><a href="global.html#elementsByLinkText">elementsByLinkText</a></li><li><a href="global.html#elementsByName">elementsByName</a></li><li><a href="global.html#elementsByPartialLinkText">elementsByPartialLinkText</a></li><li><a href="global.html#elementsByTagName">elementsByTagName</a></li><li><a href="global.html#elementsByXPath">elementsByXPath</a></li><li><a href="global.html#execute">execute</a></li><li><a href="global.html#flick">flick</a></li><li><a href="global.html#forward">forward</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAttribute">getAttribute</a></li><li><a href="global.html#getComputedCss">getComputedCss</a></li><li><a href="global.html#getWindowSize">getWindowSize</a></li><li><a href="global.html#hasElement">hasElement</a></li><li><a href="global.html#hasElementByClassName">hasElementByClassName</a></li><li><a href="global.html#hasElementByCss">hasElementByCss</a></li><li><a href="global.html#hasElementByCssSelector">hasElementByCssSelector</a></li><li><a href="global.html#hasElementById">hasElementById</a></li><li><a href="global.html#hasElementByLinkText">hasElementByLinkText</a></li><li><a href="global.html#hasElementByName">hasElementByName</a></li><li><a href="global.html#hasElementByPartialLinkText">hasElementByPartialLinkText</a></li><li><a href="global.html#hasElementByTagName">hasElementByTagName</a></li><li><a href="global.html#hasElementByXPath">hasElementByXPath</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isDisplayed">isDisplayed</a></li><li><a href="global.html#maximize">maximize</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#quit">quit</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#safeEval">safeEval</a></li><li><a href="global.html#safeExecute">safeExecute</a></li><li><a href="global.html#sendKeys">sendKeys</a></li><li><a href="global.html#sessions">sessions</a></li><li><a href="global.html#setImplicitWaitTimeout">setImplicitWaitTimeout</a></li><li><a href="global.html#setWindowSize">setWindowSize</a></li><li><a href="global.html#source">source</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#swipe">swipe</a></li><li><a href="global.html#takeScreenshot">takeScreenshot</a></li><li><a href="global.html#tap">tap</a></li><li><a href="global.html#text">text</a></li><li><a href="global.html#textPresent">textPresent</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#url">url</a></li><li><a href="global.html#window">window</a></li><li><a href="global.html#windowHandle">windowHandle</a></li><li><a href="global.html#windowHandles">windowHandles</a></li></ul>
+    <br/><ul><li><a href="global.html#acceptAlert">acceptAlert</a></li><li><a href="global.html#alertKeys">alertKeys</a></li><li><a href="global.html#alertText">alertText</a></li><li><a href="global.html#back">back</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#click">click</a></li><li><a href="global.html#close">close</a></li><li><a href="global.html#context">context</a></li><li><a href="global.html#contexts">contexts</a></li><li><a href="global.html#currentContext">currentContext</a></li><li><a href="global.html#dismissAlert">dismissAlert</a></li><li><a href="global.html#element">element</a></li><li><a href="global.html#elementByClassName">elementByClassName</a></li><li><a href="global.html#elementByClassNameIfExists">elementByClassNameIfExists</a></li><li><a href="global.html#elementByClassNameOrNull">elementByClassNameOrNull</a></li><li><a href="global.html#elementByCss">elementByCss</a></li><li><a href="global.html#elementByCssIfExists">elementByCssIfExists</a></li><li><a href="global.html#elementByCssOrNull">elementByCssOrNull</a></li><li><a href="global.html#elementByCssSelector">elementByCssSelector</a></li><li><a href="global.html#elementByCssSelectorIfExists">elementByCssSelectorIfExists</a></li><li><a href="global.html#elementByCssSelectorOrNull">elementByCssSelectorOrNull</a></li><li><a href="global.html#elementById">elementById</a></li><li><a href="global.html#elementByIdIfExists">elementByIdIfExists</a></li><li><a href="global.html#elementByIdOrNull">elementByIdOrNull</a></li><li><a href="global.html#elementByLinkText">elementByLinkText</a></li><li><a href="global.html#elementByLinkTextIfExists">elementByLinkTextIfExists</a></li><li><a href="global.html#elementByLinkTextOrNull">elementByLinkTextOrNull</a></li><li><a href="global.html#elementByName">elementByName</a></li><li><a href="global.html#elementByNameIfExists">elementByNameIfExists</a></li><li><a href="global.html#elementByNameOrNull">elementByNameOrNull</a></li><li><a href="global.html#elementByPartialLinkText">elementByPartialLinkText</a></li><li><a href="global.html#elementByPartialLinkTextIfExists">elementByPartialLinkTextIfExists</a></li><li><a href="global.html#elementByPartialLinkTextOrNull">elementByPartialLinkTextOrNull</a></li><li><a href="global.html#elementByTagName">elementByTagName</a></li><li><a href="global.html#elementByTagNameIfExists">elementByTagNameIfExists</a></li><li><a href="global.html#elementByTagNameOrNull">elementByTagNameOrNull</a></li><li><a href="global.html#elementByXPath">elementByXPath</a></li><li><a href="global.html#elementByXPathIfExists">elementByXPathIfExists</a></li><li><a href="global.html#elementByXPathOrNull">elementByXPathOrNull</a></li><li><a href="global.html#elementIfExists">elementIfExists</a></li><li><a href="global.html#elementOrNull">elementOrNull</a></li><li><a href="global.html#elements">elements</a></li><li><a href="global.html#elementsByClassName">elementsByClassName</a></li><li><a href="global.html#elementsByCss">elementsByCss</a></li><li><a href="global.html#elementsByCssSelector">elementsByCssSelector</a></li><li><a href="global.html#elementsById">elementsById</a></li><li><a href="global.html#elementsByLinkText">elementsByLinkText</a></li><li><a href="global.html#elementsByName">elementsByName</a></li><li><a href="global.html#elementsByPartialLinkText">elementsByPartialLinkText</a></li><li><a href="global.html#elementsByTagName">elementsByTagName</a></li><li><a href="global.html#elementsByXPath">elementsByXPath</a></li><li><a href="global.html#execute">execute</a></li><li><a href="global.html#flick">flick</a></li><li><a href="global.html#forward">forward</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAttribute">getAttribute</a></li><li><a href="global.html#getComputedCss">getComputedCss</a></li><li><a href="global.html#getWindowSize">getWindowSize</a></li><li><a href="global.html#hasElement">hasElement</a></li><li><a href="global.html#hasElementByClassName">hasElementByClassName</a></li><li><a href="global.html#hasElementByCss">hasElementByCss</a></li><li><a href="global.html#hasElementByCssSelector">hasElementByCssSelector</a></li><li><a href="global.html#hasElementById">hasElementById</a></li><li><a href="global.html#hasElementByLinkText">hasElementByLinkText</a></li><li><a href="global.html#hasElementByName">hasElementByName</a></li><li><a href="global.html#hasElementByPartialLinkText">hasElementByPartialLinkText</a></li><li><a href="global.html#hasElementByTagName">hasElementByTagName</a></li><li><a href="global.html#hasElementByXPath">hasElementByXPath</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isDisplayed">isDisplayed</a></li><li><a href="global.html#maximize">maximize</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#quit">quit</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#safeEval">safeEval</a></li><li><a href="global.html#safeExecute">safeExecute</a></li><li><a href="global.html#sendKeys">sendKeys</a></li><li><a href="global.html#sessions">sessions</a></li><li><a href="global.html#setImplicitWaitTimeout">setImplicitWaitTimeout</a></li><li><a href="global.html#setWindowSize">setWindowSize</a></li><li><a href="global.html#source">source</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#swipe">swipe</a></li><li><a href="global.html#takeScreenshot">takeScreenshot</a></li><li><a href="global.html#tap">tap</a></li><li><a href="global.html#text">text</a></li><li><a href="global.html#textPresent">textPresent</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#url">url</a></li><li><a href="global.html#window">window</a></li><li><a href="global.html#windowHandle">windowHandle</a></li><li><a href="global.html#windowHandles">windowHandles</a></li></ul>
 </nav>
 
 <div id="main">
-    
-    <h1 class="page-title">Global</h1>
-    
-
     
 
 
@@ -104,7 +137,6 @@
 </dl>
 
 
-        
     
     </div>
 
@@ -178,9 +210,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line602">line 602</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -329,9 +365,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line624">line 624</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -436,9 +476,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line616">line 616</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -543,9 +587,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line653">line 653</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -650,9 +698,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line515">line 515</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -757,9 +809,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line487">line 487</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -864,9 +920,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line674">line 674</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1020,9 +1080,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line41">line 41</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1120,9 +1184,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line47">line 47</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1224,9 +1292,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line34">line 34</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1324,9 +1396,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line609">line 609</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1503,9 +1579,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line84">line 84</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1659,9 +1739,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line92">line 92</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1815,9 +1899,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line335">line 335</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -1971,9 +2059,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line254">line 254</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2127,9 +2219,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line156">line 156</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2283,9 +2379,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line399">line 399</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2439,9 +2539,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line318">line 318</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2595,9 +2699,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line100">line 100</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2751,9 +2859,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line343">line 343</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -2907,9 +3019,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line262">line 262</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3063,9 +3179,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line108">line 108</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3219,9 +3339,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line351">line 351</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3375,9 +3499,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line270">line 270</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3531,9 +3659,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line124">line 124</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3687,9 +3819,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line367">line 367</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3843,9 +3979,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line286">line 286</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -3999,9 +4139,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line116">line 116</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4155,9 +4299,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line359">line 359</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4311,9 +4459,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line278">line 278</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4467,9 +4619,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line132">line 132</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4623,9 +4779,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line375">line 375</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4779,9 +4939,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line294">line 294</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -4935,9 +5099,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line140">line 140</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5091,9 +5259,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line383">line 383</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5247,9 +5419,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line302">line 302</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5403,9 +5579,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line148">line 148</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5559,9 +5739,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line391">line 391</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5715,9 +5899,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line310">line 310</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -5894,9 +6082,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line327">line 327</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6073,9 +6265,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line246">line 246</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6252,9 +6448,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line165">line 165</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6408,9 +6608,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line173">line 173</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6564,9 +6768,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line237">line 237</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6720,9 +6928,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line181">line 181</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -6876,9 +7088,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line189">line 189</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7032,9 +7248,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line205">line 205</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7188,9 +7408,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line197">line 197</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7344,9 +7568,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line213">line 213</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7500,9 +7728,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line221">line 221</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7656,9 +7888,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line229">line 229</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -7845,9 +8081,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line569">line 569</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8032,9 +8272,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line550">line 550</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8132,9 +8376,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line646">line 646</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8283,9 +8531,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line639">line 639</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8390,9 +8642,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line528">line 528</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8497,9 +8753,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line535">line 535</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8660,9 +8920,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line696">line 696</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8839,9 +9103,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line408">line 408</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -8995,9 +9263,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line416">line 416</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9151,9 +9423,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line480">line 480</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9307,9 +9583,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line424">line 424</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9463,9 +9743,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line432">line 432</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9619,9 +9903,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line448">line 448</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9775,9 +10063,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line440">line 440</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -9931,9 +10223,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line456">line 456</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10087,9 +10383,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line464">line 464</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10243,9 +10543,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line472">line 472</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10399,9 +10703,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line15">line 15</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10506,9 +10814,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line521">line 521</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10650,9 +10962,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line714">line 714</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10851,9 +11167,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line75">line 75</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -10951,9 +11271,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line28">line 28</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11058,9 +11382,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line660">line 660</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11209,9 +11537,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line588">line 588</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11398,9 +11730,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line578">line 578</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11554,9 +11890,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line495">line 495</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11661,9 +12001,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line21">line 21</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -11810,9 +12154,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line54">line 54</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12018,9 +12366,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line706">line 706</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12125,9 +12477,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line67">line 67</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12232,9 +12588,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line7">line 7</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12434,9 +12794,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line560">line 560</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12534,9 +12898,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line60">line 60</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12638,9 +13006,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line541">line 541</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12738,9 +13110,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line501">line 501</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12887,9 +13263,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line508">line 508</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -12987,9 +13367,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line595">line 595</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -13094,9 +13478,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line631">line 631</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -13201,9 +13589,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line667">line 667</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -13308,9 +13700,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line681">line 681</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -13415,9 +13811,13 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
         <a href="macaca-wd.js.html">macaca-wd.js</a>, <a href="macaca-wd.js.html#line688">line 688</a>
-    </li></ul></dd>
+        </li>
+      </ul>
+    </dd>
     
 
     
@@ -13485,12 +13885,7 @@
 <br class="clear">
 </div>
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Apr 29 2016 16:51:07 GMT+0800 (CST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon May 09 2016 11:32:18 GMT+0800 (CST) using the Minami theme.
 </footer>
-
-<div class="macaca-ribbon" style="position:fixed;right:0;top:0;width:150px;height:150px;overflow:hidden;z-index:9999;" data-reactid=".0.0.3"><a target="_blank" style="display:inline-block;width:200px;overflow:hidden;padding:6px 0;text-align:center;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);-transform:rotate(45deg);text-decoration:none;color:#fff;position:inherit;top:45px;right:-40px;border-width:1px 0;border-style:dotted;border-color:rgba(255, 255, 255, 0.7);font:700 13px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.5);background-color:#a00;" href="https://github.com/alibaba/macaca" data-reactid=".0.0.3.0">Fork me on Github</a></div>
-
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
 </body>
 </html>

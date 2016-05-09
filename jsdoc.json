@@ -4,7 +4,7 @@
   },
   "opts": {
     "destination": "./docs/",
-    "template": "node_modules/macaca-minami",
+    "template": "./template/",
     "private": false,
     "destination": "docs",
     "readme": "./README.md"
