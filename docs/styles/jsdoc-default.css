@@ -100,7 +100,7 @@ tt, code, kbd, samp {
 
 #main {
   float: right;
-  padding-top: 72px;
+  padding-top: 20px;
   min-width: 360px;
   width: calc(100% - 250px);
 }
