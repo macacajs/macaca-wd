@@ -112,7 +112,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-        <?js= self.linkto(meta.shortpath) ?>, <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
+        <?js= self.linktoGitHub(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
         </li>
       </ul>
     </dd>

@@ -334,6 +334,13 @@ function linktoExternal(longName, name) {
     return linkto(longName, name.replace(/(^"|"$)/g, ''));
 }
 
+var homepage = require('../package').homepage;
+
+function linktoGitHub(path, line) {
+  var _line = line.split(' ')[1];
+  return `<a href="${homepage}/blob/gh-pages/lib/macaca-wd.js#L${_line}" target="_blank">#Line:${_line}</a>`;
+}
+
 /**
  * Create the navigation sidebar.
  * @param {object} members The members that will be used to create the sidebar.
@@ -556,6 +563,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     // add template helpers
     view.find = find;
     view.linkto = linkto;
+    view.linktoGitHub = linktoGitHub;
     view.resolveAuthorLinks = resolveAuthorLinks;
     view.tutoriallink = tutoriallink;
     view.htmlsafe = htmlsafe;
