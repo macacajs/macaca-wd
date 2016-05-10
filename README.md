@@ -65,8 +65,8 @@ it('#1 should', function() {
 ```javascript
 wd.addPromiseChainMethod(name, method);
 ```
-[API](//macacajs.github.io/macaca-wd/docs)
+[API](//macacajs.github.io/macaca-wd/docs/global.html)
 
 ## Demo
 
-[macaca guide](//macacajs.github.io/macaca/guide.html)
+[macaca getting-started](//macacajs.github.io/macaca/getting-started.html)
