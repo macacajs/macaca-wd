@@ -584,7 +584,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     // generate('', 'Home', packages.concat([{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]).concat(files), indexUrl);
 
     if (members.globals.length) {
-      generate('', 'Global', [{kind: 'globalobj'}], indexUrl);
+      generate('', 'API docs', [{kind: 'globalobj'}], indexUrl);
     }
 
     // set up the lists that we'll use to generate pages
