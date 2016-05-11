@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="generator" content="JSDoc" />
+    <meta name="description" content="Solution for Automation Test with Ease" />
+    <title>Macaca • Solution for Automation Test with Ease</title>
+    <link rel="canonical" href="http://macacajs.github.io/macaca/" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/polymer/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/assets/polymer/paper-ripple.html" />
+  </head>
+
+  <body>
+    <header class="clearfix">
+      <div class="container">
+        <a href="/macaca/" class="brand">Macaca</a>
+
+        <nav id="nav">
+          <a href="/macaca/" class="current">
+            <paper-ripple class="peach"></paper-ripple>
+            Home
+          </a>
+          <a href="/macaca/getting-started.html">
+            <paper-ripple class="peach"></paper-ripple>
+            Guide
+          </a>
+          <a href="/macaca-wd/api/">
+            <paper-ripple class="peach"></paper-ripple>
+            API
+          </a>
+          <a href="/macaca/support.html">
+            <paper-ripple class="peach"></paper-ripple>
+            Support
+          </a>
+          <a href="https://github.com/macacajs" target="_blank">
+            <paper-ripple class="peach"></paper-ripple>
+            GitHub
+          </a>
+        </nav>
+
+        <button id="menu" class="menu"></button>
+      </div>
+    </header>
+    <script>
+      (function() {
+        var menu = document.getElementById('menu');
+        var nav = document.getElementById('nav');
+        var hidden = true;
+
+        menu.addEventListener('click', function() {
+          nav.style.display = hidden ? 'block' : 'none';
+          hidden = !hidden;
+        }, false);
+      })();
+    </script>
+
+    <section class="container">
+      <aside>
+        <h4>All APIs</h4>
+        <?js= this.nav ?>
+      </aside>
+
+      <article>
+        <h1><?js= title ?></h1>
+
+        <?js= content ?>
+      </article>
+    </section>
+
+    <footer>
+      <p>
+        Released under the
+        <a href="https://github.com/alibaba/macaca/blob/master/LICENSE">MIT License</a>
+      </p>
+      <p>
+        &copy; 2015-2016
+        <a href="https://github.com/macacajs">Macaca</a>
+      </p>
+    </footer>
+  </body>
+</html>

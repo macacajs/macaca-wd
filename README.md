@@ -1,4 +1,4 @@
-# macaca-wd
+# Macaca WD Client
 
 [![Gitter Chat][gitter-image]][gitter-url]
 [![NPM version][npm-image]][npm-url]
@@ -14,9 +14,9 @@
 [gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square
 [gitter-url]: https://gitter.im/alibaba/macaca
 
-Macaca wd client inspired by [admc/wd](//github.com/admc/wd), according to W3 [Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html).
+Macaca WD Client is inspired by [admc/wd](https://github.com/admc/wd), according to [W3C WebDriver Spec](https://w3c.github.io/webdriver/webdriver-spec.html).
 
-## Installment
+## Installation
 
 ```shell
 $ npm i macaca-wd --save-dev
@@ -24,9 +24,9 @@ $ npm i macaca-wd --save-dev
 
 ## Documentation
 
-### Initial
+### Usage
 
-```javascript
+```js
 var wd = require('macaca-wd');
 
 var remoteConfig = {
@@ -62,11 +62,12 @@ it('#1 should', function() {
 
 ### Extend
 
-```javascript
+```js
 wd.addPromiseChainMethod(name, method);
 ```
-[API](//macacajs.github.io/macaca-wd/docs/global.html)
+
+[API](//macacajs.github.io/macaca-wd/api/)
 
 ## Demo
 
-[macaca getting-started](//macacajs.github.io/macaca/getting-started.html)
+[Macaca Getting Started](//macacajs.github.io/macaca/getting-started.html)

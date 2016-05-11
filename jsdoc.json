@@ -1,13 +1,11 @@
 {
   "source": {
-    "include": ["lib"]
+    "include": ["lib"],
+    "includePattern": ".js$"
   },
   "opts": {
-    "destination": "./docs/",
-    "template": "./template/",
-    "private": false,
-    "destination": "docs",
-    "readme": "./README.md"
+    "destination": "./api/",
+    "template": "./theme/"
   },
   "templates": {
     "cleverLinks": false,

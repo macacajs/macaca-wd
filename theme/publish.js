@@ -164,7 +164,7 @@ function addSignatureReturns(f) {
         returnTypes = addNonParamAttributes(f.returns);
     }
     if (returnTypes.length) {
-        returnTypesString = util.format( ' &rarr; %s{%s}', attribsString, returnTypes.join('|') );
+        returnTypesString = util.format( ' &rarr; %s{ %s }', attribsString, returnTypes.join('|') );
     }
 
     f.signature = '<span class="signature">' + (f.signature || '') + '</span>' +
@@ -336,9 +336,8 @@ function linktoExternal(longName, name) {
 
 var homepage = require('../package').homepage;
 
-function linktoGitHub(path, line) {
-  var _line = line.split(' ')[1];
-  return `<a href="${homepage}/blob/gh-pages/lib/macaca-wd.js#L${_line}" target="_blank">#Line:${_line}</a>`;
+function linktoGitHub(shortpath, lineno) {
+  return `<a href="${homepage}/blob/gh-pages/lib/${shortpath}#L${lineno}">${shortpath}#L${lineno}</a>`;
 }
 
 /**
@@ -374,7 +373,7 @@ function buildNav(members) {
 
         members.globals.forEach(function(g) {
             if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-                globalNav += '<li>' + linkto(g.longname, g.name) + '</li>';
+                globalNav += '<li><a href="#' + g.longname + '">' + g.longname + '</a></li>';
             }
             seen[g.longname] = true;
         });
@@ -403,8 +402,8 @@ exports.publish = function(taffyData, opts, tutorials) {
     var indexUrl = helper.getUniqueFilename('index');
     // don't call registerLink() on this one! 'index' is also a valid longname
 
-    var globalUrl = helper.getUniqueFilename('global');
-    helper.registerLink('global', globalUrl);
+    // var globalUrl = helper.getUniqueFilename('global');
+    // helper.registerLink('global', globalUrl);
 
     // set up templating
     view.layout = conf.default.layoutFile ?
@@ -556,8 +555,8 @@ exports.publish = function(taffyData, opts, tutorials) {
     members.tutorials = tutorials.children;
 
     // output pretty-printed source files by default
-    var outputSourceFiles = conf.default && conf.default.outputSourceFiles !== false 
-        ? true 
+    var outputSourceFiles = conf.default && conf.default.outputSourceFiles !== false
+        ? true
         : false;
 
     // add template helpers
@@ -574,18 +573,18 @@ exports.publish = function(taffyData, opts, tutorials) {
     attachModuleSymbols( find({ longname: {left: 'module:'} }), members.modules );
 
     // generate the pretty-printed source files first so other pages can link to them
-    if (outputSourceFiles) {
-        generateSourceFiles(sourceFiles, opts.encoding);
-    }
+    // if (outputSourceFiles) {
+    //     generateSourceFiles(sourceFiles, opts.encoding);
+    // }
 
     // index page displays information from package.json and lists files
     var files = find({kind: 'file'});
     var packages = find({kind: 'package'});
 
-    generate('', 'Home', packages.concat([{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]).concat(files), indexUrl);
+    // generate('', 'Home', packages.concat([{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]).concat(files), indexUrl);
 
     if (members.globals.length) {
-      generate('', 'Global', [{kind: 'globalobj'}], globalUrl);
+      generate('', 'Global', [{kind: 'globalobj'}], indexUrl);
     }
 
     // set up the lists that we'll use to generate pages
@@ -652,6 +651,6 @@ exports.publish = function(taffyData, opts, tutorials) {
             saveChildren(child);
         });
     }
-    
+
     saveChildren(tutorials);
 };
