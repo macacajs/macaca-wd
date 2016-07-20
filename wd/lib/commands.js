@@ -1373,6 +1373,26 @@ commands.getAttribute = function() {
 };
 
 /**
+ * getProperty(element, propertyName, cb) -> cb(err, value)
+ *
+ * @jsonWire GET /session/:sessionId/element/:id/property/:name
+ * @docOrder 1
+ */
+commands.getProperty = function() {
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      element = fargs.all[0],
+      propertyName = fargs.all[1];
+  if(!element) { throw new Error('Missing element.'); }
+  if(!propertyName) { throw new Error('Missing property name.'); }
+  this._jsonWireCall({
+    method: 'GET'
+    , relPath: '/element/' + element + '/property/' + propertyName
+    , cb: callbackWithData(cb, this)
+  });
+};
+
+/**
  * isDisplayed(element, cb) -> cb(err, displayed)
  *
  * @jsonWire GET /session/:sessionId/element/:id/displayed

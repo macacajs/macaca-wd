@@ -8,7 +8,7 @@ var _ = require("./lodash")
     elementCallback = callbacks.elementCallback,
     elementsCallback = callbacks.elementsCallback,
     commands = require('./commands');
-  
+
 var elementCommands = {};
 
 /**
@@ -176,6 +176,16 @@ elementCommands.textPresent = function(searchText, cb) {
  */
 elementCommands.getAttribute = function(name, cb) {
   commands.getAttribute.apply(this.browser, [this, name, cb]);
+};
+
+/**
+ * element.getProperty(propertyName, cb) -> cb(err, value)
+ *
+ * @jsonWire GET /session/:sessionId/element/:id/property/:name
+ * @docOrder 2
+ */
+elementCommands.getProperty = function(name, cb) {
+  commands.getProperty.apply(this.browser, [this, name, cb]);
 };
 
 /**
@@ -408,7 +418,7 @@ elementCommands.performMultiAction = function (actions, cb) {
  * element.rotate(opts, cb) -> cb(err)
  * opts is like the following:
  * {x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}
- * 
+ *
  * @jsonWire POST /session/:sessionId/appium/device/rotate
  */
 elementCommands.rotate = function(opts, cb) {
