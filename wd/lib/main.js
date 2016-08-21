@@ -1,6 +1,6 @@
 var __slice = Array.prototype.slice,
     url = require('url'),
-    SPECIAL_KEYS = require('./special-keys'),
+    SPECIAL_KEYS = require('webdriver-keycode'),
     Webdriver = require('./webdriver'),
     Element = require('./element'),
     utils = require('./utils'),

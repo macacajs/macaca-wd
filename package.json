@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "macaca wd client",
   "keywords": [
     "macaca",
@@ -19,7 +19,8 @@
     "q": "~1.4.1",
     "request": "~2.55.0",
     "underscore.string": "~3.0.3",
-    "vargs": "~0.1.0"
+    "vargs": "~0.1.0",
+    "webdriver-keycode": "^1.0.0"
   },
   "devDependencies": {
     "co-mocha": "*",
