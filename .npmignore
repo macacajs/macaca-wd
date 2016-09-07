@@ -8,12 +8,8 @@ Makefile
 .jshintrc
 .jshintignore
 coverage/
-*.swp
-*.swo
-*.swn
-*.swl
-*.swm
-.sw*
+*.sw*
 docs/
 wd/doc/
 wd/test/
+*.un~
