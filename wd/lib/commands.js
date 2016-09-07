@@ -526,6 +526,9 @@ commands.refresh = function() {
  */
 commands.maximize = function(win) {
 var cb = findCallback(arguments);
+if (typeof win === 'function') {
+  win = 'current';
+}
 this._jsonWireCall({
 	method: 'POST'
 	, relPath: '/window/'+ win + '/maximize'
