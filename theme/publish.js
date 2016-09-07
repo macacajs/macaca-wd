@@ -337,7 +337,7 @@ function linktoExternal(longName, name) {
 var homepage = require('../package').homepage;
 
 function linktoGitHub(shortpath, lineno) {
-  return `<a href="${homepage}/blob/gh-pages/lib/${shortpath}#L${lineno}">${shortpath}#L${lineno}</a>`;
+  return `<a href="${homepage}/blob/master/lib/${shortpath}#L${lineno}">${shortpath}#L${lineno}</a>`;
 }
 
 /**
