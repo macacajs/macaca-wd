@@ -66,7 +66,7 @@ it('#1 should', function() {
 wd.addPromiseChainMethod(name, method);
 ```
 
-[API](//macacajs.github.io/macaca-wd/api/)
+[API](//macacajs.github.io/macaca-wd/)
 
 ## Demo
 
