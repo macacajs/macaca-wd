@@ -24,7 +24,7 @@ travis: install
 		--bail
 
 clean:
-	@rm -rf ./api
+	@rm -rf ./docs
 
 doc: clean
 	@${npm_bin}/jsdoc -c ./jsdoc.json
