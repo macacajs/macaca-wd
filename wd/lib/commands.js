@@ -1126,12 +1126,13 @@ commands.saveScreenshot = function() {
     if(_path.match(/.*\/$/)) {
       tmp.tmpName( {template: 'screenshot-XXXXXX.png'}, function(err, fileName) {
         if(err) { return cb(err); }
-        if(dir) { _path = dir + '/'; }
+        if(dir) { _path = dir + '/screenshot/'; }
         cb(null, path.join(_path , fileName));
       });
     } else {
       if(path.extname(_path) === '') { _path = _path + '.png'; }
-      cb(null, path.join(dir, _path));
+      if(dir) { _path = path.join(dir, 'screenshot', _path)}
+      cb(null, _path);
     }
   }
 
