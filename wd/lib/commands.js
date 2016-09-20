@@ -1119,17 +1119,19 @@ commands.saveScreenshot = function() {
   var cb = findCallback(arguments);
   var fargs = utils.varargs(arguments);
   var _path = fargs.all[0];
+  var dir = process.env.CUSTOM_DIR || '';
 
   function buildFilePath(_path, cb) {
     if(!_path) { _path = tmp.tmpdir + '/'; }
     if(_path.match(/.*\/$/)) {
       tmp.tmpName( {template: 'screenshot-XXXXXX.png'}, function(err, fileName) {
         if(err) { return cb(err); }
-        cb(null, path.join( _path , fileName) );
+        if(dir) { _path = dir + '/'; }
+        cb(null, path.join(_path , fileName));
       });
     } else {
       if(path.extname(_path) === '') { _path = _path + '.png'; }
-      cb(null, _path);
+      cb(null, path.join(dir, _path));
     }
   }
 
