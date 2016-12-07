@@ -70,4 +70,4 @@ wd.addPromiseChainMethod(name, method);
 
 ## Demo
 
-[Macaca Getting Started](//macacajs.github.io/macaca/getting-started.html)
+[Macaca Getting Started](//macacajs.github.io/getting-started.html)
