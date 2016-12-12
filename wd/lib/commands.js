@@ -3160,4 +3160,28 @@ commands.getDeviceTime = function () {
   });
 };
 
+commands.touch = function () {
+  var cb = findCallback(arguments);
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      code = fargs.all[0],
+      args = fargs.all[1] || {},
+      actions = [];
+  if (Array.isArray(code)) {
+    actions = code;
+  } else if (typeof code === 'string') {
+    args['type'] = code;
+    actions = [args];
+  } else {
+    cb(new Error('Touch function only accept a action name or a list of actions.'))
+  }
+
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/actions',
+    data: {actions: actions},
+    cb: simpleCallback(cb)
+  });
+};
+
 module.exports = commands;
