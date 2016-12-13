@@ -7,6 +7,7 @@ var _ = require("./lodash")
     callbacks = require("./callbacks"),
     elementCallback = callbacks.elementCallback,
     elementsCallback = callbacks.elementsCallback,
+    simpleCallback = callbacks.simpleCallback,
     commands = require('./commands');
 
 var elementCommands = {};
@@ -423,6 +424,35 @@ elementCommands.performMultiAction = function (actions, cb) {
  */
 elementCommands.rotate = function(opts, cb) {
     commands.rotateDevice.apply(this.browser, [this, opts, cb]);
+};
+
+elementCommands.touch = function() {
+  var _this = this;
+  var cb = utils.findCallback(arguments);
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      code = fargs.all[0],
+      args = fargs.all[1] || {},
+      actions = [];
+  if (Array.isArray(code)) {
+    actions = code.map(function(el) {
+      el['element'] = _this.value;
+      return el;
+    });
+  } else if (typeof code === 'string') {
+    args['type'] = code;
+    args['element'] = _this.value;
+    actions = [args];
+  } else {
+    cb(new Error('Touch function only accept a action name or a list of actions.'))
+  }
+
+  this.browser._jsonWireCall({
+    method: 'POST',
+    relPath: '/actions',
+    data: {actions: actions},
+    cb: simpleCallback(cb)
+  });
 };
 
 /**
