@@ -3168,7 +3168,16 @@ commands.touch = function () {
       args = fargs.all[1] || {},
       actions = [];
   if (Array.isArray(code)) {
-    actions = code;
+    for (var i = 0, len = code.length; i < len; i++) {
+      if (i > 0) {
+        var curr = code[i];
+        var prev = code[i-1];
+        if (!curr.type) {
+          curr.type = prev.type;
+        }
+      }
+      actions[i] = code[i];
+    }
   } else if (typeof code === 'string') {
     args['type'] = code;
     actions = [args];
