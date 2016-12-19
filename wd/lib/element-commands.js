@@ -189,6 +189,17 @@ elementCommands.getProperty = function(name, cb) {
   commands.getProperty.apply(this.browser, [this, name, cb]);
 };
 
+
+/**
+ * element.getRect(cb) -> cb(err, value)
+ *
+ * @jsonWire GET /session/:sessionId/element/:id/rect
+ * @docOrder 2
+ */
+elementCommands.getRect = function(name, cb) {
+  commands.getRect.apply(this.browser, [this, name, cb]);
+};
+
 /**
  * element.getTagName(cb) -> cb(err, name)
  *
