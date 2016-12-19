@@ -1403,6 +1403,24 @@ commands.getProperty = function() {
 };
 
 /**
+ * getRect(element, cb) -> cb(err, value)
+ *
+ * @jsonWire GET /session/:sessionId/element/:id/rect
+ * @docOrder 1
+ */
+commands.getRect = function() {
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      element = fargs.all[0];
+  if(!element) { throw new Error('Missing element.'); }
+  this._jsonWireCall({
+    method: 'GET'
+    , relPath: '/element/' + element + '/rect'
+    , cb: callbackWithData(cb, this)
+  });
+};
+
+/**
  * isDisplayed(element, cb) -> cb(err, displayed)
  *
  * @jsonWire GET /session/:sessionId/element/:id/displayed
