@@ -18,7 +18,7 @@ Macaca WD Client is inspired by [admc/wd](https://github.com/admc/wd), according
 
 ## Installation
 
-``` bash
+```bash
 $ npm i macaca-wd --save-dev
 ```
 
@@ -26,7 +26,7 @@ $ npm i macaca-wd --save-dev
 
 ### Usage
 
-``` javascript
+```javascript
 var wd = require('macaca-wd');
 
 var remoteConfig = {
@@ -62,7 +62,7 @@ it('#1 should', function() {
 
 ### Extend
 
-``` javascript
+```javascript
 wd.addPromiseChainMethod(name, method);
 ```
 
