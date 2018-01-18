@@ -1,8 +1,5 @@
-coverage.html
 node_modules
 .travis.yml
-examples/
-Makefile
 .jshintrc
 .jshintignore
 coverage/

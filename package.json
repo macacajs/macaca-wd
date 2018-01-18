@@ -34,11 +34,14 @@
     "startserver": "^1.2.3"
   },
   "scripts": {
-    "test": "make test",
-    "jshint": "make jshint"
+    "test": "istanbul cover `npm bin`/_mocha .",
+    "lint": "jshint .",
+    "ci": "npm run lint && npm run test",
+    "clean": "rm -rf ./docs",
+    "doc": "npm run clean && jsdoc -c ./jsdoc.json"
   },
   "pre-commit": [
-    "jshint"
+    "lint"
   ],
   "homepage": "https://github.com/macacajs/macaca-wd",
   "license": "MIT"
