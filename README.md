@@ -14,7 +14,7 @@
 [gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square
 [gitter-url]: https://gitter.im/alibaba/macaca
 
-Macaca WD Client is inspired by [admc/wd](https://github.com/admc/wd), according to [W3C WebDriver Spec](https://w3c.github.io/webdriver/webdriver-spec.html).
+Macaca WD Client is inspired by [admc/wd](//github.com/admc/wd), according to [W3C WebDriver Spec](//w3c.github.io/webdriver/webdriver-spec.html).
 
 ## Installation
 
@@ -83,4 +83,4 @@ wd.addPromiseChainMethod(name, method);
 
 ## Demo
 
-[Macaca Getting Started](//macacajs.github.io/getting-started.html)
+[Macaca Getting Started](//macacajs.github.io/environment-setup)
