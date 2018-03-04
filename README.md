@@ -60,9 +60,22 @@ it('#1 should', function() {
 
 ```
 
-### Extend
+### Mixin Helper
 
 ```javascript
+import wd from 'macaca-wd';
+import {
+  extendsMixIn,
+} from 'macaca-wd/lib/helper'
+
+extendsMixIn(wd)
+```
+
+### Extend WD chain
+
+```javascript
+import wd from 'macaca-wd';
+
 wd.addPromiseChainMethod(name, method);
 ```
 
