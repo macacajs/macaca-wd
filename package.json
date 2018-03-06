@@ -28,15 +28,16 @@
     "xutil": "^1.0.11"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-plugin-mocha": "^4.12.1",
     "istanbul": "*",
-    "jsdoc": "3.4.0",
     "jshint": "*",
     "mocha": "*",
     "pre-commit": "^1.2.2"
   },
   "scripts": {
     "test": "istanbul cover `npm bin`/_mocha",
-    "lint": "jshint .",
+    "lint": "eslint --fix lib test",
     "ci": "npm run lint && npm run test",
     "clean": "rm -rf ./docs",
     "doc": "npm run clean && jsdoc -c ./jsdoc.json"
