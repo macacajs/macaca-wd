@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -15,6 +15,7 @@
   "dependencies": {
     "archiver": "~0.14.0",
     "async": "~1.0.0",
+    "bluebird": "^3.5.1",
     "datahub-nodejs-sdk": "^1.0.6",
     "lodash": "~3.9.3",
     "macaca-coverage": "^1.0.2",
