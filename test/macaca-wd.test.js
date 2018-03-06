@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const wd = require('../lib/macaca-wd.js');
+const wd = require('../lib/macaca-wd');
 
 describe('test', function() {
   it('should be ok', function() {

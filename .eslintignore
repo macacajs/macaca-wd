@@ -1,0 +1,10 @@
+**/.*
+**/node_modules
+**/dist
+**/assets
+**/build
+**/test
+**/wd
+**/logs
+**/template
+**/theme

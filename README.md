@@ -71,6 +71,8 @@ import {
 extendsMixIn(wd)
 ```
 
+[see more about helper](./lib/helper.js)
+
 ### Extend WD chain
 
 ```javascript
