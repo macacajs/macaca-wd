@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -31,13 +31,12 @@
   "devDependencies": {
     "eslint": "^4.18.2",
     "eslint-plugin-mocha": "^4.12.1",
-    "istanbul": "*",
-    "jshint": "*",
     "mocha": "*",
+    "nyc": "^11.6.0",
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "test": "istanbul cover `npm bin`/_mocha",
+    "test": "nyc --reporter=lcov --reporter=text mocha",
     "lint": "eslint --fix lib test",
     "ci": "npm run lint && npm run test",
     "clean": "rm -rf ./docs",
