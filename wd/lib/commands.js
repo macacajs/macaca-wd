@@ -2390,24 +2390,6 @@ commands.waitForConditionInBrowser = function() {
 };
 
 /**
- * sauceJobUpdate(jsonData, cb) -> cb(err)
- */
-commands.sauceJobUpdate = function() {
-  var fargs = utils.varargs(arguments);
-  this._sauceJobUpdate.apply(this, fargs.array);
-};
-
-/**
- * sauceJobStatus(hasPassed, cb) -> cb(err)
- */
-commands.sauceJobStatus = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      hasPassed = fargs.all[0];
-  this._sauceJobUpdate.apply(this, [{passed: hasPassed}, cb]);
-};
-
-/**
  * sleep(ms, cb) -> cb(err)
  */
 commands.sleep = function(ms, cb) {

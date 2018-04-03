@@ -20,8 +20,6 @@ var Webdriver = module.exports = function(configUrl) {
   EventEmitter.call( this );
   this.sessionID = null;
   this.configUrl = configUrl;
-  this.sauceTestPageRoot = "https://saucelabs.com/jobs";
-  this.sauceRestRoot = "https://saucelabs.com/rest/v1";
   // config url without auth
   this.noAuthConfigUrl = url.parse(url.format(this.configUrl));
   delete this.noAuthConfigUrl.auth;
@@ -122,11 +120,7 @@ Webdriver.prototype._init = function() {
     }
 
     if (_this.sessionID) {
-      if (/saucelabs\.com/.exec(url.hostname)) {
-        _this.emit('status', '\nDriving the web on session: ' + _this.sauceTestPageRoot + '/' + _this.sessionID + '\n');
-      } else {
-        _this.emit('status', '\nDriving the web on session: ' + _this.sessionID + '\n');
-      }
+      _this.emit('status', '\nDriving the web on session: ' + _this.sessionID + '\n');
       if (cb) { cb(null, _this.sessionID, resData); }
     } else {
       data = strip(data);
@@ -177,36 +171,6 @@ Webdriver.prototype._jsonWireCall = function(opts) {
     if(err) { return cb(err); }
     data = strip(data);
     cb(null, data || "");
-  });
-};
-
-Webdriver.prototype._sauceJobUpdate = function(jsonData, done) {
-  var _this = this;
-  if(!this.configUrl || !this.configUrl.auth){
-    return done(new Error("Missing auth token."));
-  } else if(!this.configUrl.auth.match(/^.+:.+$/)){
-    return done(new Error("Invalid auth token."));
-  }
-  var jobUpdateUrl = url.resolve(
-    this.sauceRestRoot.replace(/\/?$/,'/'),
-    this.configUrl.auth.replace(/:.*$/,'') + '/jobs/' + this.sessionID);
-
-  var httpOpts = httpUtils.newHttpOpts('PUT', this._httpConfig);
-  httpOpts.auth = {
-    user: this.configUrl.auth.split(':')[0],
-    pass: this.configUrl.auth.split(':')[1],
-  };
-  httpOpts.jar = false; // disable cookies: avoids CSRF issues
-  httpOpts.prepareToSend(jobUpdateUrl, jsonData);
-
-  httpUtils.requestWithoutRetry(httpOpts, this.emit.bind(this), function(err, resp) {
-    if(err) { return done(err); }
-    if(resp.statusCode !== 200) {
-      return done(new Error("Sauce job update failed with http status code:" +
-        resp.statusCode));
-    }
-    httpUtils.emit(_this, 'POST', '/rest/v1/:user/jobs/:sessionID', jsonData);
-    done();
   });
 };
 

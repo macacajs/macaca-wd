@@ -88,14 +88,6 @@ var parseRemoteWdConfig = function(args) {
     } );
   }
 
-  // saucelabs automatic config
-  if( /saucelabs\.com/.exec(config.hostname) )
-  {
-    if(!config.auth && process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY){
-      config.auth = process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY;
-    }
-  }
-
   return config;
 };
 
