@@ -36,8 +36,7 @@
     "git-contributor": "^1.0.3",
     "mocha": "*",
     "nyc": "^11.6.0",
-    "pre-commit": "^1.2.2",
-    "remap-istanbul": "^0.11.0"
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha",
