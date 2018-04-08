@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -22,6 +22,7 @@
     "macaca-reporter": "^1.0.52",
     "mkdirp": "^0.5.1",
     "q": "~1.4.1",
+    "remap-istanbul": "^0.11.0",
     "request": "~2.55.0",
     "underscore.string": "~3.0.3",
     "vargs": "~0.1.0",
