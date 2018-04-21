@@ -33,7 +33,7 @@
   "devDependencies": {
     "eslint": "^4.18.2",
     "eslint-plugin-mocha": "^4.12.1",
-    "git-contributor": "^1.0.3",
+    "git-contributor": "^1.0.8",
     "mocha": "*",
     "nyc": "^11.6.0",
     "pre-commit": "^1.2.2"
