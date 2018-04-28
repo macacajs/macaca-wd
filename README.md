@@ -86,6 +86,7 @@ wd.addPromiseChainMethod(name, method);
 ## Demo
 
 [Macaca Getting Started](//macacajs.github.io/environment-setup)
+
 <!-- GITCONTRIBUTOR_START -->
 
 ## Contributors
