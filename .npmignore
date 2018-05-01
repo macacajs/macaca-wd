@@ -7,5 +7,6 @@ docs/
 theme/
 wd/doc/
 wd/test/
+*.tgz
 *.sw*
 *.un~

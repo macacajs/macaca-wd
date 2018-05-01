@@ -6,6 +6,6 @@ Thumbs.db
 coverage/
 .nyc_output/
 .project
-build/
+*.tgz
 *.sw*
 *.un~
