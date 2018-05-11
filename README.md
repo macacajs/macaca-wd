@@ -9,7 +9,7 @@
 [npm-url]: https://npmjs.org/package/macaca-wd
 [travis-image]: https://img.shields.io/travis/macacajs/macaca-wd.svg?style=flat-square
 [travis-url]: https://travis-ci.org/macacajs/macaca-wd
-[node-image]: https://img.shields.io/badge/node.js-%3E=_4-green.svg?style=flat-square
+[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
 [gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square
 [gitter-url]: https://gitter.im/alibaba/macaca
