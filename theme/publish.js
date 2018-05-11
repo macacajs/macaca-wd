@@ -407,7 +407,7 @@ function buildNav(members) {
         newGroupMap['others'] = otherGroup;
 
         Object.keys(newGroupMap).forEach(groupName => {
-            globalNav += `<li><h1>${groupName}</h1><ul>`;
+            globalNav += `<li><h4>${groupName}</h4><ul>`;
 
             const list = newGroupMap[groupName];
             list.forEach(function(g) {
