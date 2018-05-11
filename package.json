@@ -41,7 +41,7 @@
   },
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha",
-    "lint": "eslint --fix lib test",
+    "lint": "eslint --fix lib test theme",
     "ci": "npm run lint && npm run test",
     "clean": "rm -rf ./docs",
     "build:doc": "npm run clean && jsdoc -c ./jsdoc.json",

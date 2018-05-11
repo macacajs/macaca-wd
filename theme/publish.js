@@ -9,6 +9,9 @@ var path = require('jsdoc/path');
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
+var {
+ _
+} = require('xutil');
 
 var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
@@ -368,14 +371,52 @@ function buildNav(members) {
     nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
     nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
 
+    // group refer to https://github.com/macacajs/webdriver-server/blob/master/lib/server/router.js
+
+    const groupList = [
+        'session',
+        'context',
+        'screenshot',
+        'source',
+        'execute',
+        'title',
+        'alert',
+        'cookie',
+        'url',
+        'window',
+        'element',
+        'browser'
+    ];
+
     if (members.globals.length) {
         var globalNav = '';
 
-        members.globals.forEach(function(g) {
-            if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-                globalNav += '<li><a href="#' + g.longname + '">' + g.longname + '</a></li>';
-            }
-            seen[g.longname] = true;
+        const newGroupMap = {};
+        groupList.forEach(groupName => {
+            members.globals.forEach(item => {
+                const hit = !!~item.longname.toLowerCase().indexOf(groupName)
+                 || (item.type && item.type.names && !!~item.type.names.join('').indexOf(groupName));
+                if (hit) {
+                    newGroupMap[groupName] = newGroupMap[groupName] || [];
+                    newGroupMap[groupName].push(item);
+                    item.selected = true;
+                }
+            });
+        });
+        const otherGroup = members.globals.filter(item => !item.selected);
+        newGroupMap['others'] = otherGroup;
+
+        Object.keys(newGroupMap).forEach(groupName => {
+            globalNav += `<li><h1>${groupName}</h1><ul>`;
+
+            const list = newGroupMap[groupName];
+            list.forEach(function(g) {
+                if (!hasOwnProp.call(seen, g.longname)) {
+                    globalNav += '<li><a href="#' + g.longname + '">' + g.longname + '</a></li>';
+                }
+                seen[g.longname] = true;
+            });
+            globalNav += '</ul></li>'
         });
         nav += '<ul>' + globalNav + '</ul>';
     }
