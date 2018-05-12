@@ -16,6 +16,7 @@
     "archiver": "~0.14.0",
     "async": "~1.0.0",
     "bluebird": "^3.5.1",
+    "chai": "^4.1.2",
     "datahub-nodejs-sdk": "^1.0.6",
     "lodash": "~3.9.3",
     "macaca-coverage": "^1.0.2",
@@ -35,6 +36,7 @@
     "eslint-plugin-mocha": "^4.12.1",
     "git-contributor": "^1.0.8",
     "jsdoc": "^3.5.5",
+    "jsdom": "^11.10.0",
     "mocha": "*",
     "nyc": "^11.6.0",
     "pre-commit": "^1.2.2"
