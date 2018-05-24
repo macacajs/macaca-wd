@@ -1,6 +1,6 @@
 //Element object
 //Wrapper around browser methods
-var _ = require("./lodash")
+var _ = require("xutil")
   , utils = require("./utils.js")
   , deprecator = utils.deprecator
   , fs = require("fs"),

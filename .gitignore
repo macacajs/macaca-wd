@@ -6,6 +6,11 @@ Thumbs.db
 coverage/
 .nyc_output/
 .project
+.DS_Store
+tmp
+temp
+.npmignore
+*.log
 *.tgz
 *.sw*
 *.un~

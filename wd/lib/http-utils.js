@@ -1,7 +1,7 @@
 var request = require('request'),
     utils = require("./utils"),
     urllib = require('url'),
-    packageDotJson = require('../package.json');
+    pkg = require('../../package.json');
 
 exports.buildInitUrl =function(baseUrl)
 {
@@ -41,7 +41,7 @@ exports.newHttpOpts = function(method, httpConfig) {
   opts.headers = {};
 
   opts.headers.Connection = 'keep-alive';
-  opts.headers['User-Agent'] = 'admc/wd/' + packageDotJson.version;
+  opts.headers['User-Agent'] = 'admc/wd/' + pkg.version;
   opts.timeout = httpConfig.timeout;
   if(httpConfig.proxy) { opts.proxy = httpConfig.proxy; }
   // we need to check method here to cater for PUT and DELETE case

@@ -2,8 +2,7 @@ var fs = require("fs"),
     url = require('url'),
     path = require('path'),
     tmp = require('./tmp'),
-    _ = require("./lodash"),
-    mkdirp = require("mkdirp")
+    _ = require("xutil"),
     async = require('async'),
     __slice = Array.prototype.slice,
     config = require('./config'),
@@ -1128,10 +1127,8 @@ commands.saveScreenshot = function() {
       tmp.tmpName( {template: 'screenshot-XXXXXX.png'}, function(err, fileName) {
         if(err) { return cb(err); }
         if(dir) { _path = dir + '/screenshot/'; }
-        mkdirp(_path, function(err) {
-          if(err) { return cb(err); }
-          cb(null, path.join(_path , fileName));
-        })
+        _.mkdir(_path);
+        cb(null, path.join(_path , fileName));
       });
     } else {
       if(path.extname(_path) === '') { _path = _path + '.png'; }

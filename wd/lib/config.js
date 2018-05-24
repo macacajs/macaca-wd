@@ -1,4 +1,4 @@
-var _ = require('./lodash');
+var _ = require('xutil');
 
 var httpConfig = {
   timeout: undefined,
