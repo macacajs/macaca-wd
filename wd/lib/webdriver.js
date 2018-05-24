@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter,
-    _ = require("./lodash"),
+    _ = require("xutil"),
     util = require( 'util' ),
     url = require('url'),
     __slice = Array.prototype.slice,

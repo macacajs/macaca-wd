@@ -1,4 +1,4 @@
-var _ = require('./lodash');
+var _ = require('xutil');
 var __slice = Array.prototype.slice;
 var utils = require("./utils");
 var deprecator = utils.deprecator;
@@ -32,7 +32,7 @@ function textInclude(content) {
     function(target, cb) {
       target.text(function(err, text) {
         if(err) { return cb(err); }
-        var satisfied = text && _(text).includeString(content).value();
+        var satisfied = text && _.includes(text, content);
         cb(null, satisfied, satisfied? text : undefined);
       });
     }

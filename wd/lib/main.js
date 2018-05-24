@@ -6,7 +6,7 @@ var __slice = Array.prototype.slice,
     utils = require('./utils'),
     deprecator = utils.deprecator,
     config = require('./config'),
-    _ = require("./lodash"),
+    _ = require("xutil"),
     Q = require('q'),
     actions = require('./actions');
 

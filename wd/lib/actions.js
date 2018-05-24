@@ -1,6 +1,5 @@
-var _ = require('lodash'),
+var _ = require('xutil'),
     __slice = Array.prototype.slice,
-    _ = require('lodash'),
     Webdriver = require('./webdriver'),
     Element = require('./element');
 

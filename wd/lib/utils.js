@@ -1,5 +1,5 @@
 var Args = require("vargs").Constructor,
-    _ = require('./lodash'),
+    _ = require('xutil'),
     url = require('url'),
     JSONWIRE_ERRORS = require('./jsonwire-errors.js');
 
