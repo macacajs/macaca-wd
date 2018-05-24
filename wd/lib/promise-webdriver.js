@@ -8,8 +8,21 @@ var __slice = Array.prototype.slice,
 // The method below returns no result, so we are able hijack the result to
 // preserve the element scope.
 // This alows for thing like: field.click().clear().input('hello').getValue()
-var elementChainableMethods = ['clear','click','doubleClick','doubleclick',
-  'flick','tap','sendKeys','submit','type','keys','moveTo','sleep','noop'];
+var elementChainableMethods = [
+  'clear',
+  'click',
+  'doubleClick',
+  'doubleclick',
+  'flick',
+  'tap',
+  'sendKeys',
+  'submit',
+  'type',
+  'keys',
+  'moveTo',
+  'sleep',
+  'noop'
+];
 
 // gets the list of methods to be promisified.
 function filterPromisedMethods(Obj) {
