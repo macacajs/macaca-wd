@@ -76,10 +76,10 @@ var requestWithRetry = function(httpOpts, httpConfig, emit, cb, attempts) {
     if( httpConfig.retries >= 0 &&
       (httpConfig.retries === 0 || (attempts -1) <= httpConfig.retries) &&
       err && (shouldRetryOn(err))) {
-      emit('connection', err.code , 'Lost http connection retrying in ' + httpConfig.retryDelay + ' ms.', err);
+      emit('connection', err.code , 'Lost http connection retrying in ' + httpConfig.retryDelay + ' s.', err);
       setTimeout(function() {
         requestWithRetry(httpOpts, httpConfig, emit, cb, attempts + 1 );
-      }, httpConfig.retryDelay);
+      }, httpConfig.retryDelay * 1000);
     } else {
       if(err) {
         emit('connection', err.code, 'Unexpected error.' , err);
