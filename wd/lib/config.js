@@ -1,9 +1,9 @@
 var _ = require('./lodash');
 
 var httpConfig = {
-  timeout: undefined,
-  retries: 3,
-  retryDelay: 15,
+  timeout: 20000,
+  retries: 5,
+  retryDelay: 5,
   baseUrl: undefined,
   proxy: undefined
 };
