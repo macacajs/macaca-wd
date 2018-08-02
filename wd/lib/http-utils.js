@@ -41,6 +41,7 @@ exports.newHttpOpts = function(method, httpConfig) {
   opts.headers = {};
 
   opts.headers.Connection = 'keep-alive';
+  opts.forever = true;
   opts.headers['User-Agent'] = 'admc/wd/' + packageDotJson.version;
   opts.timeout = httpConfig.timeout;
   if(httpConfig.proxy) { opts.proxy = httpConfig.proxy; }
