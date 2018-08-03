@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "1.1.6",
+  "version": "2.0.0",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -17,10 +17,10 @@
     "async": "~1.0.0",
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
-    "datahub-nodejs-sdk": "^1.1.0",
+    "datahub-nodejs-sdk": "2",
     "lodash": "~3.9.3",
     "macaca-coverage": "^1.0.2",
-    "macaca-reporter": "^1.1.3",
+    "macaca-reporter": "1",
     "mkdirp": "^0.5.1",
     "q": "~1.4.1",
     "remap-istanbul": "^0.11.0",
@@ -29,7 +29,7 @@
     "vargs": "~0.1.0",
     "webdriver-keycode": "^1.0.0",
     "xlogger": "^1.0.6",
-    "xutil": "^1.0.11"
+    "xutil": "1"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
@@ -39,7 +39,7 @@
     "jsdom": "^11.10.0",
     "mocha": "*",
     "nyc": "^11.6.0",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "1"
   },
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha",
