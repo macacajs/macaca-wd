@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -19,11 +19,9 @@
     "chai": "^4.1.2",
     "datahub-nodejs-sdk": "2",
     "lodash": "~3.9.3",
-    "macaca-coverage": "^1.0.2",
     "macaca-reporter": "1",
     "mkdirp": "^0.5.1",
     "q": "~1.4.1",
-    "remap-istanbul": "^0.11.0",
     "request": "~2.85.0",
     "underscore.string": "~3.0.3",
     "vargs": "~0.1.0",
