@@ -43,7 +43,7 @@
     "test": "nyc --reporter=lcov --reporter=text mocha",
     "lint": "eslint --fix lib test theme",
     "ci": "npm run lint && npm run test",
-    "clean": "rm -rf ./docs",
+    "clean": "rm -rf ./docs/index.html",
     "build:doc": "npm run clean && jsdoc -c ./jsdoc.json",
     "contributor": "git-contributor"
   },
