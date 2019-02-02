@@ -17,6 +17,7 @@
     "async": "~1.0.0",
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
+    "commander": "^2.19.0",
     "datahub-nodejs-sdk": "2",
     "lodash": "~3.9.3",
     "macaca-reporter": "1",
