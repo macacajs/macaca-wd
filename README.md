@@ -1,6 +1,5 @@
 # Macaca WD Client
 
-[![Gitter Chat][gitter-image]][gitter-url]
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![node version][node-image]][node-url]
@@ -11,8 +10,6 @@
 [travis-url]: https://travis-ci.org/macacajs/macaca-wd
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-[gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square
-[gitter-url]: https://gitter.im/alibaba/macaca
 
 Macaca WD Client is inspired by [admc/wd](//github.com/admc/wd), according to [W3C WebDriver Spec](//w3c.github.io/webdriver/webdriver-spec.html).
 
