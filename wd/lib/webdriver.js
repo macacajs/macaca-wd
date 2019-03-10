@@ -26,7 +26,7 @@ var Webdriver = module.exports = function(configUrl) {
 
   this.defaultCapabilities = {
     browserName: 'firefox'
-     , version: ''
+    , version: ''
     , javascriptEnabled: true
     , platform: 'ANY'
   };
@@ -78,7 +78,7 @@ Webdriver.prototype._init = function() {
   var _desired = _.clone(desired);
 
   if(desired.deviceName || desired.device || desired.wdNoDefaults ||
-     desired['wd-no-defaults']) {
+    desired['wd-no-defaults']) {
     // no default or appium caps, we dont default
     delete _desired.wdNoDefaults;
     delete _desired['wd-no-defaults'];
