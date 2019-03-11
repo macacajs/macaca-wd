@@ -39,13 +39,13 @@
     "jsdoc": "^3.5.5",
     "jsdom": "^11.10.0",
     "koa": "^2.7.0",
+    "macaca-ecosystem": "^1.0.15",
     "mocha": "*",
     "nyc": "^11.6.0"
   },
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha",
     "lint": "eslint --fix lib test theme",
-    "ci": "npm run lint && npm run test",
     "clean": "rm -rf ./docs/index.html",
     "build:doc": "npm run clean && jsdoc -c ./jsdoc.json",
     "contributor": "git-contributor"
