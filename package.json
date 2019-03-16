@@ -39,9 +39,11 @@
     "jsdoc": "^3.5.5",
     "jsdom": "^11.10.0",
     "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
     "macaca-ecosystem": "^1.0.15",
     "mocha": "*",
-    "nyc": "^11.6.0"
+    "nyc": "^11.6.0",
+    "stoppable": "^1.1.0"
   },
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha",

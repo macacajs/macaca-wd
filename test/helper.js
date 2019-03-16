@@ -1,17 +1,24 @@
 'use strict';
 
+const http = require('http');
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+const stoppable = require('stoppable');
 
 class Server {
   constructor(options) {
-    this.options = Object.assign({
-      port: 3456,
-    }, options || {});
+    this.options = Object.assign(
+      {
+        port: 3456
+      },
+      options || {}
+    );
   }
 
   start() {
-    this.app = new Koa();
-    this.app.use(async(ctx, next) => {
+    const app = new Koa();
+    app.use(bodyParser());
+    app.use(async (ctx, next) => {
       await next();
       this.ctx = ctx;
       this.ctx.body = {
@@ -20,14 +27,15 @@ class Server {
         value: ''
       };
     });
-    this.server = this.app.listen(this.options.port);
+    this.server = stoppable(
+      http.createServer(app.callback()).listen(this.options.port)
+    );
     console.log('server listening on', this.options.port);
   }
 
   stop() {
-    this.server.close();
+    this.server.stop();
   }
-
 }
 
 module.exports.Server = Server;
