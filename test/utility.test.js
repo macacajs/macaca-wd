@@ -155,15 +155,11 @@ describe('test/utility.test.js', function() {
    * https://macacajs.github.io/macaca-wd/#saveScreenshots
    */
   describe('saveScreenshots', async () => {
+    afterEach(function() {
+      return driver.saveScreenshots(this);
+    });
     it('should work', async () => {
-      await driver.saveScreenshots();
-      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/screenshot');
-      assert.equal(server.ctx.method, 'GET');
-      assert.deepEqual(server.ctx.response.body, {
-        sessionId: 'sessionId',
-        status: 0,
-        value: '',
-      });
+      assert.ok(driver);
     });
   });
 });
