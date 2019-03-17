@@ -16,6 +16,8 @@ class Server {
   }
 
   start() {
+    const args = Array.from(arguments);
+    const mockValue = args[0] ? args[0] : '';
     const app = new Koa();
     app.use(bodyParser());
     app.use(async (ctx, next) => {
@@ -24,7 +26,7 @@ class Server {
       this.ctx.body = {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: mockValue
       };
     });
     this.server = stoppable(
