@@ -42,7 +42,6 @@ class Server {
     this.server = stoppable(
       http.createServer(this.app.callback()).listen(this.options.port)
     );
-    console.log('server listening on', this.options.port);
   }
 
   stop() {
