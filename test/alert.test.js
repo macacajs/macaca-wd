@@ -6,7 +6,7 @@ const { Server } = require('./helper');
 
 const wd = require('../lib/macaca-wd');
 
-describe.only('test/alert.test.js', function() {
+describe('test/alert.test.js', function() {
   let driver, server;
   before(() => {
     server = new Server();
