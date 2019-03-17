@@ -33,6 +33,15 @@ name + (data.signature || '') ?></h3>
   </ul>
 <?js } ?>
 
+<?js if (kind === 'function' && data.type && data.type.names) {?>
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      <?js= self.partial('type.tmpl', data.type.names) ?>
+    </li>
+  </ul>
+<?js } ?>
+
 <?js if (data['this']) { ?>
   <h4>This:</h4>
   <ul><li><?js= this.linkto(data['this'], data['this']) ?></li></ul>
