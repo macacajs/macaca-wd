@@ -153,6 +153,16 @@ function addSignatureReturns(f) {
   // jam all the return-type attributes into an array. this could create odd results (for example,
   // if there are both nullable and non-nullable return types), but let's assume that most people
   // who use multiple @return tags aren't using Closure Compiler type annotations, and vice-versa.
+
+  // remove our custom type from returns
+  if (f.returns.length === 2) {
+    for (var i = 0; i < f.returns.length; i++) {
+      if (f.returns[i].type.names[0] === f.type.names[0]) {
+        f.returns.splice(i, 1);
+      }
+    }
+  }
+
   if (f.returns) {
     f.returns.forEach(function(item) {
       helper.getAttribs(item).forEach(function(attrib) {
