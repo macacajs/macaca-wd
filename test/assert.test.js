@@ -13,9 +13,10 @@ describe('test/asserter.test.js', function() {
     server.stop();
   });
 
-  const mockServer = async mockValue => {
+  const mockServer = async (mockKey, mockValue) => {
     server = new Server();
-    server.start(mockValue);
+    server.mock(mockKey, mockValue);
+    server.start();
     const remoteConfig = {
       host: 'localhost',
       port: 3456
@@ -37,10 +38,38 @@ describe('test/asserter.test.js', function() {
    */
   describe.only('assertAttribute', async () => {
     before(async () => {
-      await mockServer('someClass');
+      await mockServer('ctx.body', {
+        sessionId: 'sessionId',
+        status: 0,
+        value: 'someClass'
+      });
     });
     it('should work', async () => {
       await driver.assertAttribute('class', 'someClass');
+      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/execute');
+      assert.equal(server.ctx.method, 'POST');
+      const { script, args } = server.ctx.request.body;
+      assert.equal(
+        script,
+        "return window.__macaca_current_element.getAttribute('class')"
+      );
+      assert.equal(args.length, 0);
+    });
+  });
+
+  /**
+   * https://macacajs.github.io/macaca-wd/#assertTitle
+   */
+  describe.only('assertTitle', async () => {
+    before(async () => {
+      await mockServer('ctx.body', {
+        sessionId: 'sessionId',
+        status: 0,
+        value: 'someClass'
+      });
+    });
+    it('should work', async () => {
+      await driver.assertTitle('My Title');
       assert.equal(server.ctx.url, '/wd/hub/session/sessionId/execute');
       assert.equal(server.ctx.method, 'POST');
       const { script, args } = server.ctx.request.body;
