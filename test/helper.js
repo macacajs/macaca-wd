@@ -22,7 +22,7 @@ class Server {
     this.app.use(async (ctx, next) => {
       await next();
       this.ctx = ctx;
-      let mockObj = _.set(this, key, value);
+      _.set(this, key, value);
     });
     this.mocked = true;
   }
