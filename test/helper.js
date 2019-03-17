@@ -4,6 +4,7 @@ const http = require('http');
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const stoppable = require('stoppable');
+const _ = require('lodash');
 
 class Server {
   constructor(options) {
@@ -13,24 +14,34 @@ class Server {
       },
       options || {}
     );
+    this.app = new Koa();
+    this.app.use(bodyParser());
+  }
+
+  mock(key, value) {
+    this.app.use(async (ctx, next) => {
+      await next();
+      this.ctx = ctx;
+      _.set(this, key, value);
+    });
+    this.mocked = true;
   }
 
   start() {
-    const app = new Koa();
-    app.use(bodyParser());
-    app.use(async (ctx, next) => {
-      await next();
-      this.ctx = ctx;
-      this.ctx.body = {
-        sessionId: 'sessionId',
-        status: 0,
-        value: ''
-      };
-    });
+    if (!this.mocked) {
+      this.app.use(async (ctx, next) => {
+        await next();
+        this.ctx = ctx;
+        this.ctx.body = {
+          sessionId: 'sessionId',
+          status: 0,
+          value: ''
+        };
+      });
+    }
     this.server = stoppable(
-      http.createServer(app.callback()).listen(this.options.port)
+      http.createServer(this.app.callback()).listen(this.options.port)
     );
-    console.log('server listening on', this.options.port);
   }
 
   stop() {
