@@ -4,6 +4,8 @@ node_modules
 .jshintignore
 coverage/
 docs/
+reports/
+assets/
 theme/
 wd/doc/
 wd/test/
