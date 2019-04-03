@@ -11,3 +11,4 @@ reports/
 *.tgz
 *.sw*
 *.un~
+package-lock.json
