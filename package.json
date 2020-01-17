@@ -27,7 +27,7 @@
     "q": "~1.4.1",
     "react-router": "4",
     "request": "~2.85.0",
-    "underscore.string": "~3.0.3",
+    "underscore.string": "~3.3.5",
     "vargs": "~0.1.0",
     "webdriver-keycode": "^1.0.0",
     "xlogger": "^1.0.6",
