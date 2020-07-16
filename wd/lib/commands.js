@@ -1102,10 +1102,12 @@ commands.waitForVisible = function(using, value, timeout, pollFreq) {
  */
 commands.takeScreenshot = function() {
   var cb = findCallback(arguments);
+  var params = arguments[0];
   this._jsonWireCall({
-    method: 'GET'
+    method: 'POST'
     , relPath: '/screenshot'
     , cb: callbackWithData(cb, this)
+    , data: params
   });
 };
 
@@ -1120,6 +1122,7 @@ commands.saveScreenshot = function() {
   var cb = findCallback(arguments);
   var fargs = utils.varargs(arguments);
   var _path = fargs.all[0];
+  var _params = fargs.all[1];
   var dir = process.env.CUSTOM_DIR || '';
 
   function buildFilePath(_path, cb) {
@@ -1141,7 +1144,7 @@ commands.saveScreenshot = function() {
   }
 
   buildFilePath(_path, function(err, filePath) {
-    commands.takeScreenshot.apply(_this, [function(err, base64Data) {
+    commands.takeScreenshot.apply(_this, [_params, function(err, base64Data) {
       if(err) { return cb(err); }
       require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
         if(err) { return cb(err); }
