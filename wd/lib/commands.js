@@ -1105,7 +1105,7 @@ commands.takeScreenshot = function() {
   var params = arguments[0];
   this._jsonWireCall({
     method: 'GET'
-    , relPath: `/screenshot${url.format({query: params})}`
+    , relPath: `/screenshot${url.format({ query: params })}`
     , cb: callbackWithData(cb, this)
   });
 };
