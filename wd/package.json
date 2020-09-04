@@ -55,7 +55,7 @@
     "gulp": "~3.8.1",
     "gulp-jshint": "~1.11.0",
     "hbs": "~3.0.1",
-    "http-proxy": "~1.11.1",
+    "http-proxy": "~1.18.1",
     "imageinfo": "~1.0.4",
     "istanbul": "~0.3.0",
     "jshint": "~2.7.0",
