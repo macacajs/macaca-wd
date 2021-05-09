@@ -844,15 +844,14 @@ commands.hasElement = function(using, value){
  * opts with the following fields: timeout, pollFreq, asserter.
  * asserter like: function(browser , cb) -> cb(err, satisfied, return_value)
  */
-commands.waitFor = function(){
+commands.waitFor = function() {
   var cb = findCallback(arguments);
   var fargs = utils.varargs(arguments);
   var opts;
   // retrieving options
-  if(typeof fargs.all[0] === 'object' && !(fargs.all[0] instanceof Asserter)){
+  if (typeof fargs.all[0] === 'object' && !(fargs.all[0] instanceof Asserter)) {
     opts = fargs.all[0];
-  } else
-  {
+  } else {
     opts = {
       asserter: fargs.all[0],
       timeout: fargs.all[1],
@@ -860,11 +859,17 @@ commands.waitFor = function(){
     };
   }
 
+  const {
+    MACACA_WD_CLIENT_WAITFOR_TIMEOUT,
+    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ,
+  } = process.env;
   // default
-  opts.timeout = opts.timeout || 1000;
-  opts.pollFreq = opts.pollFreq || 200;
+  opts.timeout =  opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
+  opts.pollFreq = opts.pollFreq || parseInt(MACACA_WD_CLIENT_WAITFOR_POLL_FREQ, 10) || 1000;
 
-  if(!opts.asserter) { throw new Error('Missing asserter!'); }
+  if(!opts.asserter) {
+    throw new Error('Missing asserter!');
+  }
 
   var _this = this;
   var endTime = Date.now() + opts.timeout;
@@ -872,7 +877,7 @@ commands.waitFor = function(){
   var unpromisedAsserter = new Asserter(
     function(browser, cb) {
       var promise = opts.asserter.assert(browser, cb);
-      if(promise && promise.then && typeof promise.then === 'function'){
+      if (promise && promise.then && typeof promise.then === 'function') {
         promise.then(
           function(res) { cb(null, true, res); },
           function(err) {
@@ -913,7 +918,7 @@ commands.waitFor = function(){
  * opts with the following fields: timeout, pollFreq, asserter.
  * asserter like: function(element , cb) -> cb(err, satisfied, el)
  */
-commands.waitForElement = function(){
+commands.waitForElement = function() {
 
   var cb = findCallback(arguments);
   var fargs = utils.varargs(arguments);
@@ -922,7 +927,7 @@ commands.waitForElement = function(){
   var opts;
 
   // retrieving options
-  if(typeof fargs.all[2] === 'object' && !(fargs.all[2] instanceof Asserter)){
+  if (typeof fargs.all[2] === 'object' && !(fargs.all[2] instanceof Asserter)) {
     opts = fargs.all[2];
   } else if(fargs.all[2] instanceof Asserter) {
     opts = {

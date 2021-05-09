@@ -1,11 +1,15 @@
 {
   "name": "macaca-wd",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
     "webdriver",
     "wd"
+  ],
+  "files": [
+    "lib/**/*.js",
+    "wd/lib/**/*.js"
   ],
   "main": "./lib/macaca-wd.js",
   "repository": {
