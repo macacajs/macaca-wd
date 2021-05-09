@@ -859,9 +859,13 @@ commands.waitFor = function() {
     };
   }
 
+  const {
+    MACACA_WD_CLIENT_WAITFOR_TIMEOUT,
+    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ,
+  } = process.env;
   // default
-  opts.timeout = opts.timeout || 1000;
-  opts.pollFreq = opts.pollFreq || 200;
+  opts.timeout =  opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
+  opts.pollFreq = opts.pollFreq || parseInt(MACACA_WD_CLIENT_WAITFOR_POLL_FREQ, 10) || 1000;
 
   if(!opts.asserter) {
     throw new Error('Missing asserter!');
