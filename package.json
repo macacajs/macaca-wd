@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "3.3.7",
+  "version": "3.4.2",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -9,7 +9,8 @@
   ],
   "files": [
     "lib/**/*.js",
-    "wd/**/*.js"
+    "wd/**/*.js",
+    "wd/package.json"
   ],
   "main": "./lib/macaca-wd.js",
   "repository": {
