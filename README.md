@@ -5,13 +5,13 @@
 [![Test coverage][coveralls-image]][coveralls-url]
 [![node version][node-image]][node-url]
 
-[npm-image]: https://img.shields.io/npm/v/macaca-wd.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/macaca-wd.svg
 [npm-url]: https://npmjs.org/package/macaca-wd
-[travis-image]: https://img.shields.io/travis/macacajs/macaca-wd.svg?style=flat-square
-[travis-url]: https://travis-ci.org/macacajs/macaca-wd
-[coveralls-image]: https://img.shields.io/coveralls/macacajs/macaca-wd.svg?style=flat-square
+[travis-image]: https://travis-ci.com/macacajs/macaca-wd.svg?branch=master
+[travis-url]: https://travis-ci.com/macacajs/macaca-wd
+[coveralls-image]: https://img.shields.io/coveralls/macacajs/macaca-wd.svg
 [coveralls-url]: https://coveralls.io/r/macacajs/macaca-wd?branch=master
-[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg?style=flat-square
+[node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg
 [node-url]: http://nodejs.org/download/
 
 Macaca WD Client is inspired by [admc/wd](//github.com/admc/wd), according to [W3C WebDriver Spec](//w3c.github.io/webdriver/webdriver-spec.html).
