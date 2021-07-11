@@ -1,12 +1,15 @@
 # Macaca WD Client
 
 [![NPM version][npm-image]][npm-url]
+[![Package quality][quality-image]][quality-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![node version][node-image]][node-url]
 
 [npm-image]: https://img.shields.io/npm/v/macaca-wd.svg
 [npm-url]: https://npmjs.org/package/macaca-wd
+[quality-image]: https://packagequality.com/shield/macaca-wd.svg
+[quality-url]: https://packagequality.com/#?package=macaca-wd
 [travis-image]: https://travis-ci.com/macacajs/macaca-wd.svg?branch=master
 [travis-url]: https://travis-ci.com/macacajs/macaca-wd
 [coveralls-image]: https://img.shields.io/coveralls/macacajs/macaca-wd.svg
