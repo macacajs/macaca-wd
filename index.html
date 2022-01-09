@@ -1,0 +1,16082 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="Solution for Automation Test with Ease">
+    <title>Macaca • Solution for Automation Test with Ease</title>
+    <link rel="canonical" href="//macacajs.github.io">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="//macacajs.github.io/macaca-wd/assets/css/styles.css">
+    <script src="/macaca-wd/assets/polymer/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/macaca-wd/assets/polymer/paper-ripple.html">
+  </head>
+
+  <body>
+    <header class="clearfix">
+      <div class="container">
+        <a href="/" class="brand">Macaca</a>
+
+        <nav id="nav">
+          <a href="/">
+            <paper-ripple class="peach"></paper-ripple>
+            Home
+          </a>
+          <a href="/guide">
+            <paper-ripple class="peach"></paper-ripple>
+            Document
+          </a>
+          <a href="/macaca-wd/" class="current">
+            <paper-ripple class="peach"></paper-ripple>
+            API
+          </a>
+        </nav>
+
+        <button id="menu" class="menu"></button>
+      </div>
+    </header>
+    <script>
+      (function() {
+        var menu = document.getElementById('menu');
+        var nav = document.getElementById('nav');
+        var hidden = true;
+
+        menu.addEventListener('click', function() {
+          nav.style.display = hidden ? 'block' : 'none';
+          hidden = !hidden;
+        }, false);
+      })();
+    </script>
+
+    <section class="container">
+      <aside class="api-table" id="sidebar">
+        <h4>Table of Contents</h4>
+        <ul><li><h4>session</h4><ul><li><a href="#init">init</a></li><li><a href="#quit">quit</a></li><li><a href="#sessions">sessions</a></li></ul></li><li><h4>context</h4><ul><li><a href="#context">context</a></li><li><a href="#contexts">contexts</a></li><li><a href="#currentContext">currentContext</a></li></ul></li><li><h4>screenshot</h4><ul><li><a href="#saveScreenshot">saveScreenshot</a></li><li><a href="#takeScreenshot">takeScreenshot</a></li></ul></li><li><h4>source</h4><ul><li><a href="#source">source</a></li></ul></li><li><h4>execute</h4><ul><li><a href="#execute">execute</a></li></ul></li><li><h4>title</h4><ul><li><a href="#title">title</a></li></ul></li><li><h4>alert</h4><ul><li><a href="#acceptAlert">acceptAlert</a></li><li><a href="#alertKeys">alertKeys</a></li><li><a href="#alertText">alertText</a></li><li><a href="#dismissAlert">dismissAlert</a></li></ul></li><li><h4>cookie</h4><ul><li><a href="#allCookies">allCookies</a></li><li><a href="#deleteAllCookies">deleteAllCookies</a></li><li><a href="#deleteCookie">deleteCookie</a></li><li><a href="#setCookie">setCookie</a></li></ul></li><li><h4>url</h4><ul><li><a href="#url">url</a></li></ul></li><li><h4>window</h4><ul><li><a href="#close">close</a></li><li><a href="#getWindowSize">getWindowSize</a></li><li><a href="#setWindowSize">setWindowSize</a></li><li><a href="#window">window</a></li><li><a href="#windowHandle">windowHandle</a></li><li><a href="#windowHandles">windowHandles</a></li></ul></li><li><h4>element</h4><ul><li><a href="#clear">clear</a></li><li><a href="#element">element</a></li><li><a href="#elementByClassName">elementByClassName</a></li><li><a href="#elementByClassNameIfExists">elementByClassNameIfExists</a></li><li><a href="#elementByClassNameOrNull">elementByClassNameOrNull</a></li><li><a href="#elementByCss">elementByCss</a></li><li><a href="#elementByCssIfExists">elementByCssIfExists</a></li><li><a href="#elementByCssOrNull">elementByCssOrNull</a></li><li><a href="#elementById">elementById</a></li><li><a href="#elementByIdIfExists">elementByIdIfExists</a></li><li><a href="#elementByIdOrNull">elementByIdOrNull</a></li><li><a href="#elementByLinkText">elementByLinkText</a></li><li><a href="#elementByLinkTextIfExists">elementByLinkTextIfExists</a></li><li><a href="#elementByLinkTextOrNull">elementByLinkTextOrNull</a></li><li><a href="#elementByName">elementByName</a></li><li><a href="#elementByNameIfExists">elementByNameIfExists</a></li><li><a href="#elementByNameOrNull">elementByNameOrNull</a></li><li><a href="#elementByPartialLinkText">elementByPartialLinkText</a></li><li><a href="#elementByPartialLinkTextIfExists">elementByPartialLinkTextIfExists</a></li><li><a href="#elementByPartialLinkTextOrNull">elementByPartialLinkTextOrNull</a></li><li><a href="#elementByTagName">elementByTagName</a></li><li><a href="#elementByTagNameIfExists">elementByTagNameIfExists</a></li><li><a href="#elementByTagNameOrNull">elementByTagNameOrNull</a></li><li><a href="#elementByXPath">elementByXPath</a></li><li><a href="#elementByXPathIfExists">elementByXPathIfExists</a></li><li><a href="#elementByXPathOrNull">elementByXPathOrNull</a></li><li><a href="#elementIfExists">elementIfExists</a></li><li><a href="#elementOrNull">elementOrNull</a></li><li><a href="#elements">elements</a></li><li><a href="#elementsByClassName">elementsByClassName</a></li><li><a href="#elementsByCss">elementsByCss</a></li><li><a href="#elementsById">elementsById</a></li><li><a href="#elementsByLinkText">elementsByLinkText</a></li><li><a href="#elementsByName">elementsByName</a></li><li><a href="#elementsByPartialLinkText">elementsByPartialLinkText</a></li><li><a href="#elementsByTagName">elementsByTagName</a></li><li><a href="#elementsByXPath">elementsByXPath</a></li><li><a href="#getComputedCss">getComputedCss</a></li><li><a href="#getProperty">getProperty</a></li><li><a href="#getRect">getRect</a></li><li><a href="#isDisplayed">isDisplayed</a></li><li><a href="#sendKeys">sendKeys</a></li><li><a href="#text">text</a></li><li><a href="#waitForElement">waitForElement</a></li></ul></li><li><h4>browser</h4><ul><li><a href="#back">back</a></li><li><a href="#forward">forward</a></li><li><a href="#get">get</a></li><li><a href="#maximize">maximize</a></li><li><a href="#refresh">refresh</a></li></ul></li><li><h4>utility</h4><ul><li><a href="#coverage">coverage</a></li><li><a href="#domEvent">domEvent</a></li><li><a href="#elementInput">elementInput</a></li><li><a href="#formInput">formInput</a></li><li><a href="#getUrl">getUrl</a></li><li><a href="#initWindow">initWindow</a></li><li><a href="#openReporter">openReporter</a></li><li><a href="#saveScreenshots">saveScreenshots</a></li></ul></li><li><h4>assert</h4><ul><li><a href="#assertAttribute">assertAttribute</a></li><li><a href="#assertTitle">assertTitle</a></li><li><a href="#hasElement">hasElement</a></li><li><a href="#hasElementByClassName">hasElementByClassName</a></li><li><a href="#hasElementByCss">hasElementByCss</a></li><li><a href="#hasElementById">hasElementById</a></li><li><a href="#hasElementByLinkText">hasElementByLinkText</a></li><li><a href="#hasElementByName">hasElementByName</a></li><li><a href="#hasElementByPartialLinkText">hasElementByPartialLinkText</a></li><li><a href="#hasElementByTagName">hasElementByTagName</a></li><li><a href="#hasElementByXPath">hasElementByXPath</a></li><li><a href="#hasText">hasText</a></li></ul></li><li><h4>datahub</h4><ul><li><a href="#switchAllScenes">switchAllScenes</a></li><li><a href="#switchMultiScenes">switchMultiScenes</a></li><li><a href="#switchScene">switchScene</a></li></ul></li><li><h4>others</h4><ul><li><a href="#click">click</a></li><li><a href="#frame">frame</a></li><li><a href="#keys">keys</a></li><li><a href="#sleep">sleep</a></li><li><a href="#startMediaRecorder">startMediaRecorder</a></li><li><a href="#status">status</a></li><li><a href="#stopMediaRecorder">stopMediaRecorder</a></li><li><a href="#touch">touch</a></li><li><a href="#waitForVideosSave">waitForVideosSave</a></li></ul></li></ul>
+      </aside>
+
+      <article>
+        <h1>API docs</h1>
+
+        
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+  <!-- <h2 class="subsection-title">Methods</h2> -->
+
+  
+    
+
+
+
+<h3 class="name" id="acceptAlert"><a href="#acceptAlert" class="anchor" data-scroll="">#</a><span class="type-signature"></span>acceptAlert<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS</p>
+
+
+
+
+<p>Accepts the currently displayed alert dialog.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L636">macaca-wd.js#L636</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#accept-alert">POST /session/:sessionId/accept_alert</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="alertKeys"><a href="#alertKeys" class="anchor" data-scroll="">#</a><span class="type-signature"></span>alertKeys<span class="signature">(keys)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: iOS</p>
+
+
+
+
+<p>Sends keystrokes to a JavaScript prompt() dialog.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">keys</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last"></td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L661">macaca-wd.js#L661</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#send-alert-text">POST /session/:sessionId/alert_text</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="alertText"><a href="#alertText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>alertText<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: iOS</p>
+
+
+
+
+<p>Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L652">macaca-wd.js#L652</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#send-alert-text">GET /session/:sessionId/alert_text</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="allCookies"><a href="#allCookies" class="anchor" data-scroll="">#</a><span class="type-signature"></span>allCookies<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Returns all cookies associated with the address of the current browsing context’s active document.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L797">macaca-wd.js#L797</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-all-cookies">GET /session/:sessionId/cookie</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="assertAttribute"><a href="#assertAttribute" class="anchor" data-scroll="">#</a><span class="type-signature"></span>assertAttribute<span class="signature">(attribute, value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Check if element's attribute right.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">attribute</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">attribute's name.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">expected value.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L442">helper.js#L442</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="assertTitle"><a href="#assertTitle" class="anchor" data-scroll="">#</a><span class="type-signature"></span>assertTitle<span class="signature">(title)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Check if title exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">title</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">title of the web page.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L425">helper.js#L425</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="back"><a href="#back" class="anchor" data-scroll="">#</a><span class="type-signature"></span>back<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android Web(WebView)</p>
+
+
+
+
+<p>Navigate backwards in the browser history, if possible.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">browser</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L697">macaca-wd.js#L697</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#back">POST /session/:sessionId/back</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="clear"><a href="#clear" class="anchor" data-scroll="">#</a><span class="type-signature"></span>clear<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Clear a TEXTAREA or text INPUT element's value.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L573">macaca-wd.js#L573</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#element-clear">POST /session/:sessionId/element/:id/clear</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="click"><a href="#click" class="anchor" data-scroll="">#</a><span class="type-signature"></span>click<span class="signature">()</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Click on an element.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L538">macaca-wd.js#L538</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-element-click">POST /session/:sessionId/element/:id/click</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="close"><a href="#close" class="anchor" data-scroll="">#</a><span class="type-signature"></span>close<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Close the current window.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">window</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L723">macaca-wd.js#L723</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#close-window">DELETE /session/:sessionId/window</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="context"><a href="#context" class="anchor" data-scroll="">#</a><span class="type-signature"></span>context<span class="signature">(contextRef)</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android iOS</p>
+
+
+
+
+<p>Set the current context.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">contextRef</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">context reference from contexts</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L49">macaca-wd.js#L49</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="contexts"><a href="#contexts" class="anchor" data-scroll="">#</a><span class="type-signature"></span>contexts<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS</p>
+
+
+
+
+<p>Get a list of the available contexts.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L56">macaca-wd.js#L56</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+<div class="param-desc">
+  A list of available contexts.
+</div>
+
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="coverage"><a href="#coverage" class="anchor" data-scroll="">#</a><span class="type-signature"></span>coverage<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Generate the coverage reporter.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L195">helper.js#L195</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="currentContext"><a href="#currentContext" class="anchor" data-scroll="">#</a><span class="type-signature"></span>currentContext<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS</p>
+
+
+
+
+<p>Get the current context.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L41">macaca-wd.js#L41</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="deleteAllCookies"><a href="#deleteAllCookies" class="anchor" data-scroll="">#</a><span class="type-signature"></span>deleteAllCookies<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Allows deletion of all cookies associated with the active document’s address.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L823">macaca-wd.js#L823</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#delete-all-cookies">DELETE /session/:sessionId/cookie/:name</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="deleteCookie"><a href="#deleteCookie" class="anchor" data-scroll="">#</a><span class="type-signature"></span>deleteCookie<span class="signature">(name)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Delete either a single cookie by parameter name, or all the cookies associated with the active document’s address if name is undefined.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">name</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">cookie name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L815">macaca-wd.js#L815</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#delete-cookie">DELETE /session/:sessionId/cookie/:name</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="dismissAlert"><a href="#dismissAlert" class="anchor" data-scroll="">#</a><span class="type-signature"></span>dismissAlert<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS</p>
+
+
+
+
+<p>Dismisses the currently displayed alert dialog.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L644">macaca-wd.js#L644</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dismiss-alert">POST /session/:sessionId/dismiss_alert</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="domEvent"><a href="#domEvent" class="anchor" data-scroll="">#</a><span class="type-signature"></span>domEvent<span class="signature">(eventType, options)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Simulate the dom event.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">eventType</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">type of the event.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">options</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">options of the event.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L375">helper.js#L375</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://github.com/macacajs/dom-event-simulate#support-events">https://github.com/macacajs/dom-event-simulate#support-events</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="element"><a href="#element" class="anchor" data-scroll="">#</a><span class="type-signature"></span>element<span class="signature">(using, value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The locator strategy to use.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The search target.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L118">macaca-wd.js#L118</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByClassName"><a href="#elementByClassName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByClassName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The class name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L127">macaca-wd.js#L127</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByClassNameIfExists"><a href="#elementByClassNameIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByClassNameIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The class name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L386">macaca-wd.js#L386</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByClassNameOrNull"><a href="#elementByClassNameOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByClassNameOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The class name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L304">macaca-wd.js#L304</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByCss"><a href="#elementByCss" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByCss<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The css selector</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L136">macaca-wd.js#L136</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByCssIfExists"><a href="#elementByCssIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByCssIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The css selector</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L395">macaca-wd.js#L395</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByCssOrNull"><a href="#elementByCssOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByCssOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The css selector</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L313">macaca-wd.js#L313</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementById"><a href="#elementById" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementById<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The ID attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L145">macaca-wd.js#L145</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByIdIfExists"><a href="#elementByIdIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByIdIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The ID attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L404">macaca-wd.js#L404</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByIdOrNull"><a href="#elementByIdOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByIdOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The ID attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L322">macaca-wd.js#L322</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByLinkText"><a href="#elementByLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L163">macaca-wd.js#L163</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByLinkTextIfExists"><a href="#elementByLinkTextIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByLinkTextIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L422">macaca-wd.js#L422</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByLinkTextOrNull"><a href="#elementByLinkTextOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByLinkTextOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L340">macaca-wd.js#L340</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByName"><a href="#elementByName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The name attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L154">macaca-wd.js#L154</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByNameIfExists"><a href="#elementByNameIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByNameIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The name attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L413">macaca-wd.js#L413</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByNameOrNull"><a href="#elementByNameOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByNameOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The name attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L331">macaca-wd.js#L331</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByPartialLinkText"><a href="#elementByPartialLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByPartialLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The partially text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L172">macaca-wd.js#L172</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByPartialLinkTextIfExists"><a href="#elementByPartialLinkTextIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByPartialLinkTextIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The partially text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L431">macaca-wd.js#L431</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByPartialLinkTextOrNull"><a href="#elementByPartialLinkTextOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByPartialLinkTextOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The partially text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L349">macaca-wd.js#L349</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByTagName"><a href="#elementByTagName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByTagName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The tag name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L181">macaca-wd.js#L181</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByTagNameIfExists"><a href="#elementByTagNameIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByTagNameIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The tag name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L440">macaca-wd.js#L440</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByTagNameOrNull"><a href="#elementByTagNameOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByTagNameOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The tag name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L358">macaca-wd.js#L358</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByXPath"><a href="#elementByXPath" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByXPath<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Element&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The XPath expression</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L190">macaca-wd.js#L190</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Element&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByXPathIfExists"><a href="#elementByXPathIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByXPathIfExists<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|undefined)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The XPath expression</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L449">macaca-wd.js#L449</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|undefined)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementByXPathOrNull"><a href="#elementByXPathOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementByXPathOrNull<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The XPath expression</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L367">macaca-wd.js#L367</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementIfExists"><a href="#elementIfExists" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementIfExists<span class="signature">(using, value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The locator strategy to use.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The search target.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L377">macaca-wd.js#L377</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementInput"><a href="#elementInput" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementInput<span class="signature">(content)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Type content to a contentEditable element.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">content</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">of type.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L339">helper.js#L339</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementOrNull"><a href="#elementOrNull" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementOrNull<span class="signature">(using, value)</span><span class="type-signature"> → { Promise.&lt;(Element|null)&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for an element on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The locator strategy to use.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The search target.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L295">macaca-wd.js#L295</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;(Element|null)&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elements"><a href="#elements" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elements<span class="signature">(using, value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The locator strategy to use.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The search target.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L200">macaca-wd.js#L200</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByClassName"><a href="#elementsByClassName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByClassName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The class name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L209">macaca-wd.js#L209</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByCss"><a href="#elementsByCss" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByCss<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The css selector</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L218">macaca-wd.js#L218</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsById"><a href="#elementsById" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsById<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The ID attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L227">macaca-wd.js#L227</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByLinkText"><a href="#elementsByLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L245">macaca-wd.js#L245</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByName"><a href="#elementsByName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The name attribute</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L236">macaca-wd.js#L236</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByPartialLinkText"><a href="#elementsByPartialLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByPartialLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The partially text</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L254">macaca-wd.js#L254</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByTagName"><a href="#elementsByTagName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByTagName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The tag name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L263">macaca-wd.js#L263</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="elementsByXPath"><a href="#elementsByXPath" class="anchor" data-scroll="">#</a><span class="type-signature"></span>elementsByXPath<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Search for multiple elements on the page, starting from the document root.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The XPath expression</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L272">macaca-wd.js#L272</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/elements</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="execute"><a href="#execute" class="anchor" data-scroll="">#</a><span class="type-signature"></span>execute<span class="signature">(code, args<span class="signature-attributes">opt</span>)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+      <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">code</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">script</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">args</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">script argument array</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L620">macaca-wd.js#L620</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#executing-script">POST /session/:sessionId/execute</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="formInput"><a href="#formInput" class="anchor" data-scroll="">#</a><span class="type-signature"></span>formInput<span class="signature">(content)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Type content to input element.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">content</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">of type.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L302">helper.js#L302</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="forward"><a href="#forward" class="anchor" data-scroll="">#</a><span class="type-signature"></span>forward<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Navigate forwards in the browser history, if possible.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">browser</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L688">macaca-wd.js#L688</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#back">POST /session/:sessionId/forward</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="frame"><a href="#frame" class="anchor" data-scroll="">#</a><span class="type-signature"></span>frame<span class="signature">(frameRef)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Change focus to another frame on the page.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">frameRef</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">Identifier(id/name) for the frame to change focus to</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L778">macaca-wd.js#L778</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#switch-to-frame">POST /session/:sessionId/frame</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="get"><a href="#get" class="anchor" data-scroll="">#</a><span class="type-signature"></span>get<span class="signature">(url)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Navigate to a new URL.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">browser</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">url</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">get a new url.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L679">macaca-wd.js#L679</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get">POST /session/:sessionId/url</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="getComputedCss"><a href="#getComputedCss" class="anchor" data-scroll="">#</a><span class="type-signature"></span>getComputedCss<span class="signature">(propertyName)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Query the value of an element's computed CSS property.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">propertyName</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The property name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L601">macaca-wd.js#L601</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-element-css-value">GET /session/:sessionId/element/:id/css/:propertyName</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="getProperty"><a href="#getProperty" class="anchor" data-scroll="">#</a><span class="type-signature"></span>getProperty<span class="signature">(name)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView). iOS: 'isVisible', 'isAccessible', 'isEnabled', 'type', 'label', 'name', 'value', Android: 'selected', 'description', 'text'</p>
+
+
+
+
+<p>Get the result of a property of a element.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">name</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The property name</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L591">macaca-wd.js#L591</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-get-element-property">GET /session/:sessionId/element/:id/property/:name</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="getRect"><a href="#getRect" class="anchor" data-scroll="">#</a><span class="type-signature"></span>getRect<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS.</p>
+
+
+
+
+<p>Get the dimensions and coordinates of the given element with a object including x/y/height/width.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L610">macaca-wd.js#L610</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-get-element-rect">GET /session/:sessionId/element/:id/rect</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="getUrl"><a href="#getUrl" class="anchor" data-scroll="">#</a><span class="type-signature"></span>getUrl<span class="signature">(the)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Get webpage from url util the page ready.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">the</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">pointed url.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L66">helper.js#L66</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="getWindowSize"><a href="#getWindowSize" class="anchor" data-scroll="">#</a><span class="type-signature"></span>getWindowSize<span class="signature">(handle<span class="signature-attributes">opt</span>)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Get the size of the specified window.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+      <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">handle</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">window handle to set size for (optional, default: 'current')</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L748">macaca-wd.js#L748</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-window-size">GET /session/:sessionId/window/size</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElement"><a href="#hasElement" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElement<span class="signature">(using, value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The locator strategy to use.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The search target.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L460">macaca-wd.js#L460</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByClassName"><a href="#hasElementByClassName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByClassName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The class name.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L470">macaca-wd.js#L470</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByCss"><a href="#hasElementByCss" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByCss<span class="signature">(text)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Check if element is existed.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">text</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">content.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L409">helper.js#L409</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementById"><a href="#hasElementById" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementById<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The ID attribute.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L480">macaca-wd.js#L480</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByLinkText"><a href="#hasElementByLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The text.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L500">macaca-wd.js#L500</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByName"><a href="#hasElementByName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The name attribute.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L490">macaca-wd.js#L490</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByPartialLinkText"><a href="#hasElementByPartialLinkText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByPartialLinkText<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The partially text.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L510">macaca-wd.js#L510</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByTagName"><a href="#hasElementByTagName" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByTagName<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The tag name.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L520">macaca-wd.js#L520</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasElementByXPath"><a href="#hasElementByXPath" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasElementByXPath<span class="signature">(value)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Check if element exists.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The XPath expression.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L530">macaca-wd.js#L530</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#elements">POST /session/:sessionId/element</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="hasText"><a href="#hasText" class="anchor" data-scroll="">#</a><span class="type-signature"></span>hasText<span class="signature">(text)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Check if element has pointed text.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">assert</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">text</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">content.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L397">helper.js#L397</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="init"><a href="#init" class="anchor" data-scroll="">#</a><span class="type-signature"></span>init<span class="signature">(desired)</span><span class="type-signature"> → { Promise.&lt;Object&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Create a new session.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">session</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">desired</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">Object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">Desired Capabilities</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L18">macaca-wd.js#L18</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-new-session">POST /session</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Object&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="initWindow"><a href="#initWindow" class="anchor" data-scroll="">#</a><span class="type-signature"></span>initWindow<span class="signature">(browser)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Initial browser window.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">browser</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">options.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L45">helper.js#L45</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="isDisplayed"><a href="#isDisplayed" class="anchor" data-scroll="">#</a><span class="type-signature"></span>isDisplayed<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android Web(WebView)</p>
+
+
+
+
+<p>Determine if an element is currently displayed.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L581">macaca-wd.js#L581</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="keys"><a href="#keys" class="anchor" data-scroll="">#</a><span class="type-signature"></span>keys<span class="signature">(keys)</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android Web(WebView) More: https://github.com/alibaba/macaca/issues/487</p>
+
+
+
+
+<p>Send a sequence of key strokes to the active window.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">keys</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The keys sequence to be sent.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L556">macaca-wd.js#L556</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="maximize"><a href="#maximize" class="anchor" data-scroll="">#</a><span class="type-signature"></span>maximize<span class="signature">(handle)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Maximize the specified window if not already maximized.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">browser</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">handle</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">window handle</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L769">macaca-wd.js#L769</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-maximize-window">POST /session/:sessionId/window/maximize</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="openReporter"><a href="#openReporter" class="anchor" data-scroll="">#</a><span class="type-signature"></span>openReporter<span class="signature">(if)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Open all reporters in browser.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">if</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">boolean</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">open.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L228">helper.js#L228</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="quit"><a href="#quit" class="anchor" data-scroll="">#</a><span class="type-signature"></span>quit<span class="signature">()</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Delete the session.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">session</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L34">macaca-wd.js#L34</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-delete-session">DELETE /session/:sessionId</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="refresh"><a href="#refresh" class="anchor" data-scroll="">#</a><span class="type-signature"></span>refresh<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Refresh the current page.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">browser</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L706">macaca-wd.js#L706</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#refresh">POST /session/:sessionId/refresh</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="saveScreenshot"><a href="#saveScreenshot" class="anchor" data-scroll="">#</a><span class="type-signature"></span>saveScreenshot<span class="signature">(filepath)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Save the screenshot of the current page.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">filepath</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">str</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The path to save the screenshot or left blank (will create a file in the system temp dir).</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L79">macaca-wd.js#L79</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+<div class="param-desc">
+  The filepath of the screenshot.
+</div>
+
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="saveScreenshots"><a href="#saveScreenshots" class="anchor" data-scroll="">#</a><span class="type-signature"></span>saveScreenshots<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Save screenshots to ./screenshots.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">utility</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L179">helper.js#L179</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="sendKeys"><a href="#sendKeys" class="anchor" data-scroll="">#</a><span class="type-signature"></span>sendKeys<span class="signature">(keys)</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Send a sequence of key strokes to the active element.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">keys</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The keys sequence to be sent.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L548">macaca-wd.js#L548</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-element-send-keys">POST /session/:sessionId/element/:id/sendKeys</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="sessions"><a href="#sessions" class="anchor" data-scroll="">#</a><span class="type-signature"></span>sessions<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Returns a list of the currently active sessions.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L25">macaca-wd.js#L25</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="setCookie"><a href="#setCookie" class="anchor" data-scroll="">#</a><span class="type-signature"></span>setCookie<span class="signature">(cookie)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Adds a single cookie to the cookie store associated with the active document’s address.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">cookie</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">example: {url: 'https://macacajs.github.io', name:'foo', value:'bar'} Optional cookie fields: secure, expiry</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L806">macaca-wd.js#L806</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#add-cookie">POST /session/:sessionId/cookie</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="setWindowSize"><a href="#setWindowSize" class="anchor" data-scroll="">#</a><span class="type-signature"></span>setWindowSize<span class="signature">(width, height, handle<span class="signature-attributes">opt</span>)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Change the size of the specified window.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+      <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">width</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">width in pixels to set size to</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">height</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">height in pixels to set size to</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">handle</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">window handle to set size for (optional, default: 'current')</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L759">macaca-wd.js#L759</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#set-window-size">POST	/session/:sessionId/window/size</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="sleep"><a href="#sleep" class="anchor" data-scroll="">#</a><span class="type-signature"></span>sleep<span class="signature">(ms)</span><span class="type-signature"> → { Promise }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Set the amount of time the driver should wait.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">ms</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">number</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">The amount of time to wait, in milliseconds</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L64">macaca-wd.js#L64</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="source"><a href="#source" class="anchor" data-scroll="">#</a><span class="type-signature"></span>source<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Get the current page source.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L108">macaca-wd.js#L108</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-get-page-source">GET 	/session/:sessionId/source</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="startMediaRecorder"><a href="#startMediaRecorder" class="anchor" data-scroll="">#</a><span class="type-signature"></span>startMediaRecorder<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web</p>
+
+
+
+
+<p>Record a video for the use case execution process, start to create a new record.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L86">macaca-wd.js#L86</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="status"><a href="#status" class="anchor" data-scroll="">#</a><span class="type-signature"></span>status<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;Object&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Query the server's current status.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L8">macaca-wd.js#L8</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+<div class="param-desc">
+  The server's current status.
+</div>
+
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Object&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="stopMediaRecorder"><a href="#stopMediaRecorder" class="anchor" data-scroll="">#</a><span class="type-signature"></span>stopMediaRecorder<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web</p>
+
+
+
+
+<p>Record a video for the use case execution process, stop the record in process.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L93">macaca-wd.js#L93</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="switchAllScenes"><a href="#switchAllScenes" class="anchor" data-scroll="">#</a><span class="type-signature"></span>switchAllScenes<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Switch all scenes with DataHub.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">datahub</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">options.</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last"></td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L287">helper.js#L287</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="switchMultiScenes"><a href="#switchMultiScenes" class="anchor" data-scroll="">#</a><span class="type-signature"></span>switchMultiScenes<span class="signature">(the)</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Switch multi-scene with DataHub.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">datahub</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">the</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">array</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last">scene list.</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L269">helper.js#L269</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="switchScene"><a href="#switchScene" class="anchor" data-scroll="">#</a><span class="type-signature"></span>switchScene<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;boolean&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Switch scene with DataHub.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">datahub</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">options.</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">object</span>
+
+
+
+        
+        </td>
+
+        
+
+        
+
+        <td class="description last"></td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L255">helper.js#L255</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;boolean&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="takeScreenshot"><a href="#takeScreenshot" class="anchor" data-scroll="">#</a><span class="type-signature"></span>takeScreenshot<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Take a screenshot of the current page.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L71">macaca-wd.js#L71</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+<div class="param-desc">
+  The screenshot as a base64 encoded PNG.
+</div>
+
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="text"><a href="#text" class="anchor" data-scroll="">#</a><span class="type-signature"></span>text<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Returns the visible text for the element.</p>
+
+
+
+
+
+
+
+  <h4>Type:</h4>
+  <ul>
+    <li>
+      
+<span class="param-type">element</span>
+
+
+
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L564">macaca-wd.js#L564</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="title"><a href="#title" class="anchor" data-scroll="">#</a><span class="type-signature"></span>title<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>Get the current page title or focus activity or viewController.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L628">macaca-wd.js#L628</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#accept-alert">GET /session/:sessionId/title</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="touch"><a href="#touch" class="anchor" data-scroll="">#</a><span class="type-signature"></span>touch<span class="signature">(action, object<span class="signature-attributes">opt</span>)</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: iOS, Android</p>
+
+
+
+
+<p>Apply touch actions on devices.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+      <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">action</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">Name of the action, tap/doubleTap/press/pinch/rotate/drag.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">object</code></td>
+        
+
+        <td class="type">
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+
+        <td class="description last">args Parameters of the action <a href="https://github.com/alibaba/macaca/issues/366">more params</a></td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L789">macaca-wd.js#L789</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#actions">POST /session/:sessionId/actions</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+  <h4>Example</h4>
+  
+  <pre class="prettyprint"><code>driver.touch('doubleTap', {x: 100, y: 100});</code></pre>
+
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="url"><a href="#url" class="anchor" data-scroll="">#</a><span class="type-signature"></span>url<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Retrieve the URL of the current page.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L669">macaca-wd.js#L669</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-current-url">GET /session/:sessionId/url</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="waitForElement"><a href="#waitForElement" class="anchor" data-scroll="">#</a><span class="type-signature"></span>waitForElement<span class="signature">(using, value, asserter<span class="signature-attributes">opt</span>, timeout<span class="signature-attributes">opt</span>, interval<span class="signature-attributes">opt</span>)</span><span class="type-signature"> → { Promise.&lt;Array&gt; }</span></h3>
+
+
+<p class="summary">Support: Android iOS Web(WebView)</p>
+
+
+
+
+<p>All the element-related methods above (except which suffixed with OrNull, IfExists) could be prefixed with the "waitFor-" (need to capitalize the 'e', e.g., waitForElementByClassName)</p>
+
+
+
+
+
+
+
+
+
+
+
+  <h4>Parameters:</h4>
+  
+
+<div class="props">
+  <table class="params">
+    <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+      <th>Attributes</th>
+      
+
+      
+      <th>Default</th>
+      
+
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">using</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+          <td class="default">
+          
+          </td>
+        
+
+        <td class="description last">The locator strategy to use, omitted when using specific method like waitForElementByClassName.</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">value</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">string</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+
+          
+
+          
+          </td>
+        
+
+        
+          <td class="default">
+          
+          </td>
+        
+
+        <td class="description last">The css selector</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">asserter</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">function</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+          <td class="default">
+          
+          </td>
+        
+
+        <td class="description last">The asserter function (commonly used asserter function can be found at wd.asserters) (optional)</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">timeout</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">number</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+          <td class="default">
+          
+            1000ms
+          
+          </td>
+        
+
+        <td class="description last">The timeout before find the element (optional)</td>
+      </tr>
+
+    
+
+      <tr>
+        
+          <td class="name"><code class="highlighter-rouge">interval</code></td>
+        
+
+        <td class="type">
+        
+          
+<span class="param-type">number</span>
+
+
+
+        
+        </td>
+
+        
+          <td class="attributes">
+          
+            &lt;optional&gt;<br>
+          
+
+          
+
+          
+          </td>
+        
+
+        
+          <td class="default">
+          
+            200ms
+          
+          </td>
+        
+
+        <td class="description last">The interval between each searching (optional)</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L285">macaca-wd.js#L285</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;Array&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+  <h4>Example</h4>
+  
+  <pre class="prettyprint"><code>waitForElementByClassName('btn', 2000, 100) Search for element which class name is 'btn' at intervals of 100ms, last for 2000ms.</code></pre>
+
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="waitForVideosSave"><a href="#waitForVideosSave" class="anchor" data-scroll="">#</a><span class="type-signature"></span>waitForVideosSave<span class="signature">()</span><span class="type-signature"></span></h3>
+
+
+
+
+
+<p>Wait for videos in process.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/helper.js#L462">helper.js#L462</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="waitForVideosSave"><a href="#waitForVideosSave" class="anchor" data-scroll="">#</a><span class="type-signature"></span>waitForVideosSave<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web</p>
+
+
+
+
+<p>Record a video for the use case execution process, wait for the genaration of the videos in process.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L100">macaca-wd.js#L100</a></dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="window"><a href="#window" class="anchor" data-scroll="">#</a><span class="type-signature"></span>window<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Change focus to another window.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L714">macaca-wd.js#L714</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#switch-to-window">POST /session/:sessionId/window</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="windowHandle"><a href="#windowHandle" class="anchor" data-scroll="">#</a><span class="type-signature"></span>windowHandle<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Retrieve the current window handle.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L731">macaca-wd.js#L731</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-window-handle">GET /session/:sessionId/window_handle</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+    
+
+
+
+<h3 class="name" id="windowHandles"><a href="#windowHandles" class="anchor" data-scroll="">#</a><span class="type-signature"></span>windowHandles<span class="signature">()</span><span class="type-signature"> → { Promise.&lt;string&gt; }</span></h3>
+
+
+<p class="summary">Support: Web(WebView)</p>
+
+
+
+
+<p>Retrieve the list of all window handles available to the session.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-source">Source:</dt>
+  <dd class="tag-source"><a href="https://github.com/macacajs/macaca-wd/blob/master/lib/macaca-wd.js#L739">macaca-wd.js#L739</a></dd>
+  
+
+  
+
+  
+  <dt class="tag-see">See:</dt>
+  <dd class="tag-see">
+    <ul>
+      <li><a href="https://w3c.github.io/webdriver/webdriver-spec.html#get-window-handles">GET /session/:sessionId/window_handles</a></li>
+    </ul>
+  </dd>
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Returns:</h4>
+
+    
+
+
+<dl class="param-type">
+  <dt>Type</dt>
+  <dd>
+<span class="param-type">Promise.&lt;string&gt;</span>
+
+
+</dd>
+</dl>
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+      </article>
+    </section>
+
+    <footer>
+      <p>
+        Released under the
+        <a href="//github.com/alibaba/macaca/blob/master/LICENSE">MIT License</a>
+      </p>
+      <p>
+        © 2015-2016
+        <a href="//github.com/macacajs">Macaca</a>
+      </p>
+    </footer>
+
+    <script src="/macaca-wd/assets/js/smooth-scroll.min.js"></script>
+    <script src="/macaca-wd/assets/js/index.js"></script>
+  
+</body></html>
