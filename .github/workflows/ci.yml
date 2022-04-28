@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  Runner:
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        node-version: [ 12, 14, 16 ]
+    steps:
+      - name: Checkout Git Source
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm i npm@6 -g
+          npm i
+
+      - name: Continuous integration
+        run: |
+          npm run lint
+          npm run test
+
+      - name: Code coverage
+        uses: codecov/codecov-action@v3.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
