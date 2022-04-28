@@ -8,6 +8,9 @@
   "plugins": [
     "mocha"
   ],
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
   // https://github.com/feross/eslint-config-standard
   "rules": {
     "accessor-pairs": 2,

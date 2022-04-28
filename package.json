@@ -1,6 +1,6 @@
 {
   "name": "macaca-wd",
-  "version": "3.3.7",
+  "version": "3.5.1",
   "description": "Macaca wd client",
   "keywords": [
     "macaca",
@@ -9,7 +9,8 @@
   ],
   "files": [
     "lib/**/*.js",
-    "wd/**/*.js"
+    "wd/**/*.js",
+    "wd/package.json"
   ],
   "main": "./lib/macaca-wd.js",
   "repository": {
@@ -33,6 +34,7 @@
     "request": "~2.85.0",
     "underscore.string": "~3.0.3",
     "vargs": "~0.1.0",
+    "webdriver": "^7.16.11",
     "webdriver-keycode": "^1.0.0",
     "xlogger": "^1.0.6",
     "xutil": "1"
