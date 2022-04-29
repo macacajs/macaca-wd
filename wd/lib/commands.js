@@ -1150,6 +1150,9 @@ commands.saveScreenshot = function() {
   buildFilePath(_path, function(err, filePath) {
     commands.takeScreenshot.apply(_this, [_params, function(err, base64Data) {
       if(err) { return cb(err); }
+      if (_params && _params.video) {
+        cb(null, base64Data);
+      }
       require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
         if(err) { return cb(err); }
         cb(null, filePath);
