@@ -3203,4 +3203,44 @@ commands.touch = function () {
   });
 };
 
+commands.keyboard = function () {
+  var cb = findCallback(arguments);
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      type = fargs.all[0],
+      args = fargs.all[1] || {};
+
+  const data = {
+    type,
+    args: [args],
+  };
+
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/keyboard',
+    data,
+    cb: simpleCallback(cb)
+  });
+};
+
+commands.mouse = function () {
+  var cb = findCallback(arguments);
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      type = fargs.all[0],
+      args = fargs.all[1] || {};
+
+  const data = {
+    type,
+    args: [args],
+  };
+
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/mouse',
+    data,
+    cb: simpleCallback(cb)
+  });
+};
+
 module.exports = commands;
