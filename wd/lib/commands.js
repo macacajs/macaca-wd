@@ -3204,15 +3204,13 @@ commands.touch = function () {
 };
 
 commands.keyboard = function () {
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      type = fargs.all[0],
-      args = fargs.all[1] || {};
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const [ type, ...args ] = fargs.all;
 
   const data = {
     type,
-    args: [args],
+    args,
   };
 
   this._jsonWireCall({
@@ -3224,15 +3222,13 @@ commands.keyboard = function () {
 };
 
 commands.mouse = function () {
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      type = fargs.all[0],
-      args = fargs.all[1] || {};
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const [ type, ...args ] = fargs.all;
 
   const data = {
     type,
-    args: [args],
+    args,
   };
 
   this._jsonWireCall({
