@@ -63,6 +63,24 @@ commands.sessions = function() {
 };
 
 /**
+ * extra(cb) -> cb(err)
+ *
+ * @jsonWire POST /extra
+ */
+commands.extra = function() {
+  var fargs = utils.varargs(arguments);
+  var cb = fargs.callback,
+      funcName = fargs.all[0],
+      args = fargs.all[1] || [];
+  this._jsonWireCall({
+    method: 'POST'
+    , absPath: 'extra'
+    , cb: callbackWithData(cb, this)
+    , data: { funcName, args }
+  });
+};
+
+/**
  * Retrieves the current session id.
  * getSessionId(cb) -> cb(err, sessionId)
  * getSessionId()
@@ -1503,6 +1521,20 @@ commands.clickElement = function(element) {
   this._jsonWireCall({
     method: 'POST'
     , relPath: '/element/' + element + '/click'
+    , cb: simpleCallback(cb)
+  });
+};
+
+/**
+ * takeElementScreenshot(element, cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/element/:id/screenshot
+ */
+commands.takeElementScreenshot = function(element) {
+  var cb = findCallback(arguments);
+  this._jsonWireCall({
+    method: 'POST'
+    , relPath: '/element/' + element + '/screenshot'
     , cb: simpleCallback(cb)
   });
 };

@@ -103,6 +103,15 @@ elementCommands.click = function (cb) {
 };
 
 /**
+ * element.takeElementScreenshot(cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/element/:id/screenshot
+ */
+elementCommands.screenshot = function (cb) {
+  commands.takeElementScreenshot.apply(this.browser, [this, cb]);
+};
+
+/**
  * element.tap(cb) -> cb(err)
  *
  * @jsonWire POST /session/:sessionId/touch/click
