@@ -1,33 +1,28 @@
-var request = require('request'),
-    utils = require("./utils"),
-    urllib = require('url'),
-    packageDotJson = require('../package.json');
+const request = require('request');
+const utils = require('./utils');
+const urllib = require('url');
+const packageDotJson = require('../package.json');
 
-exports.buildInitUrl =function(baseUrl)
-{
+exports.buildInitUrl = function(baseUrl) {
   return utils.resolveUrl(baseUrl, 'session');
 };
 
-exports.emit =function(browser ,method, url, data)
-{
+exports.emit = function(browser, method, url, data) {
   if (typeof data === 'object') {
     data = JSON.stringify(data);
   }
-  if(typeof url === 'string') { url = urllib.parse(url); }
+  if (typeof url === 'string') { url = urllib.parse(url); }
   browser.emit('http', method,
     url.path.replace(browser.sessionID, ':sessionID')
       .replace(browser.configUrl.pathname, ''), data
-    );
+  );
 };
 
-exports.buildJsonCallUrl = function(baseUrl ,sessionID, relPath, absPath){
-  var path = ['session'];
-  if(sessionID)
-    { path.push('/' , sessionID); }
-  if(relPath)
-    { path.push(relPath); }
-  if(absPath)
-    { path = [absPath]; }
+exports.buildJsonCallUrl = function(baseUrl, sessionID, relPath, absPath) {
+  let path = ['session'];
+  if (sessionID) { path.push('/', sessionID); }
+  if (relPath) { path.push(relPath); }
+  if (absPath) { path = [absPath]; }
   path = path.join('');
 
   return utils.resolveUrl(baseUrl, path);
@@ -35,7 +30,7 @@ exports.buildJsonCallUrl = function(baseUrl ,sessionID, relPath, absPath){
 
 exports.newHttpOpts = function(method, httpConfig) {
   // this._httpConfig
-  var opts = {};
+  const opts = {};
 
   opts.method = method;
   opts.headers = {};
@@ -44,9 +39,9 @@ exports.newHttpOpts = function(method, httpConfig) {
   opts.forever = true;
   opts.headers['User-Agent'] = 'admc/wd/' + packageDotJson.version;
   opts.timeout = httpConfig.timeout;
-  if(httpConfig.proxy) { opts.proxy = httpConfig.proxy; }
+  if (httpConfig.proxy) { opts.proxy = httpConfig.proxy; }
   // we need to check method here to cater for PUT and DELETE case
-  if(opts.method === 'GET' || opts.method === 'POST'){
+  if (opts.method === 'GET' || opts.method === 'POST') {
     opts.headers.Accept = 'application/json';
   }
 
@@ -64,26 +59,26 @@ exports.newHttpOpts = function(method, httpConfig) {
   return opts;
 };
 
-var shouldRetryOn = function(err) {
-    return err.code === 'ECONNRESET' ||
+const shouldRetryOn = function(err) {
+  return err.code === 'ECONNRESET' ||
         err.code === 'ETIMEDOUT' ||
         err.code === 'ESOCKETTIMEDOUT' ||
         err.code === 'EPIPE';
 };
 
-var requestWithRetry = function(httpOpts, httpConfig, emit, cb, attempts) {
+const requestWithRetry = function(httpOpts, httpConfig, emit, cb, attempts) {
   request(httpOpts, function(err, res, data) {
-    if(!attempts) { attempts = 1; }
-    if( httpConfig.retries >= 0 &&
-      (httpConfig.retries === 0 || (attempts -1) <= httpConfig.retries) &&
+    if (!attempts) { attempts = 1; }
+    if (httpConfig.retries >= 0 &&
+      (httpConfig.retries === 0 || (attempts - 1) <= httpConfig.retries) &&
       err && (shouldRetryOn(err))) {
-      emit('connection', err.code , 'Lost http connection retrying in ' + httpConfig.retryDelay + ' s.', err);
+      emit('connection', err.code, 'Lost http connection retrying in ' + httpConfig.retryDelay + ' s.', err);
       setTimeout(function() {
-        requestWithRetry(httpOpts, httpConfig, emit, cb, attempts + 1 );
+        requestWithRetry(httpOpts, httpConfig, emit, cb, attempts + 1);
       }, httpConfig.retryDelay * 1000);
     } else {
-      if(err) {
-        emit('connection', err.code, 'Unexpected error.' , err);
+      if (err) {
+        emit('connection', err.code, 'Unexpected error.', err);
       }
       cb(err, res, data);
     }
@@ -91,10 +86,10 @@ var requestWithRetry = function(httpOpts, httpConfig, emit, cb, attempts) {
 };
 exports.requestWithRetry = requestWithRetry;
 
-var requestWithoutRetry = function(httpOpts, emit, cb) {
+const requestWithoutRetry = function(httpOpts, emit, cb) {
   request(httpOpts, function(err, res, data) {
-    if(err) {
-      emit('connection', err.code, 'Unexpected error.' , err);
+    if (err) {
+      emit('connection', err.code, 'Unexpected error.', err);
     }
     cb(err, res, data);
   });

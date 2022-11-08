@@ -1,20 +1,19 @@
 // inspired by https://github.com/raszi/node-tmp, but only
 // provides tmp paths.
 
-var
-  fs     = require('fs'),
-  path   = require('path'),
-  os     = require('os'),
-  utils     = require('./utils');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const utils = require('./utils');
 
 function _isUndefined(obj) {
   return typeof obj === 'undefined';
 }
 
 function _parseArguments() {
-  var fargs = utils.varargs(arguments);
-  var callback = fargs.callback;
-  var options = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const callback = fargs.callback;
+  const options = fargs.all[0];
   return [ options, callback ];
 }
 
@@ -25,9 +24,9 @@ function _parseArguments() {
  * @api private
  */
 function _getTMPDir() {
-  var tmpNames = [ 'TMPDIR', 'TMP', 'TEMP' ];
+  const tmpNames = [ 'TMPDIR', 'TMP', 'TEMP' ];
 
-  for (var i = 0, length = tmpNames.length; i < length; i++) {
+  for (let i = 0, length = tmpNames.length; i < length; i++) {
     if (_isUndefined(process.env[tmpNames[i]])) { continue; }
 
     return process.env[tmpNames[i]];
@@ -37,40 +36,36 @@ function _getTMPDir() {
   return '/tmp';
 }
 
-var
-  exists = fs.exists || path.exists,
-  tmpDir = os.tmpdir || _getTMPDir,
-  _TMP = tmpDir(),
-  randomChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
-  randomCharsLength = randomChars.length;
+const exists = fs.exists || path.exists;
+const tmpDir = os.tmpdir || _getTMPDir;
+const _TMP = tmpDir();
+const randomChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+const randomCharsLength = randomChars.length;
 
 /**
  * Gets a temporary file name.
  *
- * @param {Object} opts
- * @param {Function} cb
  * @api private
+ * @param options
+ * @param callback
  */
 function _getTmpName(options, callback) {
-  var
-    args = _parseArguments(options, callback),
-    opts = args[0],
-    cb = args[1],
-    template = opts.template,
-    templateDefined = !_isUndefined(template),
-    tries = opts.tries || 3;
+  const args = _parseArguments(options, callback);
+  const opts = args[0];
+  const cb = args[1];
+  const template = opts.template;
+  const templateDefined = !_isUndefined(template);
+  let tries = opts.tries || 3;
 
-  if (isNaN(tries) || tries < 0)
-    { return cb(new Error('Invalid tries')); }
+  if (isNaN(tries) || tries < 0) { return cb(new Error('Invalid tries')); }
 
-  if (templateDefined && !template.match(/XXXXXX/))
-    { return cb(new Error('Invalid template provided')); }
+  if (templateDefined && !template.match(/XXXXXX/)) { return cb(new Error('Invalid template provided')); }
 
   function _getName() {
 
     // prefix and postfix
     if (!templateDefined) {
-      var name = [
+      const name = [
         (_isUndefined(opts.prefix)) ? 'tmp-' : opts.prefix,
         process.pid,
         (Math.random() * 0x1000000000).toString(36),
@@ -81,9 +76,9 @@ function _getTmpName(options, callback) {
     }
 
     // mkstemps like template
-    var chars = [];
+    const chars = [];
 
-    for (var i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
       chars.push(randomChars.substr(Math.floor(Math.random() * randomCharsLength), 1));
     }
 
@@ -91,7 +86,7 @@ function _getTmpName(options, callback) {
   }
 
   (function _getUniqueName() {
-    var name = _getName();
+    const name = _getName();
 
     // check whether the path exists then retry if needed
     exists(name, function _pathExists(pathExists) {

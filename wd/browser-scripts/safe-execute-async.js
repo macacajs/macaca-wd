@@ -1,7 +1,10 @@
 /* jshint evil:true */
-var args = Array.prototype.slice.call(arguments, 0);
-var code = args[0], fargs = args[1], done = args[2];
-var wrap = function() {
+const args = Array.prototype.slice.call(arguments, 0);
+const code = args[0];
+const fargs = args[1];
+const done = args[2];
+const wrap = function() {
+  // eslint-disable-next-line no-eval
   return eval(code);
 };
 fargs.push(done);

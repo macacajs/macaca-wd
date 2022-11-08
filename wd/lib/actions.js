@@ -1,39 +1,38 @@
-var _ = require('lodash'),
-    __slice = Array.prototype.slice,
-    _ = require('lodash'),
-    Webdriver = require('./webdriver'),
-    Element = require('./element');
+const _ = require('lodash');
+const __slice = Array.prototype.slice;
+const Webdriver = require('./webdriver');
+const Element = require('./element');
 
 /**
  * new wd.TouchAction()
- * TouchAction constructor 
+ * TouchAction constructor
  *
- * @actions 
+ * @actions
  */
-var TouchAction = function (driver) {
+const TouchAction = function (driver) {
   this.driver = driver;
   this.gestures = [];
 };
 
 TouchAction.prototype.addGesture = function(action, opts) {
   opts = opts || {};
-  var el = opts.element || opts.el;
-  if(el && !(el instanceof Element)) {
+  const el = opts.element || opts.el;
+  if (el && !(el instanceof Element)) {
     throw new Error('Invalid element or el field passed');
   }
 
   // preparing opts
-  var finalOpts = {};
+  const finalOpts = {};
   _(opts).each(function(value, name) {
-    if(_.isNumber(value)) {
+    if (_.isNumber(value)) {
       finalOpts[name] = value;
-    } else if(value instanceof Element) {
+    } else if (value instanceof Element) {
       finalOpts[name] = value.value;
-    } else if(value) {
+    } else if (value) {
       finalOpts[name] = value;
     }
   }).value();
-  if(finalOpts.el) {
+  if (finalOpts.el) {
     finalOpts.element = finalOpts.el;
     delete finalOpts.el;
   }
@@ -53,7 +52,7 @@ TouchAction.prototype.toJSON = function() {
  * touchAction.longPress({el, x, y})
  * pass el or (x,y) or both
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.longPress = function (opts) {
   this.addGesture('longPress', opts);
@@ -64,7 +63,7 @@ TouchAction.prototype.longPress = function (opts) {
  * touchAction.moveTo({el, x, y})
  * pass el or (x,y) or both
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.moveTo = function (opts) {
   this.addGesture('moveTo', opts);
@@ -75,7 +74,7 @@ TouchAction.prototype.moveTo = function (opts) {
  * touchAction.press({el, x, y})
  * pass el or (x,y) or both
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.press = function (opts) {
   this.addGesture('press', opts);
@@ -85,7 +84,7 @@ TouchAction.prototype.press = function (opts) {
 /**
  * touchAction.release()
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.release = function () {
   this.addGesture('release', {});
@@ -97,7 +96,7 @@ TouchAction.prototype.release = function () {
  * pass el or (x,y) or both
  * count is optional
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.tap = function (opts) {
   this.addGesture('tap', opts);
@@ -109,10 +108,10 @@ TouchAction.prototype.tap = function (opts) {
  * touchAction.wait(ms)
  * ms is optional
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.wait = function (opts) {
-  if(_.isNumber(opts)) { opts = {ms: opts}; }
+  if (_.isNumber(opts)) { opts = {ms: opts}; }
   this.addGesture('wait', opts);
   return this;
 };
@@ -120,7 +119,7 @@ TouchAction.prototype.wait = function (opts) {
 /**
  * cancel the action
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.cancel = function () {
   this.gestures = [];
@@ -129,10 +128,10 @@ TouchAction.prototype.cancel = function () {
 /**
  * perform the action
  *
- * @actions 
+ * @actions
  */
 TouchAction.prototype.perform = function(cb) {
-  if(typeof cb === 'function') {
+  if (typeof cb === 'function') {
     this.driver.performTouchAction(this, cb);
   } else {
     return this.driver.performTouchAction(this);
@@ -141,12 +140,12 @@ TouchAction.prototype.perform = function(cb) {
 
 /**
  * new wd.MultiAction()
- * MultiAction constructor 
+ * MultiAction constructor
  *
- * @actions 
+ * @actions
  */
-var MultiAction = function (browserOrElement) {
-  if(browserOrElement instanceof Element) {
+const MultiAction = function (browserOrElement) {
+  if (browserOrElement instanceof Element) {
     this.element = browserOrElement;
     this.browser = this.element.browser;
   } else if (browserOrElement instanceof Webdriver) {
@@ -156,8 +155,8 @@ var MultiAction = function (browserOrElement) {
 };
 
 MultiAction.prototype.toJSON = function() {
-  var output = {};
-  if(this.element) { output.elementId = this.element.value; }
+  const output = {};
+  if (this.element) { output.elementId = this.element.value; }
   output.actions = _(this.actions).map(function(action) {
     return action.toJSON();
   }).value();
@@ -167,10 +166,10 @@ MultiAction.prototype.toJSON = function() {
 /**
  * multiAction.add(touchAction)
  *
- * @actions 
+ * @actions
  */
 MultiAction.prototype.add = function () {
-  var actions = __slice.call(arguments, 0);
+  const actions = __slice.call(arguments, 0);
   this.actions = this.actions.concat(actions);
   return this;
 };
@@ -178,7 +177,7 @@ MultiAction.prototype.add = function () {
 /**
  * multiAction.cancel()
  *
- * @actions 
+ * @actions
  */
 MultiAction.prototype.cancel = function() {
   this.actions = [];
@@ -187,21 +186,21 @@ MultiAction.prototype.cancel = function() {
 /**
  * multiAction.perform()
  *
- * @actions 
+ * @actions
  */
 MultiAction.prototype.perform = function(cb) {
-  if(typeof cb === 'function') {
-    if(this.element){
+  if (typeof cb === 'function') {
+    if (this.element) {
       this.element.performMultiAction(this, cb);
     } else {
       this.browser.performMultiAction(this, cb);
-    }  
+    }
   } else {
-    if(this.element){
+    if (this.element) {
       return this.element.performMultiAction(this);
     } else {
       return this.browser.performMultiAction(this);
-    }    
+    }
   }
 };
 

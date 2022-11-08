@@ -1,23 +1,23 @@
-var EventEmitter = require('events').EventEmitter,
-    _ = require("./lodash"),
-    util = require( 'util' ),
-    url = require('url'),
-    __slice = Array.prototype.slice,
-    utils = require("./utils"),
-    findCallback = utils.findCallback,
-    niceArgs = utils.niceArgs,
-    niceResp = utils.niceResp,
-    strip = utils.strip,
-    deprecator = utils.deprecator,
-    httpUtils = require('./http-utils'),
-    config = require('./config'),
-    Element = require('./element'),
-    commands = require('./commands');
+const EventEmitter = require('events').EventEmitter;
+const _ = require('./lodash');
+const util = require('util');
+const url = require('url');
+const __slice = Array.prototype.slice;
+const utils = require('./utils');
+const findCallback = utils.findCallback;
+const niceArgs = utils.niceArgs;
+const niceResp = utils.niceResp;
+const strip = utils.strip;
+const deprecator = utils.deprecator;
+const httpUtils = require('./http-utils');
+const config = require('./config');
+const Element = require('./element');
+const commands = require('./commands');
 
 // Webdriver client main class
 // configUrl: url object constructed via url.parse
-var Webdriver = module.exports = function(configUrl) {
-  EventEmitter.call( this );
+const Webdriver = module.exports = function(configUrl) {
+  EventEmitter.call(this);
   this.sessionID = null;
   this.configUrl = configUrl;
   // config url without auth
@@ -25,17 +25,17 @@ var Webdriver = module.exports = function(configUrl) {
   delete this.noAuthConfigUrl.auth;
 
   this.defaultCapabilities = {
-    browserName: 'firefox'
-    , version: ''
-    , javascriptEnabled: true
-    , platform: 'ANY'
+    browserName: 'firefox',
+    version: '',
+    javascriptEnabled: true,
+    platform: 'ANY'
   };
 
   this._httpConfig = _.clone(config.httpConfig);
 };
 
-//inherit from EventEmitter
-util.inherits( Webdriver, EventEmitter );
+// inherit from EventEmitter
+util.inherits(Webdriver, EventEmitter);
 
 // creates a new element
 Webdriver.prototype.newElement = function(jsonWireElement) {
@@ -47,9 +47,9 @@ Webdriver.prototype.newElement = function(jsonWireElement) {
  * Connect to an already-active session.
  */
 Webdriver.prototype.attach = function(sessionID) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this.sessionID = sessionID;
-  if(cb) { cb(null); }
+  if (cb) { cb(null); }
 };
 
 /**
@@ -57,27 +57,27 @@ Webdriver.prototype.attach = function(sessionID) {
  * Detach from the current session.
  */
 Webdriver.prototype.detach = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this.sessionID = null;
-  if(cb) { cb(null); }
+  if (cb) { cb(null); }
 };
 
-commands.chain = function(obj){
+commands.chain = function(obj) {
   deprecator.warn('chain', 'chain api has been deprecated, use promise chain instead.');
-  require("./deprecated-chain").patch(this);
+  require('./deprecated-chain').patch(this);
   return this.chain(obj);
 };
 
 Webdriver.prototype._init = function() {
   delete this.sessionID;
-  var _this = this;
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      desired = fargs.all[0] || {};
+  const _this = this;
+  const fargs = utils.varargs(arguments);
+  let cb = fargs.callback;
+  let desired = fargs.all[0] || {};
 
-  var _desired = _.clone(desired);
+  const _desired = _.clone(desired);
 
-  if(desired.deviceName || desired.device || desired.wdNoDefaults ||
+  if (desired.deviceName || desired.device || desired.wdNoDefaults ||
     desired['wd-no-defaults']) {
     // no default or appium caps, we dont default
     delete _desired.wdNoDefaults;
@@ -88,35 +88,35 @@ Webdriver.prototype._init = function() {
   }
 
   // http options
-  var httpOpts = httpUtils.newHttpOpts('POST', _this._httpConfig);
+  const httpOpts = httpUtils.newHttpOpts('POST', _this._httpConfig);
 
-  var url = httpUtils.buildInitUrl(this.configUrl);
+  const url = httpUtils.buildInitUrl(this.configUrl);
 
   // building request
-  var data = {desiredCapabilities: _desired};
+  const data = {desiredCapabilities: _desired};
 
   httpUtils.emit(this, httpOpts.method, url, data);
 
   httpOpts.prepareToSend(url, data);
 
   httpUtils.requestWithRetry(httpOpts, this._httpConfig, this.emit.bind(this), function(err, res, data) {
-    if(err) { return cb(err); }
+    if (err) { return cb(err); }
 
-    var resData;
+    let resData;
     // retrieving session
-    try{
-      var jsonData = JSON.parse(data);
-      if( jsonData.status === 0 ){
+    try {
+      const jsonData = JSON.parse(data);
+      if (jsonData.status === 0) {
         _this.sessionID = jsonData.sessionId;
         resData = jsonData.value;
       }
-    } catch(ignore){}
-    if(!_this.sessionID){
+    } catch (ignore) {}
+    if (!_this.sessionID) {
       // attempting to retrieve the session the old way
-      try{
-        var locationArr = res.headers.location.replace(/\/$/, '').split('/');
+      try {
+        const locationArr = res.headers.location.replace(/\/$/, '').split('/');
         _this.sessionID = locationArr[locationArr.length - 1];
-      } catch(ignore){}
+      } catch (ignore) {}
     }
 
     if (_this.sessionID) {
@@ -141,22 +141,22 @@ Webdriver.prototype._init = function() {
 
 // standard jsonwire call
 Webdriver.prototype._jsonWireCall = function(opts) {
-  var _this = this;
+  const _this = this;
 
   // http options init
-  var httpOpts = httpUtils.newHttpOpts(opts.method, this._httpConfig);
+  const httpOpts = httpUtils.newHttpOpts(opts.method, this._httpConfig);
 
-  var url = httpUtils.buildJsonCallUrl(this.noAuthConfigUrl, this.sessionID, opts.relPath, opts.absPath);
+  const url = httpUtils.buildJsonCallUrl(this.noAuthConfigUrl, this.sessionID, opts.relPath, opts.absPath);
 
   // building callback
-  var cb = opts.cb;
+  let cb = opts.cb;
   if (opts.emit) {
     // wrapping cb if we need to emit a message
-    var _cb = cb;
+    const _cb = cb;
     cb = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       _this.emit(opts.emit.event, opts.emit.message);
-      if (_cb) { _cb.apply(_this,args); }
+      if (_cb) { _cb.apply(_this, args); }
     };
   }
 
@@ -164,33 +164,33 @@ Webdriver.prototype._jsonWireCall = function(opts) {
   httpUtils.emit(this, httpOpts.method, url, opts.data);
 
   // writting data
-  var data = opts.data || {};
+  const data = opts.data || {};
   httpOpts.prepareToSend(url, data);
   // building request
   httpUtils.requestWithRetry(httpOpts, this._httpConfig, this.emit.bind(this), function(err, res, data) {
-    if(err) { return cb(err); }
+    if (err) { return cb(err); }
     data = strip(data);
-    cb(null, data || "");
+    cb(null, data || '');
   });
 };
 
 _(commands).each(function(fn, name) {
   Webdriver.prototype[name] = function() {
-    var _this = this;
-    var fargs = utils.varargs(arguments);
-    this.emit('command', "CALL" , name + niceArgs(fargs.all));
-    var cb = function(err) {
-      if(err) {
-        err.message = '[' + name + niceArgs(fargs.all) + "] " + err.message;
-        if(fargs.callback) { fargs.callback(err); }
+    const _this = this;
+    const fargs = utils.varargs(arguments);
+    this.emit('command', 'CALL', name + niceArgs(fargs.all));
+    const cb = function(err) {
+      if (err) {
+        err.message = '[' + name + niceArgs(fargs.all) + '] ' + err.message;
+        if (fargs.callback) { fargs.callback(err); }
       } else {
-        var cbArgs = __slice.call(arguments, 0);
-        _this.emit('command', "RESPONSE" , name + niceArgs(fargs.all),
+        const cbArgs = __slice.call(arguments, 0);
+        _this.emit('command', 'RESPONSE', name + niceArgs(fargs.all),
           niceResp(_.rest(cbArgs)));
-        if(fargs.callback) { fargs.callback.apply(null, cbArgs); }
+        if (fargs.callback) { fargs.callback.apply(null, cbArgs); }
       }
     };
-    var args = fargs.all.concat([cb]);
+    const args = fargs.all.concat([cb]);
     return fn.apply(this, args);
   };
 }).value();
