@@ -3238,40 +3238,4 @@ commands.touch = function () {
   });
 };
 
-commands.keyboard = function () {
-  const fargs = utils.varargs(arguments);
-  const cb = fargs.callback;
-  const [ type, ...args ] = fargs.all;
-
-  const data = {
-    type,
-    args,
-  };
-
-  this._jsonWireCall({
-    method: 'POST',
-    relPath: '/keyboard',
-    data,
-    cb: simpleCallback(cb)
-  });
-};
-
-commands.mouse = function () {
-  const fargs = utils.varargs(arguments);
-  const cb = fargs.callback;
-  const [ type, ...args ] = fargs.all;
-
-  const data = {
-    type,
-    args,
-  };
-
-  this._jsonWireCall({
-    method: 'POST',
-    relPath: '/mouse',
-    data,
-    cb: simpleCallback(cb)
-  });
-};
-
 module.exports = commands;
