@@ -17,7 +17,7 @@
 [node-image]: https://img.shields.io/badge/node.js-%3E=_8-green.svg
 [node-url]: http://nodejs.org/download/
 
-Macaca WD Client is inspired by [admc/wd](//github.com/admc/wd), according to [W3C WebDriver Spec](//w3c.github.io/webdriver/webdriver-spec.html).
+Macaca WD Client is inspired by [admc/wd](//github.com/admc/wd), according to [W3C WebDriver](https://w3c.github.io/webdriver/).
 
 <!-- GITCONTRIBUTOR_START -->
 
