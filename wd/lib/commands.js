@@ -1536,9 +1536,9 @@ commands.clickElement = function(element) {
 commands.takeElementScreenshot = function(element) {
   var cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + element + '/screenshot'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: `/element/${element}/screenshot`,
+    cb: simpleCallback(cb),
   });
 };
 
