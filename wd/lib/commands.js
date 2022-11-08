@@ -1529,15 +1529,18 @@ commands.clickElement = function(element) {
 };
 
 /**
- * takeElementScreenshot(element, cb) -> cb(err)
+ * takeElementScreenshot(params, cb) -> cb(err)
  *
  * @jsonWire POST /session/:sessionId/element/:id/screenshot
  */
 commands.takeElementScreenshot = function(element) {
   var cb = findCallback(arguments);
+  var fargs = utils.varargs(arguments);
+  var opts = fargs[0];
   this._jsonWireCall({
     method: 'POST',
     relPath: `/element/${element}/screenshot`,
+    data: { opts },
     cb: simpleCallback(cb),
   });
 };
