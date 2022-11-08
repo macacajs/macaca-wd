@@ -74,7 +74,7 @@ commands.next = function() {
   const args = fargs.all[1] || [];
   this._jsonWireCall({
     method: 'POST',
-    absPath: 'next',
+    relPath: '/next',
     cb: callbackWithData(cb, this),
     data: {
       method,
