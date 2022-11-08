@@ -63,20 +63,23 @@ commands.sessions = function() {
 };
 
 /**
- * extra(cb) -> cb(err)
+ * next(cb) -> cb(err)
  *
- * @jsonWire POST /extra
+ * @jsonWire POST /next
  */
-commands.extra = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      funcName = fargs.all[0],
-      args = fargs.all[1] || [];
+commands.next = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const method = fargs.all[0];
+  const args = fargs.all[1] || [];
   this._jsonWireCall({
-    method: 'POST'
-    , absPath: 'extra'
-    , cb: callbackWithData(cb, this)
-    , data: { funcName, args }
+    method: 'POST',
+    absPath: 'next',
+    cb: callbackWithData(cb, this),
+    data: {
+      method,
+      args,
+    },
   });
 };
 

@@ -53,9 +53,9 @@ var driver = wd.promiseChainRemote(remoteConfig);
 
 before(function() {
   return driver.init({
-    platformName: 'desktop', // iOS, Android, Desktop, playwright
+    platformName: 'desktop', // iOS, Android, Desktop, Playwright
     browserName: 'chrome',   // chromium, firefox, webkit
-    app: path/to/app         // Only for mobile
+    app: 'path/to/app',      // Only for mobile
   });
 });
 
