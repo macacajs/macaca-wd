@@ -1629,16 +1629,15 @@ commands.clickElement = function(element) {
 /**
  * takeElementScreenshot(params, cb) -> cb(err)
  *
- * @jsonWire POST /session/:sessionId/element/:id/screenshot
+ * @jsonWire GET /session/:sessionId/element/:id/screenshot
  */
 commands.takeElementScreenshot = function(element) {
   const cb = findCallback(arguments);
   const fargs = utils.varargs(arguments);
-  const opts = fargs[0];
+  const params = fargs[0];
   this._jsonWireCall({
-    method: 'POST',
-    relPath: `/element/${element}/screenshot`,
-    data: { opts },
+    method: 'GET',
+    relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
     cb: simpleCallback(cb)
   });
 };
