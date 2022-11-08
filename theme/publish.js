@@ -419,7 +419,7 @@ function buildNav(members) {
       });
     });
     const otherGroup = members.globals.filter(item => !item.selected);
-    newGroupMap['others'] = otherGroup;
+    newGroupMap['Next APIs'] = otherGroup;
 
     Object.keys(newGroupMap).forEach(groupName => {
       globalNav += `<li><h4>${groupName}</h4><ul>`;

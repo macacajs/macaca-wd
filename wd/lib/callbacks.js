@@ -1,82 +1,82 @@
-var utils = require("./utils"),
-    newError = utils.newError,
-    getJsonwireError = utils.getJsonwireError,
-    isWebDriverException = utils.isWebDriverException;
+const utils = require('./utils');
+const newError = utils.newError;
+const getJsonwireError = utils.getJsonwireError;
+const isWebDriverException = utils.isWebDriverException;
 
-var cbStub = function() {};
+const cbStub = function() {};
 
 // just calls the callback when there is no result
 exports.simpleCallback = function(cb) {
   cb = cb || cbStub;
   return function(err, data) {
-    if(err) { return cb(err); }
-    if((data === '') || (data === 'OK')) {
+    if (err) { return cb(err); }
+    if ((data === '') || (data === 'OK')) {
       // expected behaviour when not returning JsonWire response
       cb(null);
     } else {
       // looking for JsonWire response
-      var jsonWireRes;
-      try{jsonWireRes = JSON.parse(data);}catch(ign){}
+      let jsonWireRes;
+      try {jsonWireRes = JSON.parse(data);} catch (ign) {}
       if (jsonWireRes && (jsonWireRes.status !== undefined)) {
         // valid JsonWire response
-        if(jsonWireRes.status === 0) {
+        if (jsonWireRes.status === 0) {
           cb(null);
         } else {
-          var jsonwireError  = getJsonwireError(jsonWireRes.status);
-          var errorMessage = 'Error response status: ' + jsonWireRes.status;
-          if(jsonwireError) {
-            errorMessage += ", " + jsonwireError.summary + " - " + jsonwireError.detail;
+          const jsonwireError = getJsonwireError(jsonWireRes.status);
+          let errorMessage = 'Error response status: ' + jsonWireRes.status;
+          if (jsonwireError) {
+            errorMessage += ', ' + jsonwireError.summary + ' - ' + jsonwireError.detail;
           }
-          if(jsonWireRes.value && jsonWireRes.value.message) {
-            errorMessage += " Selenium error: " + jsonWireRes.value.message;
+          if (jsonWireRes.value && jsonWireRes.value.message) {
+            errorMessage += ' Selenium error: ' + jsonWireRes.value.message;
           }
-          var error = newError(
-            { message: errorMessage
-              , status:jsonWireRes.status
-              , cause:jsonWireRes });
-          if(jsonwireError){ error['jsonwire-error'] = jsonwireError; }
+          const error = newError(
+            { message: errorMessage,
+              status: jsonWireRes.status,
+              cause: jsonWireRes });
+          if (jsonwireError) { error['jsonwire-error'] = jsonwireError; }
           cb(error);
         }
       } else {
         // something wrong
         cb(newError(
-          {message:'Unexpected data in simpleCallback.', data: jsonWireRes || data}) );
+          {message: 'Unexpected data in simpleCallback.', data: jsonWireRes || data}));
       }
     }
   };
 };
 
 // base for all callback handling data
-var callbackWithDataBase = function(cb) {
+const callbackWithDataBase = function(cb) {
   cb = cb || cbStub;
   return function(err, data) {
-    if(err) { return cb(err); }
-    var obj,
-        alertText;
+    if (err) { return cb(err); }
+    let obj,
+      alertText;
     try {
       obj = JSON.parse(data);
     } catch (e) {
-      return cb(newError({message:'Not JSON response', data:data}));
+      return cb(newError({message: 'Not JSON response', data: data}));
     }
     try {
-        alertText = obj.value.alert.text;
+      alertText = obj.value.alert.text;
     } catch (e) {
-        alertText = '';
+      alertText = '';
     }
     if (obj.status > 0) {
-      var jsonwireError  = getJsonwireError(obj.status);
-      var errorMessage = 'Error response status: ' + obj.status + ", " +alertText;
-      if(jsonwireError) {
-        errorMessage += ", " + jsonwireError.summary + " - " + jsonwireError.detail;
+      const jsonwireError = getJsonwireError(obj.status);
+      let errorMessage = 'Error response status: ' + obj.status + ', ' + alertText;
+      if (jsonwireError) {
+        errorMessage += ', ' + jsonwireError.summary + ' - ' + jsonwireError.detail;
       }
-      if(obj.value && obj.value.message) {
-        errorMessage += " Selenium error: " + obj.value.message;
+      if (obj.value && obj.value.message) {
+        errorMessage += ' Selenium error: ' + obj.value.message;
       }
-      var error = newError(
-        { message: errorMessage
-          , status:obj.status
-          , cause:obj });
-      if(jsonwireError){ error['jsonwire-error'] = jsonwireError; }
+      const error = newError(
+        { message: errorMessage,
+          status: obj.status,
+          cause: obj });
+      if (jsonwireError) { error['jsonwire-error'] = jsonwireError; }
       cb(error);
     } else {
       cb(null, obj);
@@ -87,20 +87,22 @@ var callbackWithDataBase = function(cb) {
 // retrieves field value from result
 exports.callbackWithData = function(cb, browser) {
   cb = cb || cbStub;
-  return callbackWithDataBase(function(err,obj) {
-    if(err) {return cb(err);}
-    if(isWebDriverException(obj.value)) {return cb(newError(
-      {message:obj.value.message,cause:obj.value}));}
+  return callbackWithDataBase(function(err, obj) {
+    if (err) {return cb(err);}
+    if (isWebDriverException(obj.value)) {
+      return cb(newError(
+        {message: obj.value.message, cause: obj.value}));
+    }
     // we might get a WebElement back as part of executeScript, so let's
     // check to make sure we convert if necessary to element objects
-    if(obj.value && typeof obj.value.ELEMENT !== "undefined") {
-        obj.value = browser.newElement(obj.value.ELEMENT);
-    } else if (Object.prototype.toString.call(obj.value) === "[object Array]") {
-        for (var i = 0; i < obj.value.length; i++) {
-            if (obj.value[i] && typeof obj.value[i].ELEMENT !== "undefined") {
-                obj.value[i] = browser.newElement(obj.value[i].ELEMENT);
-            }
+    if (obj.value && typeof obj.value.ELEMENT !== 'undefined') {
+      obj.value = browser.newElement(obj.value.ELEMENT);
+    } else if (Object.prototype.toString.call(obj.value) === '[object Array]') {
+      for (let i = 0; i < obj.value.length; i++) {
+        if (obj.value[i] && typeof obj.value[i].ELEMENT !== 'undefined') {
+          obj.value[i] = browser.newElement(obj.value[i].ELEMENT);
         }
+      }
     }
     cb(null, obj.value);
   });
@@ -110,14 +112,16 @@ exports.callbackWithData = function(cb, browser) {
 exports.elementCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if(err) {return cb(err);}
-    if(isWebDriverException(obj.value)) {return cb(newError(
-      {message:obj.value.message,cause:obj.value}));}
+    if (err) {return cb(err);}
+    if (isWebDriverException(obj.value)) {
+      return cb(newError(
+        {message: obj.value.message, cause: obj.value}));
+    }
     if (!obj.value.ELEMENT) {
       cb(newError(
-        {message:"no ELEMENT in response value field.",cause:obj}));
+        {message: 'no ELEMENT in response value field.', cause: obj}));
     } else {
-      var el = browser.newElement(obj.value.ELEMENT);
+      const el = browser.newElement(obj.value.ELEMENT);
       cb(null, el);
     }
   });
@@ -127,14 +131,19 @@ exports.elementCallback = function(cb, browser) {
 exports.elementsCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if(err) {return cb(err);}
-    if(isWebDriverException(obj.value)) {return cb(newError(
-      {message:obj.value.message,cause:obj.value}));}
-    if (!(obj.value instanceof Array)) {return cb(newError(
-      {message:"Response value field is not an Array.", cause:obj.value}));}
-    var i, elements = [];
+    if (err) {return cb(err);}
+    if (isWebDriverException(obj.value)) {
+      return cb(newError(
+        {message: obj.value.message, cause: obj.value}));
+    }
+    if (!(obj.value instanceof Array)) {
+      return cb(newError(
+        {message: 'Response value field is not an Array.', cause: obj.value}));
+    }
+    let i;
+    const elements = [];
     for (i = 0; i < obj.value.length; i++) {
-      var el = browser.newElement(obj.value[i].ELEMENT);
+      const el = browser.newElement(obj.value[i].ELEMENT);
       elements.push(el);
     }
     cb(null, elements);
@@ -145,15 +154,18 @@ exports.elementsCallback = function(cb, browser) {
 exports.elementOrElementsCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if(err) {return cb(err);}
-    if(isWebDriverException(obj.value)) {return cb(newError(
-      {message:obj.value.message,cause:obj.value}));}
-    var el;
-    if (obj.value.ELEMENT){
+    if (err) {return cb(err);}
+    if (isWebDriverException(obj.value)) {
+      return cb(newError(
+        {message: obj.value.message, cause: obj.value}));
+    }
+    let el;
+    if (obj.value.ELEMENT) {
       el = browser.newElement(obj.value.ELEMENT);
       cb(null, el);
-    } else if (obj.value instanceof Array){
-      var i, elements = [];
+    } else if (obj.value instanceof Array) {
+      let i;
+      const elements = [];
       for (i = 0; i < obj.value.length; i++) {
         el = browser.newElement(obj.value[i].ELEMENT);
         elements.push(el);
@@ -161,7 +173,7 @@ exports.elementOrElementsCallback = function(cb, browser) {
       cb(null, elements);
     } else {
       cb(newError(
-        {message:"no element or element array in response value field.",cause:obj}));
+        {message: 'no element or element array in response value field.', cause: obj}));
     }
   });
 };

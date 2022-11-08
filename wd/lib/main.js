@@ -1,52 +1,50 @@
-var __slice = Array.prototype.slice,
-    url = require('url'),
-    SPECIAL_KEYS = require('webdriver-keycode'),
-    Webdriver = require('./webdriver'),
-    Element = require('./element'),
-    utils = require('./utils'),
-    deprecator = utils.deprecator,
-    config = require('./config'),
-    _ = require("./lodash"),
-    Q = require('q'),
-    actions = require('./actions');
+const __slice = Array.prototype.slice;
+const url = require('url');
+const SPECIAL_KEYS = require('webdriver-keycode');
+let Webdriver = require('./webdriver');
+let Element = require('./element');
+const utils = require('./utils');
+const deprecator = utils.deprecator;
+const config = require('./config');
+const _ = require('./lodash');
+const Q = require('q');
+const actions = require('./actions');
 
-function buildConfigUrl(remoteWdConfig)
-{
-  var configUrl = _(remoteWdConfig).clone();
+function buildConfigUrl(remoteWdConfig) {
+  const configUrl = _(remoteWdConfig).clone();
 
   // for backward compatibility
-  if( configUrl.host && (configUrl.host.indexOf(':') < 0) && configUrl.port )
-  {
+  if (configUrl.host && (configUrl.host.indexOf(':') < 0) && configUrl.port) {
     configUrl.hostname = configUrl.host;
     delete configUrl.host;
   }
 
   // for backward compatibility
-  if(configUrl.username){
+  if (configUrl.username) {
     configUrl.user = configUrl.username;
     delete configUrl.username;
   }
 
   // for backward compatibility
-  if(configUrl.accessKey){
+  if (configUrl.accessKey) {
     configUrl.pwd = configUrl.accessKey;
     delete configUrl.accessKey;
   }
 
   // for backward compatibility
-  if(configUrl.https){
+  if (configUrl.https) {
     configUrl.protocol = 'https:';
     delete configUrl.https;
   }
 
   // for backward compatibility
-  if(configUrl.path){
+  if (configUrl.path) {
     configUrl.pathname = configUrl.path;
     delete configUrl.path;
   }
 
   // setting auth from user/password
-  if(configUrl.user && configUrl.pwd){
+  if (configUrl.user && configUrl.pwd) {
     configUrl.auth = configUrl.user + ':' + configUrl.pwd;
     delete configUrl.user;
     delete configUrl.pwd;
@@ -60,7 +58,7 @@ function buildConfigUrl(remoteWdConfig)
   });
 
   // strip any trailing slashes from pathname
-  var parsed = url.parse(url.format(configUrl), true);
+  const parsed = url.parse(url.format(configUrl), true);
   if (parsed.pathname[parsed.pathname.length - 1] === '/') {
     parsed.pathname = parsed.pathname.slice(0, parsed.pathname.length - 1);
   }
@@ -68,30 +66,30 @@ function buildConfigUrl(remoteWdConfig)
 }
 
 // parses server parameters
-var parseRemoteWdConfig = function(args) {
-  var config;
+const parseRemoteWdConfig = function(args) {
+  let config;
   if ((typeof args[0]) === 'object') {
-    if(args[0].href && args[0].format){
+    if (args[0].href && args[0].format) {
       // was constructed with url.parse, so we don't modify it
       config = args[0];
     } else {
-      config = buildConfigUrl( args[0] );
+      config = buildConfigUrl(args[0]);
     }
-  } else if ((typeof args[0]) === 'string' && (args[0].match(/^https?:\/\//)))  {
+  } else if ((typeof args[0]) === 'string' && (args[0].match(/^https?:\/\//))) {
     config = url.parse(args[0]);
   } else {
-    config = buildConfigUrl( {
+    config = buildConfigUrl({
       hostname: args[0],
       port: args[1],
       user: args[2],
       pwd: args[3]
-    } );
+    });
   }
 
   return config;
 };
 
-var PromiseWebdriver, PromiseElement, PromiseChainWebdriver, PromiseChainElement;
+let PromiseWebdriver, PromiseElement, PromiseChainWebdriver, PromiseChainElement;
 
 // Creates the Webdriver object
 // server parameters can be passed in 4 ways
@@ -103,24 +101,24 @@ var PromiseWebdriver, PromiseElement, PromiseChainWebdriver, PromiseChainElement
 // If it is a valid type it will be detected even if the other arguments
 // are ommited. Valide types are: `remote`, `promise` and `promiseChain`.
 function remote() {
-  var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var driverProtos = {
+  const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+  const driverProtos = {
     'async': Webdriver,
     'promise': PromiseWebdriver,
     'promiseChain': PromiseChainWebdriver
   };
-  var driverTypes = _(driverProtos).keys().value();
-  var driverType = driverTypes.indexOf(_(args).last())>0 ? args.pop() : 'async';
+  const driverTypes = _(driverProtos).keys().value();
+  const driverType = driverTypes.indexOf(_(args).last()) > 0 ? args.pop() : 'async';
 
-  var rwc = parseRemoteWdConfig(args);
+  const rwc = parseRemoteWdConfig(args);
   return new (driverProtos[driverType])(rwc);
 }
 
 function wrap() {
-  var promiseProtos = require('./promise-webdriver')(Webdriver, Element, false);
+  const promiseProtos = require('./promise-webdriver')(Webdriver, Element, false);
   PromiseWebdriver = promiseProtos.PromiseWebdriver;
   PromiseElement = promiseProtos.PromiseElement;
-  var promiseChainProtos = require('./promise-webdriver')(Webdriver, Element, true);
+  const promiseChainProtos = require('./promise-webdriver')(Webdriver, Element, true);
   PromiseChainWebdriver = promiseChainProtos.PromiseWebdriver;
   PromiseChainElement = promiseChainProtos.PromiseElement;
 }
@@ -128,9 +126,9 @@ function wrap() {
 // todo: allow adding element methods
 
 function addPromiseChainMethod(name, method) {
-  var wrappedMethod = function() {
-    var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    var promise = new Q(method.apply(this, args));
+  const wrappedMethod = function() {
+    const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+    const promise = new Q(method.apply(this, args));
     this._enrich(promise);
     return promise;
   };
@@ -138,9 +136,9 @@ function addPromiseChainMethod(name, method) {
 }
 
 function addElementPromiseChainMethod(name, method) {
-  var wrappedMethod = function() {
-    var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    var promise = new Q(method.apply(this, args));
+  const wrappedMethod = function() {
+    const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+    const promise = new Q(method.apply(this, args));
     this._enrich(promise);
     return promise;
   };
@@ -148,8 +146,8 @@ function addElementPromiseChainMethod(name, method) {
 }
 
 function addPromiseMethod(name, method) {
-  var wrappedMethod = function() {
-    var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  const wrappedMethod = function() {
+    const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
     return new Q(method.apply(this, args));
   };
   PromiseWebdriver.prototype[name] = wrappedMethod;
@@ -157,8 +155,8 @@ function addPromiseMethod(name, method) {
 }
 
 function addElementPromiseMethod(name, method) {
-  var wrappedMethod = function() {
-    var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  const wrappedMethod = function() {
+    const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
     return new Q(method.apply(this, args));
   };
   PromiseElement.prototype[name] = wrappedMethod;
@@ -172,7 +170,7 @@ function addAsyncMethod(name, method) {
 }
 
 function addElementAsyncMethod(name, method) {
-  Element.prototype[name] = method;  
+  Element.prototype[name] = method;
   PromiseElement.prototype[name] = PromiseWebdriver._wrapAsync(method);
   PromiseChainElement.prototype[name] = PromiseChainWebdriver._wrapAsync(method);
 }
@@ -185,22 +183,22 @@ function removeMethod(name) {
 
 // creates a webdriver object using the Q promise wrap not chained
 function asyncRemote() {
-  var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var rwc = parseRemoteWdConfig(args);
+  const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+  const rwc = parseRemoteWdConfig(args);
   return new Webdriver(rwc);
 }
 
 // creates a webdriver object using the Q promise wrap not chained
 function promiseRemote() {
-  var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var rwc = parseRemoteWdConfig(args);
+  const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+  const rwc = parseRemoteWdConfig(args);
   return new PromiseWebdriver(rwc);
 }
 
 // creates a webdriver object using the Q promise wrap chained
 function promiseChainRemote() {
-  var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var rwc = parseRemoteWdConfig(args);
+  const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
+  const rwc = parseRemoteWdConfig(args);
   return new PromiseChainWebdriver(rwc);
 }
 
@@ -228,7 +226,7 @@ module.exports = {
   // Actualizes promise wrappers
   rewrap: function() {
     deprecator.warn('rewrap',
-    'rewrap has been deprecated, use addAsyncMethod instead.');
+      'rewrap has been deprecated, use addAsyncMethod instead.');
     wrap();
   },
 

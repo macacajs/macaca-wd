@@ -1,16 +1,16 @@
-//Element object
-//Wrapper around browser methods
-var _ = require("./lodash")
-  , utils = require("./utils.js")
-  , deprecator = utils.deprecator
-  , fs = require("fs"),
-    callbacks = require("./callbacks"),
-    elementCallback = callbacks.elementCallback,
-    elementsCallback = callbacks.elementsCallback,
-    simpleCallback = callbacks.simpleCallback,
-    commands = require('./commands');
+// Element object
+// Wrapper around browser methods
+const _ = require('./lodash');
+const utils = require('./utils.js');
+const deprecator = utils.deprecator;
+const fs = require('fs');
+const callbacks = require('./callbacks');
+const elementCallback = callbacks.elementCallback;
+const elementsCallback = callbacks.elementsCallback;
+const simpleCallback = callbacks.simpleCallback;
+const commands = require('./commands');
 
-var elementCommands = {};
+const elementCommands = {};
 
 /**
  * element.type(keys, cb) -> cb(err)
@@ -32,9 +32,9 @@ elementCommands.keys = function (keys, cb) {
 
 function _isLocalFile(path, cb) {
   fs.exists(path, function (exists) {
-    if(exists) {
+    if (exists) {
       fs.lstat(path, function (err, stats) {
-       cb(err, stats.isFile());
+        cb(err, stats.isFile());
       });
     } else { cb(null, false); }
   });
@@ -46,22 +46,22 @@ function _isLocalFile(path, cb) {
  * element.sendKeys(keys, cb) -> cb(err)
  */
 elementCommands.sendKeys = function (keys, cb) {
-  var _this = this;
+  const _this = this;
   if (!(keys instanceof Array)) {keys = [keys];}
 
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
-    if (typeof key !== "string") {
+    if (typeof key !== 'string') {
       keys[idx] = key.toString();
     }
   });
 
-  var path = keys.join('');
+  const path = keys.join('');
   _isLocalFile(path, function (err, isLocalFile) {
-    if(err){ return cb(err); }
-    if(isLocalFile) {
+    if (err) { return cb(err); }
+    if (isLocalFile) {
       commands.uploadFile.apply(_this.browser, [path, function (err, distantFilePath) {
-        if(err){ return cb(err); }
+        if (err) { return cb(err); }
         return commands.type.apply(_this.browser, [_this, distantFilePath, cb]);
       }]);
     } else {
@@ -76,12 +76,12 @@ elementCommands.sendKeys = function (keys, cb) {
  * element.setText(keys, cb) -> cb(err)
  */
 elementCommands.setText = function (keys, cb) {
-  var _this = this;
+  const _this = this;
   if (!(keys instanceof Array)) {keys = [keys];}
 
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
-    if (typeof key !== "string") {
+    if (typeof key !== 'string') {
       keys[idx] = key.toString();
     }
   });
@@ -127,7 +127,7 @@ elementCommands.tap = function (cb) {
  */
 elementCommands.doubleclick = function(cb) {
   return commands.moveTo.apply(this.browser, [this, function(err) {
-    if(err) { return cb(err); }
+    if (err) { return cb(err); }
     commands.doubleclick.apply(this.browser, [cb]);
   }.bind(this)]);
 };
@@ -141,11 +141,11 @@ elementCommands.doubleClick = elementCommands.doubleclick;
  * @jsonWire POST /session/:sessionId/moveto
  */
 elementCommands.moveTo = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      xoffset = fargs.all[0],
-      yoffset = fargs.all[1];
-  commands.moveTo.apply(this.browser, [this,xoffset, yoffset, cb]);
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const xoffset = fargs.all[0];
+  const yoffset = fargs.all[1];
+  commands.moveTo.apply(this.browser, [this, xoffset, yoffset, cb]);
 };
 
 /**
@@ -156,7 +156,6 @@ elementCommands.moveTo = function() {
 elementCommands.flick = function (xoffset, yoffset, speed, cb) {
   commands.flick.apply(this.browser, [this.value, xoffset, yoffset, speed, cb]);
 };
-
 
 /**
  * element.text(cb) -> cb(err, text)
@@ -197,7 +196,6 @@ elementCommands.getAttribute = function(name, cb) {
 elementCommands.getProperty = function(name, cb) {
   commands.getProperty.apply(this.browser, [this, name, cb]);
 };
-
 
 /**
  * element.getRect(cb) -> cb(err, value)
@@ -376,13 +374,13 @@ _.each(utils.elementFuncTypes, function(type) {
  * @docOrder 1
  */
 elementCommands.element = function(using, value, cb) {
-    var _this = this;
-    this.browser._jsonWireCall({
-      method: 'POST'
-      , relPath: '/element/' + _this.value + '/element'
-      , data: {using: using, value: value}
-      , cb: elementCallback(cb, this.browser)
-    });
+  const _this = this;
+  this.browser._jsonWireCall({
+    method: 'POST',
+    relPath: '/element/' + _this.value + '/element',
+    data: {using: using, value: value},
+    cb: elementCallback(cb, this.browser)
+  });
 };
 
 /**
@@ -392,13 +390,13 @@ elementCommands.element = function(using, value, cb) {
  * @docOrder 1
  */
 elementCommands.elements = function(using, value, cb) {
-    var _this = this;
-    this.browser._jsonWireCall({
-      method: 'POST'
-      , relPath: '/element/' + _this.value + '/elements'
-      , data: {using: using, value: value}
-      , cb: elementsCallback(cb, this.browser)
-    });
+  const _this = this;
+  this.browser._jsonWireCall({
+    method: 'POST',
+    relPath: '/element/' + _this.value + '/elements',
+    data: {using: using, value: value},
+    cb: elementsCallback(cb, this.browser)
+  });
 };
 
 /**
@@ -416,14 +414,14 @@ elementCommands.equals = function(other, cb) {
  */
 elementCommands.sleep = function(ms, cb) {
   cb = cb || function() {};
-  setTimeout(cb , ms);
+  setTimeout(cb, ms);
 };
 
 /**
  * element.noop(cb) -> cb(err)
  */
 elementCommands.noop = function(cb) {
-  if(cb) { cb(); }
+  if (cb) { cb(); }
 };
 
 /**
@@ -443,17 +441,16 @@ elementCommands.performMultiAction = function (actions, cb) {
  * @jsonWire POST /session/:sessionId/appium/device/rotate
  */
 elementCommands.rotate = function(opts, cb) {
-    commands.rotateDevice.apply(this.browser, [this, opts, cb]);
+  commands.rotateDevice.apply(this.browser, [this, opts, cb]);
 };
 
 elementCommands.touch = function() {
-  var _this = this;
-  var cb = utils.findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || {},
-      actions = [];
+  const _this = this;
+  const cb = utils.findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const code = fargs.all[0];
+  const args = fargs.all[1] || {};
+  let actions = [];
   if (Array.isArray(code)) {
     actions = code.map(function(el) {
       el['element'] = _this.value;
@@ -464,7 +461,7 @@ elementCommands.touch = function() {
     args['element'] = _this.value;
     actions = [args];
   } else {
-    cb(new Error('Touch function only accept a action name or a list of actions.'))
+    cb(new Error('Touch function only accept a action name or a list of actions.'));
   }
 
   this.browser._jsonWireCall({
@@ -481,7 +478,7 @@ elementCommands.touch = function() {
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 elementCommands.setImmediateValueInApp = function(value, cb) {
-    commands.setImmediateValueInApp.apply(this.browser, [this, value, cb]);
+  commands.setImmediateValueInApp.apply(this.browser, [this, value, cb]);
 };
 /**
  * element.setImmediateValue(value, cb) -> cb(err)

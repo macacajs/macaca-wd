@@ -1,12 +1,15 @@
 /* jshint evil:true */
-var args = Array.prototype.slice.call(arguments, 0);
-var condExpr = args[0], timeout = args[1],
-    poll = args[2], cb = args[3];
-var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
-  var res;
+const args = Array.prototype.slice.call(arguments, 0);
+const condExpr = args[0];
+const timeout = args[1];
+const poll = args[2];
+const cb = args[3];
+const waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
+  let res;
   if ((new Date().getTime()) < limit) {
+    // eslint-disable-next-line no-eval
     res = eval(conditionExpr);
-    if (res === true ) {
+    if (res === true) {
       cb(res);
     } else {
       setTimeout(function() {
@@ -14,9 +17,11 @@ var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
       }, poll);
     }
   } else {
+    // eslint-disable-next-line no-eval
     res = eval(conditionExpr);
     return cb(res);
   }
 };
-var limit = (new Date().getTime()) + timeout;
+
+const limit = (new Date().getTime()) + timeout;
 waitForConditionImpl(condExpr, limit, poll, cb);

@@ -1,6 +1,6 @@
-var _ = require('./lodash');
+const _ = require('./lodash');
 
-var httpConfig = {
+const httpConfig = {
   timeout: undefined,
   retries: 3,
   retryDelay: 15,
@@ -10,13 +10,13 @@ var httpConfig = {
 
 function _configureHttp(httpConfig, opts) {
   _(_.keys(httpConfig)).intersection(_.keys(opts)).each(function(key) {
-    switch(key) {
-      case 'timeout':
-        if(opts[key] === 'default') { opts[key] = undefined; }
+    switch (key) {
+    case 'timeout':
+      if (opts[key] === 'default') { opts[key] = undefined; }
       break;
-      case 'retries':
-        if(opts[key] === 'always') { opts[key] = 0; }
-        if(opts[key] === 'never') { opts[key] = -1; }
+    case 'retries':
+      if (opts[key] === 'always') { opts[key] = 0; }
+      if (opts[key] === 'never') { opts[key] = -1; }
       break;
     }
     httpConfig[key] = opts[key];

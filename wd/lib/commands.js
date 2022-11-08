@@ -1,26 +1,27 @@
-var fs = require("fs"),
-    url = require('url'),
-    path = require('path'),
-    tmp = require('./tmp'),
-    _ = require("./lodash"),
-    mkdirp = require("mkdirp")
-    async = require('async'),
-    __slice = Array.prototype.slice,
-    config = require('./config'),
-    callbacks = require("./callbacks"),
-    callbackWithData = callbacks.callbackWithData,
-    simpleCallback = callbacks.simpleCallback,
-    elementCallback = callbacks.elementCallback,
-    elementsCallback = callbacks.elementsCallback,
-    elementOrElementsCallback = callbacks.elementOrElementsCallback,
-    utils = require("./utils"),
-    findCallback = utils.findCallback,
-    codeToString = utils.codeToString,
-    deprecator = utils.deprecator,
-    asserters = require("./asserters"),
-    Asserter = asserters.Asserter;
+const fs = require('fs');
+const url = require('url');
+const path = require('path');
+const tmp = require('./tmp');
+const _ = require('./lodash');
+const mkdirp = require('mkdirp');
+const async = require('async');
+const __slice = Array.prototype.slice;
+const config = require('./config');
 
-var commands = {};
+const callbacks = require('./callbacks');
+const callbackWithData = callbacks.callbackWithData;
+const simpleCallback = callbacks.simpleCallback;
+const elementCallback = callbacks.elementCallback;
+const elementsCallback = callbacks.elementsCallback;
+const elementOrElementsCallback = callbacks.elementOrElementsCallback;
+const utils = require('./utils');
+const findCallback = utils.findCallback;
+const codeToString = utils.codeToString;
+const deprecator = utils.deprecator;
+const asserters = require('./asserters');
+const Asserter = asserters.Asserter;
+
+const commands = {};
 
 /**
  * init(desired, cb) -> cb(err, sessionID, capabilities)
@@ -30,7 +31,7 @@ var commands = {};
  * @jsonWire POST /session
  */
 commands.init = function() {
-  var args = __slice.call(arguments, 0);
+  const args = __slice.call(arguments, 0);
   this._init.apply(this, args);
 };
 
@@ -40,11 +41,11 @@ commands.init = function() {
  * @jsonWire GET /status
  */
 commands.status = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , absPath: 'status'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    absPath: 'status',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -54,11 +55,11 @@ commands.status = function() {
  * @jsonWire GET /sessions
  */
 commands.sessions = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , absPath: 'sessions'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    absPath: 'sessions',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -78,8 +79,8 @@ commands.next = function() {
     cb: callbackWithData(cb, this),
     data: {
       method,
-      args,
-    },
+      args
+    }
   });
 };
 
@@ -89,8 +90,10 @@ commands.next = function() {
  * getSessionId()
  */
 commands.getSessionId = function() {
-  var cb = findCallback(arguments);
-  if(cb) { cb(null, this.sessionID); }
+  const cb = findCallback(arguments);
+  if (cb) {
+    cb(null, this.sessionID);
+  }
   return this.sessionID;
 };
 
@@ -105,22 +108,22 @@ commands.getSessionID = commands.getSessionId;
  * @docOrder 1
  */
 commands.execute = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || [];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  let code = fargs.all[0];
+  const args = fargs.all[1] || [];
   code = codeToString(code);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/execute'
-    , cb: callbackWithData(cb, this)
-    , data: {script: code, args: args}
+    method: 'POST',
+    relPath: '/execute',
+    cb: callbackWithData(cb, this),
+    data: { script: code, args: args }
   });
 };
 
 // script to be executed in browser
-var safeExecuteJsScript =
-  utils.inlineJs(fs.readFileSync( __dirname + "/../browser-scripts/safe-execute.js", 'utf8'));
+const safeExecuteJsScript =
+    utils.inlineJs(fs.readFileSync(__dirname + '/../browser-scripts/safe-execute.js', 'utf8'));
 
 /**
  * Safely execute script within an eval block, always returning:
@@ -132,17 +135,17 @@ var safeExecuteJsScript =
  * @docOrder 2
  */
 commands.safeExecute = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || [];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  let code = fargs.all[0];
+  const args = fargs.all[1] || [];
 
   code = codeToString(code);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/execute'
-    , cb: callbackWithData(cb, this)
-    , data: {script: safeExecuteJsScript, args: [code, args]}
+    method: 'POST',
+    relPath: '/execute',
+    cb: callbackWithData(cb, this),
+    data: { script: safeExecuteJsScript, args: [ code, args ] }
   });
 };
 
@@ -155,13 +158,15 @@ commands.safeExecute = function() {
 (function() {
   // jshint evil: true
   commands.eval = function(code) {
-    var cb = findCallback(arguments);
+    const cb = findCallback(arguments);
     code = codeToString(code);
-    code = "return " + code + ";";
-    commands.execute.apply(this, [code, function(err, res) {
-      if(err) {return cb(err);}
+    code = 'return ' + code + ';';
+    commands.execute.apply(this, [ code, function(err, res) {
+      if (err) {
+        return cb(err);
+      }
       cb(null, res);
-    }]);
+    } ]);
   };
 })();
 
@@ -172,12 +177,14 @@ commands.safeExecute = function() {
  * @jsonWire POST /session/:sessionId/execute
  */
 commands.safeEval = function(code) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   code = codeToString(code);
-  commands.safeExecute.apply(this, [code, function(err, res) {
-    if(err) {return cb(err);}
+  commands.safeExecute.apply(this, [ code, function(err, res) {
+    if (err) {
+      return cb(err);
+    }
     cb(null, res);
-  }]);
+  } ]);
 };
 
 /**
@@ -187,24 +194,24 @@ commands.safeEval = function(code) {
  *
  * @jsonWire POST /session/:sessionId/execute_async
  */
-  commands.executeAsync = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || [];
+commands.executeAsync = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const code = fargs.all[0];
+  const args = fargs.all[1] || [];
 
   code = codeToString(code);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/execute_async'
-    , cb: callbackWithData(cb, this)
-    , data: {script: code, args: args}
+    method: 'POST',
+    relPath: '/execute_async',
+    cb: callbackWithData(cb, this),
+    data: { script: code, args: args }
   });
 };
 
 // script to be executed in browser
-var safeExecuteAsyncJsScript =
-  utils.inlineJs(fs.readFileSync( __dirname + "/../browser-scripts/safe-execute-async.js", 'utf8'));
+const safeExecuteAsyncJsScript =
+    utils.inlineJs(fs.readFileSync(__dirname + '/../browser-scripts/safe-execute-async.js', 'utf8'));
 
 /**
  * Safely execute async script within an eval block, always returning:
@@ -215,17 +222,17 @@ var safeExecuteAsyncJsScript =
  * @jsonWire POST /session/:sessionId/execute_async
  */
 commands.safeExecuteAsync = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || [];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  let code = fargs.all[0];
+  const args = fargs.all[1] || [];
 
   code = codeToString(code);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/execute_async'
-    , cb: callbackWithData(cb, this)
-    , data: {script: safeExecuteAsyncJsScript , args: [code, args]}
+    method: 'POST',
+    relPath: '/execute_async',
+    cb: callbackWithData(cb, this),
+    data: { script: safeExecuteAsyncJsScript, args: [ code, args ] }
   });
 };
 
@@ -236,19 +243,19 @@ commands.safeExecuteAsync = function() {
  * @jsonWire GET /sessions
  */
 commands.altSessionCapabilities = function() {
-  var cb = findCallback(arguments);
-  var _this = this;
+  const cb = findCallback(arguments);
+  const _this = this;
   // looking for the current session
-  commands.sessions.apply(this, [function(err, sessions) {
-    if(err) {
+  commands.sessions.apply(this, [ function(err, sessions) {
+    if (err) {
       cb(err, sessions);
     } else {
       sessions = sessions.filter(function(session) {
         return session.id === _this.sessionID;
       });
-      cb(null, sessions[0]? sessions[0].capabilities : 0);
+      cb(null, sessions[0] ? sessions[0].capabilities : 0);
     }
-  }]);
+  } ]);
 };
 
 /**
@@ -257,11 +264,11 @@ commands.altSessionCapabilities = function() {
  * @jsonWire GET /session/:sessionId
  */
 commands.sessionCapabilities = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
+    method: 'GET',
     // default url
-    , cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -274,14 +281,14 @@ commands.sessionCapabilities = function() {
  * or by getting the last handle returned by the windowHandles method.
  */
 commands.newWindow = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      url =  fargs.all[0],
-      name = fargs.all[1];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const url = fargs.all[0];
+  const name = fargs.all[1];
   commands.execute.apply(
     this,
-    [ "var url=arguments[0], name=arguments[1]; window.open(url, name);",
-      [url,name] , cb]);
+    [ 'const url=arguments[0], name=arguments[1]; window.open(url, name);',
+      [ url, name ], cb ]);
 };
 
 /**
@@ -290,11 +297,11 @@ commands.newWindow = function() {
  * @jsonWire DELETE /session/:sessionId/window
  */
 commands.close = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'DELETE'
-    , relPath: '/window'
-    , cb: simpleCallback(cb)
+    method: 'DELETE',
+    relPath: '/window',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -304,11 +311,11 @@ commands.close = function() {
  * @jsonWire GET /session/:sessionId/context
  */
 commands.currentContext = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/context'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/context',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -318,12 +325,12 @@ commands.currentContext = function() {
  * @jsonWire POST /session/:sessionId/context
  */
 commands.context = function(contextRef) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/context'
-    , cb: simpleCallback(cb)
-    , data: { name: contextRef }
+    method: 'POST',
+    relPath: '/context',
+    cb: simpleCallback(cb),
+    data: { name: contextRef }
   });
 };
 
@@ -333,11 +340,11 @@ commands.context = function(contextRef) {
  * @jsonWire GET /session/:sessionId/contexts
  */
 commands.contexts = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/contexts'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/contexts',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -347,12 +354,12 @@ commands.contexts = function() {
  * @jsonWire POST /session/:sessionId/window
  */
 commands.window = function(windowRef) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/window'
-    , cb: simpleCallback(cb)
-    , data: { name: windowRef }
+    method: 'POST',
+    relPath: '/window',
+    cb: simpleCallback(cb),
+    data: { name: windowRef }
   });
 };
 
@@ -362,21 +369,21 @@ commands.window = function(windowRef) {
  * @jsonWire POST /session/:sessionId/frame
  */
 commands.frame = function(frameRef) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   // avoid using this, Webdriver seems very buggy
   // doesn't work at all with chromedriver
-  if(typeof(frameRef) === 'function'){
+  if (typeof (frameRef) === 'function') {
     frameRef = null;
   }
-  if(frameRef !== null && typeof(frameRef.value) !== "undefined"){
+  if (frameRef !== null && typeof (frameRef.value) !== 'undefined') {
     // we have an element object
-    frameRef = {ELEMENT: frameRef.value};
+    frameRef = { ELEMENT: frameRef.value };
   }
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/frame'
-    , cb: simpleCallback(cb)
-    , data: { id: frameRef }
+    method: 'POST',
+    relPath: '/frame',
+    cb: simpleCallback(cb),
+    data: { id: frameRef }
   });
 };
 
@@ -384,9 +391,9 @@ commands.frame = function(frameRef) {
  * windowName(cb) -> cb(err, name)
  */
 commands.windowName = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   // jshint evil: true
-  commands.eval.apply(this, ["window.name", cb]);
+  commands.eval.apply(this, [ 'window.name', cb ]);
 };
 
 /**
@@ -395,11 +402,11 @@ commands.windowName = function() {
  * @jsonWire GET /session/:sessionId/window_handle
  */
 commands.windowHandle = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/window_handle'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/window_handle',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -409,11 +416,11 @@ commands.windowHandle = function() {
  * @jsonWire GET /session/:sessionId/window_handles
  */
 commands.windowHandles = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/window_handles'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/window_handles',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -423,11 +430,11 @@ commands.windowHandles = function() {
  * @jsonWire GET /session/:sessionId/location
  */
 commands.getGeoLocation = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/location'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/location',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -437,15 +444,15 @@ commands.getGeoLocation = function() {
  * @jsonWire POST /session/:sessionId/location
  */
 commands.setGeoLocation = function(lat, lon, alt) {
-  var cb = findCallback(arguments);
-  if(typeof(alt) === 'function'){
+  const cb = findCallback(arguments);
+  if (typeof (alt) === 'function') {
     alt = 0;
   }
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/location'
-    , cb: simpleCallback(cb)
-    , data: {location :{latitude: lat, longitude: lon, altitude: alt }}
+    method: 'POST',
+    relPath: '/location',
+    cb: simpleCallback(cb),
+    data: { location: { latitude: lat, longitude: lon, altitude: alt } }
   });
 };
 
@@ -455,15 +462,14 @@ commands.setGeoLocation = function(lat, lon, alt) {
  * @jsonWire POST /session/:sessionId/touch/scroll
  */
 commands.scroll = function(xOffset, yOffset) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/touch/scroll'
-    , cb: simpleCallback(cb, this)
-    , data: { xoffset: xOffset, yoffset: yOffset }
+    method: 'POST',
+    relPath: '/touch/scroll',
+    cb: simpleCallback(cb, this),
+    data: { xoffset: xOffset, yoffset: yOffset }
   });
 };
-
 
 /**
  * logTypes(cb) -> cb(err, arrayOfLogTypes)
@@ -471,11 +477,11 @@ commands.scroll = function(xOffset, yOffset) {
  * @jsonWire GET /session/:sessionId/log/types
  */
 commands.logTypes = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/log/types'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/log/types',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -485,12 +491,12 @@ commands.logTypes = function() {
  * @jsonWire POST /session/:sessionId/log
  */
 commands.log = function(logType) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/log'
-    , cb: callbackWithData(cb, this)
-    , data: { type: logType }
+    method: 'POST',
+    relPath: '/log',
+    cb: callbackWithData(cb, this),
+    data: { type: logType }
   });
 };
 
@@ -501,12 +507,12 @@ commands.log = function(logType) {
  * @jsonWire DELETE /session/:sessionId
  */
 commands.quit = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'DELETE'
+    method: 'DELETE',
     // default url
-    , emit: {event: 'status', message: '\nEnding your web drivage..\n'}
-    , cb: simpleCallback(cb)
+    emit: { event: 'status', message: '\nEnding your web drivage..\n' },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -517,13 +523,15 @@ commands.quit = function() {
  * @jsonWire POST /session/:sessionId/url
  */
 commands.get = function(_url) {
-  if(this._httpConfig.baseUrl) {_url = url.resolve(this._httpConfig.baseUrl, _url); }
-  var cb = findCallback(arguments);
+  if (this._httpConfig.baseUrl) {
+    _url = url.resolve(this._httpConfig.baseUrl, _url);
+  }
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/url'
-    , data: {'url': _url}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/url',
+    data: { 'url': _url },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -533,123 +541,123 @@ commands.get = function(_url) {
  * @jsonWire POST /session/:sessionId/refresh
  */
 commands.refresh = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/refresh'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/refresh',
+    cb: simpleCallback(cb)
   });
 };
 
 /**
-  * maximize(handle, cb) -> cb(err)
-  *
-  * @jsonWire POST /session/:sessionId/window/:windowHandle/maximize
+ * maximize(handle, cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/window/:windowHandle/maximize
  */
 commands.maximize = function(win) {
-var cb = findCallback(arguments);
-if (typeof win === 'function') {
-  win = 'current';
-}
-this._jsonWireCall({
-	method: 'POST'
-	, relPath: '/window/'+ win + '/maximize'
-	, cb: simpleCallback(cb)
-	});
-};
-
-/**
-  * windowSize(handle, width, height, cb) -> cb(err)
-  *
-  * @jsonWire POST /session/:sessionId/window/:windowHandle/size
- */
-commands.windowSize = function(win, width, height) {
-var cb = findCallback(arguments);
-this._jsonWireCall({
-  method: 'POST'
-  , relPath: '/window/'+ win + '/size'
-  , data: {'width':width, 'height':height}
-  , cb: simpleCallback(cb)
+  const cb = findCallback(arguments);
+  if (typeof win === 'function') {
+    win = 'current';
+  }
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/window/' + win + '/maximize',
+    cb: simpleCallback(cb)
   });
 };
 
 /**
-  * getWindowSize(handle, cb) -> cb(err, size)
-  * getWindowSize(cb) -> cb(err, size)
-  * handle: window handle to get size (optional, default: 'current')
-  *
-  * @jsonWire GET /session/:sessionId/window/:windowHandle/size
+ * windowSize(handle, width, height, cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/window/:windowHandle/size
+ */
+commands.windowSize = function(win, width, height) {
+  const cb = findCallback(arguments);
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/window/' + win + '/size',
+    data: { 'width': width, 'height': height },
+    cb: simpleCallback(cb)
+  });
+};
+
+/**
+ * getWindowSize(handle, cb) -> cb(err, size)
+ * getWindowSize(cb) -> cb(err, size)
+ * handle: window handle to get size (optional, default: 'current')
+ *
+ * @jsonWire GET /session/:sessionId/window/:windowHandle/size
  */
 commands.getWindowSize = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      win = fargs.all[0] || 'current';
-this._jsonWireCall({
-	method: 'GET'
-	, relPath: '/window/'+ win + '/size'
-	, cb: callbackWithData(cb, this)
-	});
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const win = fargs.all[0] || 'current';
+  this._jsonWireCall({
+    method: 'GET',
+    relPath: '/window/' + win + '/size',
+    cb: callbackWithData(cb, this)
+  });
 };
 
 /**
-  * setWindowSize(width, height, handle, cb) -> cb(err)
-  * setWindowSize(width, height, cb) -> cb(err)
-  * width: width in pixels to set size to
-  * height: height in pixels to set size to
-  * handle: window handle to set size for (optional, default: 'current')
-  * @jsonWire POST /session/:sessionId/window/:windowHandle/size
+ * setWindowSize(width, height, handle, cb) -> cb(err)
+ * setWindowSize(width, height, cb) -> cb(err)
+ * width: width in pixels to set size to
+ * height: height in pixels to set size to
+ * handle: window handle to set size for (optional, default: 'current')
+ * @jsonWire POST /session/:sessionId/window/:windowHandle/size
  */
 commands.setWindowSize = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      width = fargs.all[0],
-      height = fargs.all[1],
-      win = fargs.all[2] || 'current';
-this._jsonWireCall({
-	method: 'POST'
-	, relPath: '/window/'+ win + '/size'
-    , cb: simpleCallback(cb)
-    , data: {width: width, height: height}
-	});
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const width = fargs.all[0];
+  const height = fargs.all[1];
+  const win = fargs.all[2] || 'current';
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/window/' + win + '/size',
+    cb: simpleCallback(cb),
+    data: { width: width, height: height }
+  });
 };
 
 /**
-  * getWindowPosition(handle, cb) -> cb(err, position)
-  * getWindowPosition(cb) -> cb(err, position)
-  * handle: window handle to get position (optional, default: 'current')
-  *
-  * @jsonWire GET /session/:sessionId/window/:windowHandle/position
+ * getWindowPosition(handle, cb) -> cb(err, position)
+ * getWindowPosition(cb) -> cb(err, position)
+ * handle: window handle to get position (optional, default: 'current')
+ *
+ * @jsonWire GET /session/:sessionId/window/:windowHandle/position
  */
 commands.getWindowPosition = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      win = fargs.all[0] || 'current';
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const win = fargs.all[0] || 'current';
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/window/'+ win + '/position'
-    , cb: callbackWithData(cb, this)
-    });
+    method: 'GET',
+    relPath: '/window/' + win + '/position',
+    cb: callbackWithData(cb, this)
+  });
 };
 
 /**
-  * setWindowPosition(x, y, handle, cb) -> cb(err)
-  * setWindowPosition(x, y, cb) -> cb(err)
-  * x: the x-coordinate in pixels to set the window position
-  * y: the y-coordinate in pixels to set the window position
-  * handle: window handle to set position for (optional, default: 'current')
-  * @jsonWire POST /session/:sessionId/window/:windowHandle/position
+ * setWindowPosition(x, y, handle, cb) -> cb(err)
+ * setWindowPosition(x, y, cb) -> cb(err)
+ * x: the x-coordinate in pixels to set the window position
+ * y: the y-coordinate in pixels to set the window position
+ * handle: window handle to set position for (optional, default: 'current')
+ * @jsonWire POST /session/:sessionId/window/:windowHandle/position
  */
 commands.setWindowPosition = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      x = fargs.all[0],
-      y = fargs.all[1],
-      win = fargs.all[2] || 'current';
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const x = fargs.all[0];
+  const y = fargs.all[1];
+  const win = fargs.all[2] || 'current';
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/window/'+ win + '/position'
-    , cb: simpleCallback(cb)
-    , data: {x: x, y: y}
+    method: 'POST',
+    relPath: '/window/' + win + '/position',
+    cb: simpleCallback(cb),
+    data: { x: x, y: y }
   });
 };
 
@@ -659,11 +667,11 @@ commands.setWindowPosition = function() {
  * @jsonWire POST /session/:sessionId/forward
  */
 commands.forward = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/forward'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/forward',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -673,21 +681,21 @@ commands.forward = function() {
  * @jsonWire POST /session/:sessionId/back
  */
 commands.back = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/back'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/back',
+    cb: simpleCallback(cb)
   });
 };
 
 commands.setHttpTimeout = function() {
   deprecator.warn('setHttpTimeout',
     'setHttpTimeout/setHTTPInactivityTimeout has been deprecated, use configureHttp instead.');
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      ms = fargs.all[0];
-  commands.configureHttp( {timeout: ms}, cb );
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const ms = fargs.all[0];
+  commands.configureHttp({ timeout: ms }, cb);
 };
 
 commands.setHTTPInactivityTimeout = commands.setHttpTimeout;
@@ -701,11 +709,13 @@ commands.setHTTPInactivityTimeout = commands.setHttpTimeout;
  *
  */
 commands.configureHttp = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      opts = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const opts = fargs.all[0];
   config._configureHttp(this._httpConfig, opts);
-  if(cb) { cb(null); }
+  if (cb) {
+    cb(null);
+  }
 };
 
 /**
@@ -714,12 +724,12 @@ commands.configureHttp = function() {
  * @jsonWire POST /session/:sessionId/timeouts/implicit_wait
  */
 commands.setImplicitWaitTimeout = function(ms) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/timeouts/implicit_wait'
-    , data: {ms: ms}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/timeouts/implicit_wait',
+    data: { ms: ms },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -732,12 +742,12 @@ commands.setWaitTimeout = commands.setImplicitWaitTimeout;
  * @jsonWire POST /session/:sessionId/timeouts/async_script
  */
 commands.setAsyncScriptTimeout = function(ms) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/timeouts/async_script'
-    , data: {ms: ms}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/timeouts/async_script',
+    data: { ms: ms },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -748,12 +758,12 @@ commands.setAsyncScriptTimeout = function(ms) {
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setPageLoadTimeout = function(ms) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/timeouts'
-    , data: {type: 'page load', ms: ms}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/timeouts',
+    data: { type: 'page load', ms: ms },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -763,12 +773,12 @@ commands.setPageLoadTimeout = function(ms) {
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setCommandTimeout = function(ms) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/timeouts'
-    , data: {type: 'command', ms: ms}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/timeouts',
+    data: { type: 'command', ms: ms },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -778,12 +788,12 @@ commands.setCommandTimeout = function(ms) {
  * @jsonWire POST /session/:sessionId/element
  */
 commands.element = function(using, value) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element'
-    , data: {using: using, value: value}
-    , cb: elementCallback(cb, this)
+    method: 'POST',
+    relPath: '/element',
+    data: { using: using, value: value },
+    cb: elementCallback(cb, this)
   });
 };
 
@@ -795,13 +805,18 @@ commands.element = function(using, value) {
  * @docOrder 3
  */
 commands.elementOrNull = function(using, value) {
-  var cb = findCallback(arguments);
-  commands.elements.apply(this, [using, value,
+  const cb = findCallback(arguments);
+  commands.elements.apply(this, [ using, value,
     function(err, elements) {
-      if(!err) {
-        if(elements.length>0) {cb(null,elements[0]);} else {cb(null,null);}
+      if (!err) {
+        if (elements.length > 0) {
+          cb(null, elements[0]);
+        } else {
+          cb(null, null);
+        }
       } else {
-        cb(err); }
+        cb(err);
+      }
     }
   ]);
 };
@@ -814,13 +829,18 @@ commands.elementOrNull = function(using, value) {
  * @docOrder 5
  */
 commands.elementIfExists = function(using, value) {
-  var cb = findCallback(arguments);
-  commands.elements.apply(this, [using, value,
+  const cb = findCallback(arguments);
+  commands.elements.apply(this, [ using, value,
     function(err, elements) {
-      if(!err) {
-        if(elements.length>0) {cb(null,elements[0]);} else {cb(null);}
+      if (!err) {
+        if (elements.length > 0) {
+          cb(null, elements[0]);
+        } else {
+          cb(null);
+        }
       } else {
-        cb(err); }
+        cb(err);
+      }
     }
   ]);
 };
@@ -832,12 +852,12 @@ commands.elementIfExists = function(using, value) {
  * @docOrder 1
  */
 commands.elements = function(using, value) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/elements'
-    , data: {using: using, value: value}
-    , cb: elementsCallback(cb, this)
+    method: 'POST',
+    relPath: '/elements',
+    data: { using: using, value: value },
+    cb: elementsCallback(cb, this)
   });
 };
 
@@ -848,14 +868,15 @@ commands.elements = function(using, value) {
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 7
  */
-commands.hasElement = function(using, value){
-  var cb = findCallback(arguments);
-  commands.elements.apply( this, [using, value, function(err, elements){
-    if(!err) {
-      cb(null, elements.length > 0 );
+commands.hasElement = function(using, value) {
+  const cb = findCallback(arguments);
+  commands.elements.apply(this, [ using, value, function(err, elements) {
+    if (!err) {
+      cb(null, elements.length > 0);
     } else {
-      cb(err); }
-  }]);
+      cb(err);
+    }
+  } ]);
 };
 
 /**
@@ -866,9 +887,9 @@ commands.hasElement = function(using, value){
  * asserter like: function(browser , cb) -> cb(err, satisfied, return_value)
  */
 commands.waitFor = function() {
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var opts;
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  let opts;
   // retrieving options
   if (typeof fargs.all[0] === 'object' && !(fargs.all[0] instanceof Asserter)) {
     opts = fargs.all[0];
@@ -882,45 +903,52 @@ commands.waitFor = function() {
 
   const {
     MACACA_WD_CLIENT_WAITFOR_TIMEOUT,
-    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ,
+    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ
   } = process.env;
-  // default
-  opts.timeout =  opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
+    // default
+  opts.timeout = opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
   opts.pollFreq = opts.pollFreq || parseInt(MACACA_WD_CLIENT_WAITFOR_POLL_FREQ, 10) || 1000;
 
-  if(!opts.asserter) {
+  if (!opts.asserter) {
     throw new Error('Missing asserter!');
   }
 
-  var _this = this;
-  var endTime = Date.now() + opts.timeout;
+  const _this = this;
+  const endTime = Date.now() + opts.timeout;
 
-  var unpromisedAsserter = new Asserter(
+  const unpromisedAsserter = new Asserter(
     function(browser, cb) {
-      var promise = opts.asserter.assert(browser, cb);
+      const promise = opts.asserter.assert(browser, cb);
       if (promise && promise.then && typeof promise.then === 'function') {
         promise.then(
-          function(res) { cb(null, true, res); },
+          function(res) {
+            cb(null, true, res);
+          },
           function(err) {
-            if(err.retriable) { cb(null, false); }
-            else { throw err; }
+            if (err.retriable) {
+              cb(null, false);
+            } else {
+              throw err;
+            }
           }
         );
       }
     }
   );
 
-  function poll(isFinalCheck){
+  function poll(isFinalCheck) {
     unpromisedAsserter.assert(_this, function(err, satisfied, value) {
-      if(err) { return cb(err); }
-      if(satisfied) {
+      if (err) {
+        return cb(err);
+      }
+      if (satisfied) {
         cb(null, value);
       } else {
-        if(isFinalCheck) {
+        if (isFinalCheck) {
           cb(new Error("Condition wasn't satisfied!"));
-        } else if(Date.now() > endTime){
+        } else if (Date.now() > endTime) {
           // trying one more time for safety
-          setTimeout(poll.bind(null, true) , opts.pollFreq);
+          setTimeout(poll.bind(null, true), opts.pollFreq);
         } else {
           setTimeout(poll, opts.pollFreq);
         }
@@ -941,16 +969,16 @@ commands.waitFor = function() {
  */
 commands.waitForElement = function() {
 
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var using = fargs.all[0],
-      value = fargs.all[1];
-  var opts;
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const using = fargs.all[0];
+  const value = fargs.all[1];
+  let opts;
 
   // retrieving options
   if (typeof fargs.all[2] === 'object' && !(fargs.all[2] instanceof Asserter)) {
     opts = fargs.all[2];
-  } else if(fargs.all[2] instanceof Asserter) {
+  } else if (fargs.all[2] instanceof Asserter) {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
@@ -964,59 +992,76 @@ commands.waitForElement = function() {
   }
 
   // default
-  opts.asserter = opts.asserter || new Asserter(function(el, cb) { cb(null, true); });
+  opts.asserter = opts.asserter || new Asserter(function(el, cb) {
+    cb(null, true);
+  });
 
-  var unpromisedAsserter = new Asserter(
+  const unpromisedAsserter = new Asserter(
     function(el, cb) {
-      var promise = opts.asserter.assert(el, cb);
-      if(promise && promise.then && typeof promise.then === 'function'){
+      const promise = opts.asserter.assert(el, cb);
+      if (promise && promise.then && typeof promise.then === 'function') {
         promise.then(
-          function() { cb(null, true); },
+          function() {
+            cb(null, true);
+          },
           function(err) {
-            if(err.retriable) { cb(null, false); }
-            else { throw err; }
+            if (err.retriable) {
+              cb(null, false);
+            } else {
+              throw err;
+            }
           }
         );
       }
     }
   );
 
-  var wrappedAsserter = new Asserter(
-    function(browser, cb){
-      browser.elements(using, value, function(err, els){
-        if(err) { return cb(err); }
-        var seq = [];
-        var satisfiedEl;
+  const wrappedAsserter = new Asserter(
+    function(browser, cb) {
+      browser.elements(using, value, function(err, els) {
+        if (err) {
+          return cb(err);
+        }
+        const seq = [];
+        let satisfiedEl;
         _(els).each(function(el) {
           seq.push(function(cb) {
-            if(satisfiedEl) { return cb(); }
+            if (satisfiedEl) {
+              return cb();
+            }
             unpromisedAsserter.assert(el, function(err, satisfied) {
-              if(err) { return cb(err); }
-              if(satisfied) { satisfiedEl = el; }
+              if (err) {
+                return cb(err);
+              }
+              if (satisfied) {
+                satisfiedEl = el;
+              }
               cb(err);
             });
           });
         }).value();
         async.series(seq, function(err) {
-            if(err) { return cb(err); }
-            cb(err, !_.isUndefined(satisfiedEl)  , satisfiedEl);
+          if (err) {
+            return cb(err);
+          }
+          cb(err, !_.isUndefined(satisfiedEl), satisfiedEl);
         });
       });
     }
   );
 
-  commands.waitFor.apply(this,[
+  commands.waitFor.apply(this, [
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
       pollFreq: opts.pollFreq
     }, function(err, value) {
-      if(err && err.message && err.message.match(/Condition/)) {
+      if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
       } else {
         cb(err, value);
       }
-    }]);
+    } ]);
 };
 
 /**
@@ -1027,18 +1072,18 @@ commands.waitForElement = function() {
  * opts with the following fields: timeout, pollFreq, asserter.
  * asserter like: function(element , cb) -> cb(err, satisfied, el)
  */
-commands.waitForElements = function(){
+commands.waitForElements = function() {
 
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var using = fargs.all[0],
-      value = fargs.all[1];
-  var opts;
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const using = fargs.all[0];
+  const value = fargs.all[1];
+  let opts;
 
   // retrieving options
-  if(typeof fargs.all[2] === 'object' && !(fargs.all[2] instanceof Asserter)){
+  if (typeof fargs.all[2] === 'object' && !(fargs.all[2] instanceof Asserter)) {
     opts = fargs.all[2];
-  } else if(fargs.all[2] instanceof Asserter) {
+  } else if (fargs.all[2] instanceof Asserter) {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
@@ -1052,73 +1097,88 @@ commands.waitForElements = function(){
   }
 
   // default
-  opts.asserter = opts.asserter || new Asserter(function(el, cb) { cb(null, true); });
+  opts.asserter = opts.asserter || new Asserter(function(el, cb) {
+    cb(null, true);
+  });
 
-  var unpromisedAsserter = new Asserter(
+  const unpromisedAsserter = new Asserter(
     function(el, cb) {
-      var promise = opts.asserter.assert(el, cb);
-      if(promise && promise.then && typeof promise.then === 'function'){
+      const promise = opts.asserter.assert(el, cb);
+      if (promise && promise.then && typeof promise.then === 'function') {
         promise.then(
-          function() { cb(null, true); },
+          function() {
+            cb(null, true);
+          },
           function(err) {
-            if(err.retriable) { cb(null, false); }
-            else { throw err; }
+            if (err.retriable) {
+              cb(null, false);
+            } else {
+              throw err;
+            }
           }
         );
       }
     }
   );
 
-  var wrappedAsserter = new Asserter(
-    function(browser, cb){
-      browser.elements(using, value, function(err, els){
-        if(err) { return cb(err); }
-        var seq = [];
-        var satisfiedEls = [];
+  const wrappedAsserter = new Asserter(
+    function(browser, cb) {
+      browser.elements(using, value, function(err, els) {
+        if (err) {
+          return cb(err);
+        }
+        const seq = [];
+        const satisfiedEls = [];
         _(els).each(function(el) {
           seq.push(function(cb) {
             unpromisedAsserter.assert(el, function(err, satisfied) {
-              if(err) { return cb(err); }
-              if(satisfied) { satisfiedEls.push(el); }
+              if (err) {
+                return cb(err);
+              }
+              if (satisfied) {
+                satisfiedEls.push(el);
+              }
               cb(err);
             });
           });
         }).value();
         async.series(seq, function(err) {
-            if(err) { return cb(err); }
-            cb(err, satisfiedEls.length > 0  , satisfiedEls);
+          if (err) {
+            return cb(err);
+          }
+          cb(err, satisfiedEls.length > 0, satisfiedEls);
         });
       });
     }
   );
 
-  commands.waitFor.apply(this,[
+  commands.waitFor.apply(this, [
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
       pollFreq: opts.pollFreq
     }, function(err, value) {
-      if(err && err.message && err.message.match(/Condition/)) {
+      if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
       } else {
         cb(err, value);
       }
-    }]);
+    } ]);
 };
 
 commands.waitForVisible = function(using, value, timeout, pollFreq) {
   deprecator.warn('waitForVisible',
     'waitForVisible has been deprecated, use waitForElement + isVisible asserter instead.');
 
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
 
-  commands.waitForElement.apply(this, [using, value, asserters.isVisible, timeout, pollFreq, function(err, isVisible) {
-    if(err && err.message && err.message.match(/Element condition wasn't satisfied!/)){
+  commands.waitForElement.apply(this, [ using, value, asserters.isVisible, timeout, pollFreq, function(err, isVisible) {
+    if (err && err.message && err.message.match(/Element condition wasn't satisfied!/)) {
       cb(new Error("Element didn't become visible"));
     } else {
       cb(err, isVisible);
     }
-  }]);
+  } ]);
 };
 
 /**
@@ -1127,12 +1187,12 @@ commands.waitForVisible = function(using, value, timeout, pollFreq) {
  * @jsonWire GET /session/:sessionId/screenshot
  */
 commands.takeScreenshot = function() {
-  var cb = findCallback(arguments);
-  var params = arguments[0];
+  const cb = findCallback(arguments);
+  const params = arguments[0];
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: `/screenshot${url.format({ query: params })}`
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: `/screenshot${url.format({ query: params })}`,
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1143,232 +1203,258 @@ commands.takeScreenshot = function() {
  * the screenshot name, or left blank (will create a file in the system temp dir).
  */
 commands.saveScreenshot = function() {
-  var _this = this;
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var _path = fargs.all[0];
-  var _params = fargs.all[1];
-  var dir = process.env.CUSTOM_DIR || '';
+  const _this = this;
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const _path = fargs.all[0];
+  const _params = fargs.all[1];
+  const dir = process.env.CUSTOM_DIR || '';
 
   function buildFilePath(_path, cb) {
-    if(!_path) { _path = tmp.tmpdir + '/'; }
-    if(_path.match(/.*\/$/)) {
-      tmp.tmpName( {template: 'screenshot-XXXXXX.png'}, function(err, fileName) {
-        if(err) { return cb(err); }
-        if(dir) { _path = dir + '/screenshot/'; }
+    if (!_path) {
+      _path = tmp.tmpdir + '/';
+    }
+    if (_path.match(/.*\/$/)) {
+      tmp.tmpName({ template: 'screenshot-XXXXXX.png' }, function(err, fileName) {
+        if (err) {
+          return cb(err);
+        }
+        if (dir) {
+          _path = dir + '/screenshot/';
+        }
         mkdirp(_path, function(err) {
-          if(err) { return cb(err); }
-          cb(null, path.join(_path , fileName));
-        })
+          if (err) {
+            return cb(err);
+          }
+          cb(null, path.join(_path, fileName));
+        });
       });
     } else {
-      if(path.extname(_path) === '') { _path = _path + '.png'; }
-      if(dir) { _path = path.join(dir, 'screenshot', _path)}
+      if (path.extname(_path) === '') {
+        _path = _path + '.png';
+      }
+      if (dir) {
+        _path = path.join(dir, 'screenshot', _path);
+      }
       cb(null, _path);
     }
   }
 
+  // eslint-disable-next-line handle-callback-err
   buildFilePath(_path, function(err, filePath) {
-    commands.takeScreenshot.apply(_this, [_params, function(err, base64Data) {
-      if(err) { return cb(err); }
+    commands.takeScreenshot.apply(_this, [ _params, function(err, base64Data) {
+      if (err) {
+        return cb(err);
+      }
       if (_params && _params.video) {
         cb(null, base64Data);
       }
-      require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
-        if(err) { return cb(err); }
+      require('fs').writeFile(filePath, base64Data, 'base64', function(err) {
+        if (err) {
+          return cb(err);
+        }
         cb(null, filePath);
       });
-    }]);
+    } ]);
   });
 };
 
 // adding all elementBy... , elementsBy... function
 
-var addMethodsForSuffix = function(type, singular, plural) {
-  if(singular){
+const addMethodsForSuffix = function(type, singular, plural) {
+  if (singular) {
     /**
-     * elementByClassName(value, cb) -> cb(err, element)
-     * elementByCssSelector(value, cb) -> cb(err, element)
-     * elementById(value, cb) -> cb(err, element)
-     * elementByName(value, cb) -> cb(err, element)
-     * elementByLinkText(value, cb) -> cb(err, element)
-     * elementByPartialLinkText(value, cb) -> cb(err, element)
-     * elementByTagName(value, cb) -> cb(err, element)
-     * elementByXPath(value, cb) -> cb(err, element)
-     * elementByCss(value, cb) -> cb(err, element)
-     * elementByIosUIAutomation(value, cb) -> cb(err, element)
-     * elementByAndroidUIAutomator(value, cb) -> cb(err, element)
-     * elementByAccessibilityId(value, cb) -> cb(err, element)
-     *
-     * @jsonWire POST /session/:sessionId/element
-     */
+         * elementByClassName(value, cb) -> cb(err, element)
+         * elementByCssSelector(value, cb) -> cb(err, element)
+         * elementById(value, cb) -> cb(err, element)
+         * elementByName(value, cb) -> cb(err, element)
+         * elementByLinkText(value, cb) -> cb(err, element)
+         * elementByPartialLinkText(value, cb) -> cb(err, element)
+         * elementByTagName(value, cb) -> cb(err, element)
+         * elementByXPath(value, cb) -> cb(err, element)
+         * elementByCss(value, cb) -> cb(err, element)
+         * elementByIosUIAutomation(value, cb) -> cb(err, element)
+         * elementByAndroidUIAutomator(value, cb) -> cb(err, element)
+         * elementByAccessibilityId(value, cb) -> cb(err, element)
+         *
+         * @jsonWire POST /session/:sessionId/element
+         */
     commands['element' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.element.apply(this, args);
     };
 
     /**
-     * elementByClassNameOrNull(value, cb) -> cb(err, element)
-     * elementByCssSelectorOrNull(value, cb) -> cb(err, element)
-     * elementByIdOrNull(value, cb) -> cb(err, element)
-     * elementByNameOrNull(value, cb) -> cb(err, element)
-     * elementByLinkTextOrNull(value, cb) -> cb(err, element)
-     * elementByPartialLinkTextOrNull(value, cb) -> cb(err, element)
-     * elementByTagNameOrNull(value, cb) -> cb(err, element)
-     * elementByXPathOrNull(value, cb) -> cb(err, element)
-     * elementByCssOrNull(value, cb) -> cb(err, element)
-     * elementByIosUIAutomationOrNull(value, cb) -> cb(err, element)
-     * elementByAndroidUIAutomatorOrNull(value, cb) -> cb(err, element)
-     * elementByAccessibilityIdOrNull(value, cb) -> cb(err, element)
-     *
-     * @jsonWire POST /session/:sessionId/elements
-     * @docOrder 4
-     */
-    commands['element' + utils.elFuncSuffix(type)+ 'OrNull'] = function() {
-      var fargs = utils.varargs(arguments);
-      var cb = fargs.callback;
-      var args = fargs.all;
+         * elementByClassNameOrNull(value, cb) -> cb(err, element)
+         * elementByCssSelectorOrNull(value, cb) -> cb(err, element)
+         * elementByIdOrNull(value, cb) -> cb(err, element)
+         * elementByNameOrNull(value, cb) -> cb(err, element)
+         * elementByLinkTextOrNull(value, cb) -> cb(err, element)
+         * elementByPartialLinkTextOrNull(value, cb) -> cb(err, element)
+         * elementByTagNameOrNull(value, cb) -> cb(err, element)
+         * elementByXPathOrNull(value, cb) -> cb(err, element)
+         * elementByCssOrNull(value, cb) -> cb(err, element)
+         * elementByIosUIAutomationOrNull(value, cb) -> cb(err, element)
+         * elementByAndroidUIAutomatorOrNull(value, cb) -> cb(err, element)
+         * elementByAccessibilityIdOrNull(value, cb) -> cb(err, element)
+         *
+         * @jsonWire POST /session/:sessionId/elements
+         * @docOrder 4
+         */
+    commands['element' + utils.elFuncSuffix(type) + 'OrNull'] = function() {
+      const fargs = utils.varargs(arguments);
+      const cb = fargs.callback;
+      const args = fargs.all;
       args.unshift(utils.elFuncFullType(type));
       args.push(
         function(err, elements) {
-          if(!err) {
-            if(elements.length>0) {cb(null,elements[0]);} else {cb(null,null);}
+          if (!err) {
+            if (elements.length > 0) {
+              cb(null, elements[0]);
+            } else {
+              cb(null, null);
+            }
           } else {
             cb(err);
           }
-        }
-      );
-      commands.elements.apply(this, args );
-    };
-
-    /**
-     * elementByClassNameIfExists(value, cb) -> cb(err, element)
-     * elementByCssSelectorIfExists(value, cb) -> cb(err, element)
-     * elementByIdIfExists(value, cb) -> cb(err, element)
-     * elementByNameIfExists(value, cb) -> cb(err, element)
-     * elementByLinkTextIfExists(value, cb) -> cb(err, element)
-     * elementByPartialLinkTextIfExists(value, cb) -> cb(err, element)
-     * elementByTagNameIfExists(value, cb) -> cb(err, element)
-     * elementByXPathIfExists(value, cb) -> cb(err, element)
-     * elementByCssIfExists(value, cb) -> cb(err, element)
-     * elementByIosUIAutomationIfExists(value, cb) -> cb(err, element)
-     * elementByAndroidUIAutomatorIfExists(value, cb) -> cb(err, element)
-     * elementByAccessibilityIdIfExists(value, cb) -> cb(err, element)
-     *
-     * @jsonWire POST /session/:sessionId/elements
-     * @docOrder 6
-     */
-    commands['element' + utils.elFuncSuffix(type)+ 'IfExists'] = function() {
-      var fargs = utils.varargs(arguments);
-      var cb = fargs.callback;
-      var args = fargs.all;
-      args.unshift(utils.elFuncFullType(type));
-      args.push(
-        function(err, elements) {
-          if(!err) {
-            if(elements.length>0) {cb(null,elements[0]);} else {cb(null);}
-          } else {
-            cb(err); }
         }
       );
       commands.elements.apply(this, args);
     };
 
     /**
-     * hasElementByClassName(value, cb) -> cb(err, boolean)
-     * hasElementByCssSelector(value, cb) -> cb(err, boolean)
-     * hasElementById(value, cb) -> cb(err, boolean)
-     * hasElementByName(value, cb) -> cb(err, boolean)
-     * hasElementByLinkText(value, cb) -> cb(err, boolean)
-     * hasElementByPartialLinkText(value, cb) -> cb(err, boolean)
-     * hasElementByTagName(value, cb) -> cb(err, boolean)
-     * hasElementByXPath(value, cb) -> cb(err, boolean)
-     * hasElementByCss(value, cb) -> cb(err, boolean)
-     * hasElementByIosUIAutomation(value, cb) -> cb(err, boolean)
-     * hasElementByAndroidUIAutomator(value, cb) -> cb(err, boolean)
-     * hasElementByAccessibilityId(value, cb) -> cb(err, boolean)
-     *
-     * @jsonWire POST /session/:sessionId/elements
-     * @docOrder 8
-     */
+         * elementByClassNameIfExists(value, cb) -> cb(err, element)
+         * elementByCssSelectorIfExists(value, cb) -> cb(err, element)
+         * elementByIdIfExists(value, cb) -> cb(err, element)
+         * elementByNameIfExists(value, cb) -> cb(err, element)
+         * elementByLinkTextIfExists(value, cb) -> cb(err, element)
+         * elementByPartialLinkTextIfExists(value, cb) -> cb(err, element)
+         * elementByTagNameIfExists(value, cb) -> cb(err, element)
+         * elementByXPathIfExists(value, cb) -> cb(err, element)
+         * elementByCssIfExists(value, cb) -> cb(err, element)
+         * elementByIosUIAutomationIfExists(value, cb) -> cb(err, element)
+         * elementByAndroidUIAutomatorIfExists(value, cb) -> cb(err, element)
+         * elementByAccessibilityIdIfExists(value, cb) -> cb(err, element)
+         *
+         * @jsonWire POST /session/:sessionId/elements
+         * @docOrder 6
+         */
+    commands['element' + utils.elFuncSuffix(type) + 'IfExists'] = function() {
+      const fargs = utils.varargs(arguments);
+      const cb = fargs.callback;
+      const args = fargs.all;
+      args.unshift(utils.elFuncFullType(type));
+      args.push(
+        function(err, elements) {
+          if (!err) {
+            if (elements.length > 0) {
+              cb(null, elements[0]);
+            } else {
+              cb(null);
+            }
+          } else {
+            cb(err);
+          }
+        }
+      );
+      commands.elements.apply(this, args);
+    };
+
+    /**
+         * hasElementByClassName(value, cb) -> cb(err, boolean)
+         * hasElementByCssSelector(value, cb) -> cb(err, boolean)
+         * hasElementById(value, cb) -> cb(err, boolean)
+         * hasElementByName(value, cb) -> cb(err, boolean)
+         * hasElementByLinkText(value, cb) -> cb(err, boolean)
+         * hasElementByPartialLinkText(value, cb) -> cb(err, boolean)
+         * hasElementByTagName(value, cb) -> cb(err, boolean)
+         * hasElementByXPath(value, cb) -> cb(err, boolean)
+         * hasElementByCss(value, cb) -> cb(err, boolean)
+         * hasElementByIosUIAutomation(value, cb) -> cb(err, boolean)
+         * hasElementByAndroidUIAutomator(value, cb) -> cb(err, boolean)
+         * hasElementByAccessibilityId(value, cb) -> cb(err, boolean)
+         *
+         * @jsonWire POST /session/:sessionId/elements
+         * @docOrder 8
+         */
     commands['hasElement' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.hasElement.apply(this, args);
     };
 
     /**
-     * waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementById(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByCss(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * asserter, timeout, pollFreq are optional, opts may be passed instead,
-     * as in waitForElement.
-     */
+         * waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementById(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByCss(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * asserter, timeout, pollFreq are optional, opts may be passed instead,
+         * as in waitForElement.
+         */
     commands['waitForElement' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.waitForElement.apply(this, args);
     };
 
     /**
-     * waitForElementsByClassName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByCssSelector(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsById(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByPartialLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
-     * waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
-     * asserter, timeout, pollFreq are optional, opts may be passed instead,
-     * as in waitForElements.
-     */
+         * waitForElementsByClassName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByCssSelector(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsById(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByPartialLinkText(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -> cb(err, els)
+         * waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -> cb(err, el)
+         * asserter, timeout, pollFreq are optional, opts may be passed instead,
+         * as in waitForElements.
+         */
     commands['waitForElements' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.waitForElements.apply(this, args);
     };
 
     commands['waitForVisible' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.waitForVisible.apply(this, args);
     };
 
     /**
-     * elementsByClassName(value, cb) -> cb(err, elements)
-     * elementsByCssSelector(value, cb) -> cb(err, elements)
-     * elementsById(value, cb) -> cb(err, elements)
-     * elementsByName(value, cb) -> cb(err, elements)
-     * elementsByLinkText(value, cb) -> cb(err, elements)
-     * elementsByPartialLinkText(value, cb) -> cb(err, elements)
-     * elementsByTagName(value, cb) -> cb(err, elements)
-     * elementsByXPath(value, cb) -> cb(err, elements)
-     * elementsByCss(value, cb) -> cb(err, elements)
-     * elementsByIosUIAutomation(value, cb) -> cb(err, elements)
-     * elementsByAndroidUIAutomator(value, cb) -> cb(err, elements)
-     * elementsByAccessibilityId(value, cb) -> cb(err, elements)
-     *
-     * @jsonWire POST /session/:sessionId/elements
-     * @docOrder 2
-     */
+         * elementsByClassName(value, cb) -> cb(err, elements)
+         * elementsByCssSelector(value, cb) -> cb(err, elements)
+         * elementsById(value, cb) -> cb(err, elements)
+         * elementsByName(value, cb) -> cb(err, elements)
+         * elementsByLinkText(value, cb) -> cb(err, elements)
+         * elementsByPartialLinkText(value, cb) -> cb(err, elements)
+         * elementsByTagName(value, cb) -> cb(err, elements)
+         * elementsByXPath(value, cb) -> cb(err, elements)
+         * elementsByCss(value, cb) -> cb(err, elements)
+         * elementsByIosUIAutomation(value, cb) -> cb(err, elements)
+         * elementsByAndroidUIAutomator(value, cb) -> cb(err, elements)
+         * elementsByAccessibilityId(value, cb) -> cb(err, elements)
+         *
+         * @jsonWire POST /session/:sessionId/elements
+         * @docOrder 2
+         */
   }
-  if(plural){
+  if (plural) {
     commands['elements' + utils.elFuncSuffix(type)] = function() {
-      var args = __slice.call(arguments, 0);
+      const args = __slice.call(arguments, 0);
       args.unshift(utils.elFuncFullType(type));
       commands.elements.apply(this, args);
     };
@@ -1385,11 +1471,11 @@ _.each(utils.elementFuncTypes, function(suffix) {
  * @jsonWire GET /session/:sessionId/element/:id/name
  */
 commands.getTagName = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/name'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/name',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1400,16 +1486,20 @@ commands.getTagName = function(element) {
  * @docOrder 1
  */
 commands.getAttribute = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      attrName = fargs.all[1];
-  if(!element) { throw new Error('Missing element.'); }
-  if(!attrName) { throw new Error('Missing attribute name.'); }
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const attrName = fargs.all[1];
+  if (!element) {
+    throw new Error('Missing element.');
+  }
+  if (!attrName) {
+    throw new Error('Missing attribute name.');
+  }
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/attribute/' + attrName
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/attribute/' + attrName,
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1420,16 +1510,20 @@ commands.getAttribute = function() {
  * @docOrder 1
  */
 commands.getProperty = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      propertyName = fargs.all[1];
-  if(!element) { throw new Error('Missing element.'); }
-  if(!propertyName) { throw new Error('Missing property name.'); }
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const propertyName = fargs.all[1];
+  if (!element) {
+    throw new Error('Missing element.');
+  }
+  if (!propertyName) {
+    throw new Error('Missing property name.');
+  }
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/property/' + propertyName
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/property/' + propertyName,
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1440,14 +1534,16 @@ commands.getProperty = function() {
  * @docOrder 1
  */
 commands.getRect = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0];
-  if(!element) { throw new Error('Missing element.'); }
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  if (!element) {
+    throw new Error('Missing element.');
+  }
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/rect'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/rect',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1457,27 +1553,27 @@ commands.getRect = function() {
  * @jsonWire GET /session/:sessionId/element/:id/displayed
  */
 commands.isDisplayed = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/displayed'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/displayed',
+    cb: callbackWithData(cb, this)
   });
 };
 
 commands.displayed = commands.isDisplayed;
 
 /**
-  * isEnabled(element, cb) -> cb(err, enabled)
-  *
-  * @jsonWire GET /session/:sessionId/element/:id/enabled
-  */
+ * isEnabled(element, cb) -> cb(err, enabled)
+ *
+ * @jsonWire GET /session/:sessionId/element/:id/enabled
+ */
 commands.isEnabled = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/enabled'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/enabled',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1489,11 +1585,11 @@ commands.enabled = commands.isEnabled;
  * @jsonWire GET /session/:sessionId/element/:id/selected
  */
 commands.isSelected = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/selected'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/selected',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1507,11 +1603,13 @@ commands.isSelected = function(element) {
  * @docOrder 3
  */
 commands.getValue = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0];
-  if(!element) { throw new Error('Missing element.'); }
-  commands.getAttribute.apply(this, [element, 'value', cb]);
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  if (!element) {
+    throw new Error('Missing element.');
+  }
+  commands.getAttribute.apply(this, [ element, 'value', cb ]);
 };
 
 /**
@@ -1520,25 +1618,27 @@ commands.getValue = function() {
  * @jsonWire POST /session/:sessionId/element/:id/click
  */
 commands.clickElement = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + element + '/click'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/element/' + element + '/click',
+    cb: simpleCallback(cb)
   });
 };
 
 /**
- * takeElementScreenshot(element, cb) -> cb(err)
+ * takeElementScreenshot(params, cb) -> cb(err)
  *
- * @jsonWire POST /session/:sessionId/element/:id/screenshot
+ * @jsonWire GET /session/:sessionId/element/:id/screenshot
  */
 commands.takeElementScreenshot = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const params = fargs[0];
   this._jsonWireCall({
-    method: 'POST',
-    relPath: `/element/${element}/screenshot`,
-    cb: simpleCallback(cb),
+    method: 'GET',
+    relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1548,11 +1648,11 @@ commands.takeElementScreenshot = function(element) {
  * @jsonWire GET /session/:sessionId/element/:id/css/:propertyName
  */
 commands.getComputedCss = function(element, cssProperty) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/css/' + cssProperty
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/css/' + cssProperty,
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1564,47 +1664,47 @@ commands.getComputedCSS = commands.getComputedCss;
  * @jsonWire GET /session/:sessionId/element/:id/equals/:other
  */
 commands.equalsElement = function(element, other) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/equals/' + other
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/equals/' + other,
+    cb: callbackWithData(cb, this)
   });
 };
 
-var _flick1 = function(){
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      xspeed = fargs.all[0],
-      yspeed = fargs.all[1],
-      swipe = fargs.all[2];
+const _flick1 = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const xspeed = fargs.all[0];
+  const yspeed = fargs.all[1];
+  const swipe = fargs.all[2];
 
-  var data = { xspeed: xspeed, yspeed: yspeed };
+  const data = { xspeed: xspeed, yspeed: yspeed };
   if (swipe) {
     data.swipe = swipe;
   }
 
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/touch/flick'
-    , data: data
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/touch/flick',
+    data: data,
+    cb: simpleCallback(cb)
   });
 };
 
-var _flick2 = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      xoffset = fargs.all[1],
-      yoffset = fargs.all[2],
-      speed = fargs.all[3];
+const _flick2 = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const xoffset = fargs.all[1];
+  const yoffset = fargs.all[2];
+  const speed = fargs.all[3];
 
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/touch/flick'
-    , data: { element: element, xoffset: xoffset, yoffset: yoffset, speed: speed }
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/touch/flick',
+    data: { element: element, xoffset: xoffset, yoffset: yoffset, speed: speed },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1618,7 +1718,7 @@ var _flick2 = function() {
  * @jsonWire POST /session/:sessionId/touch/flick
  */
 commands.flick = function() {
-  var args = __slice.call(arguments, 0);
+  const args = __slice.call(arguments, 0);
   if (args.length <= 4) {
     _flick1.apply(this, args);
   } else {
@@ -1634,10 +1734,10 @@ commands.flick = function() {
  */
 commands.tapElement = function(element, cb) {
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/touch/click'
-    , data: { element: element.value.toString() }
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/touch/click',
+    data: { element: element.value.toString() },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1646,17 +1746,17 @@ commands.tapElement = function(element, cb) {
  *
  * @jsonWire POST /session/:sessionId/touch/perform
  */
-commands.performTouchAction = function () {
-  var _this = this;
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      touchAction = fargs.all[0];
+commands.performTouchAction = function() {
+  const _this = this;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const touchAction = fargs.all[0];
 
   try {
     _this._jsonWireCall({
       method: 'POST',
       relPath: '/touch/perform',
-      data: {actions: touchAction.toJSON()},
+      data: { actions: touchAction.toJSON() },
       cb: callbackWithData(cb, this)
     });
   } catch (err) {
@@ -1670,20 +1770,22 @@ commands.performTouchAction = function () {
  *
  * @jsonWire POST /session/:sessionId/touch/multi/perform
  */
-commands.performMultiAction = function () {
-  var _this = this;
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      multiTouchAction = fargs.all[1];
-  if(!multiTouchAction) {
+commands.performMultiAction = function() {
+  const _this = this;
+  const fargs = utils.varargs(arguments);
+  let cb = fargs.callback;
+  let element = fargs.all[0];
+  let multiTouchAction = fargs.all[1];
+  if (!multiTouchAction) {
     multiTouchAction = element;
     element = null;
   }
-  element =  element || multiTouchAction.element;
+  element = element || multiTouchAction.element;
   try {
-    var data = multiTouchAction.toJSON(element);
-    if(element) { data.elementId = element.value.toString(); }
+    const data = multiTouchAction.toJSON(element);
+    if (element) {
+      data.elementId = element.value.toString();
+    }
     _this._jsonWireCall({
       method: 'POST',
       relPath: '/touch/multi/perform',
@@ -1703,20 +1805,22 @@ commands.performMultiAction = function () {
  * @jsonWire POST /session/:sessionId/moveto
  */
 commands.moveTo = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      xoffset = fargs.all[1],
-      yoffset = fargs.all[2];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const xoffset = fargs.all[1];
+  const yoffset = fargs.all[2];
 
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/moveto'
-    , data: { element:
-      element? element.toString(): null,
+    method: 'POST',
+    relPath: '/moveto',
+    data: {
+      element:
+                element ? element.toString() : null,
       xoffset: xoffset,
-      yoffset: yoffset }
-    , cb: simpleCallback(cb)
+      yoffset: yoffset
+    },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1729,14 +1833,14 @@ commands.moveTo = function() {
  * @jsonWire POST /session/:sessionId/buttondown
  */
 commands.buttonDown = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      button = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const button = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/buttondown'
-    , data: {button: button}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/buttondown',
+    data: { button: button },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1749,14 +1853,14 @@ commands.buttonDown = function() {
  * @jsonWire POST /session/:sessionId/buttonup
  */
 commands.buttonUp = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      button = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const button = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/buttonup'
-    , data: {button: button}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/buttonup',
+    data: { button: button },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1769,15 +1873,15 @@ commands.buttonUp = function() {
  */
 commands.click = function() {
   // parsing args, button optional
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      button = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const button = fargs.all[0];
 
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/click'
-    , data: {button: button}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/click',
+    data: { button: button },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1787,13 +1891,13 @@ commands.click = function() {
  * @jsonWire POST /session/:sessionId/element/:id/swipe
  */
 commands.swipe = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-    startX = fargs.all[0],
-    startY = fargs.all[1],
-    endX = fargs.all[2],
-    endY = fargs.all[3],
-    duration = fargs.all[4];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const startX = fargs.all[0];
+  const startY = fargs.all[1];
+  const endX = fargs.all[2];
+  const endY = fargs.all[3];
+  const duration = fargs.all[4];
   this._jsonWireCall({
     method: 'POST',
     relPath: `/element/${startX}/swipe`,
@@ -1814,11 +1918,11 @@ commands.swipe = function() {
  * @jsonWire POST /session/:sessionId/doubleclick
  */
 commands.doubleclick = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/doubleclick'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/doubleclick',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1830,36 +1934,40 @@ commands.doubleclick = function() {
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
 commands.type = function(element, keys) {
-  var cb = findCallback(arguments);
-  if (!(keys instanceof Array)) {keys = [keys];}
+  const cb = findCallback(arguments);
+  if (!(keys instanceof Array)) {
+    keys = [ keys ];
+  }
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
-    if (typeof key !== "string") {
+    if (typeof key !== 'string') {
       keys[idx] = key.toString();
     }
   });
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + element + '/value'
-    , data: {value: keys}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/element/' + element + '/value',
+    data: { value: keys },
+    cb: simpleCallback(cb)
   });
 };
 
 commands.replace = function(element, keys) {
-  var cb = findCallback(arguments);
-  if (!(keys instanceof Array)) {keys = [keys];}
+  const cb = findCallback(arguments);
+  if (!(keys instanceof Array)) {
+    keys = [ keys ];
+  }
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
-    if (typeof key !== "string") {
+    if (typeof key !== 'string') {
       keys[idx] = key.toString();
     }
   });
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/element/' + element + '/replace_value'
-    , data: {value: keys}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/element/' + element + '/replace_value',
+    data: { value: keys },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1870,11 +1978,11 @@ commands.replace = function(element, keys) {
  * @jsonWire POST /session/:sessionId/element/:id/submit
  */
 commands.submit = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + element + '/submit'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/element/' + element + '/submit',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1886,19 +1994,21 @@ commands.submit = function(element) {
  * @jsonWire POST /session/:sessionId/keys
  */
 commands.keys = function(keys) {
-  var cb = findCallback(arguments);
-  if (!(keys instanceof Array)) {keys = [keys];}
+  const cb = findCallback(arguments);
+  if (!(keys instanceof Array)) {
+    keys = [ keys ];
+  }
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
-    if (typeof key !== "string") {
+    if (typeof key !== 'string') {
       keys[idx] = key.toString();
     }
   });
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/keys'
-    , data: {value: keys}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/keys',
+    data: { value: keys },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1908,11 +2018,11 @@ commands.keys = function(keys) {
  * @jsonWire POST /session/:sessionId/element/:id/clear
  */
 commands.clear = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/' + element + '/clear'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/element/' + element + '/clear',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -1922,11 +2032,11 @@ commands.clear = function(element) {
  * @jsonWire GET /session/:sessionId/title
  */
 commands.title = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/title'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/title',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1936,21 +2046,21 @@ commands.title = function() {
  * @jsonWire GET /session/:sessionId/source
  */
 commands.source = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-		method: 'GET'
-		, relPath: '/source'
-		, cb: callbackWithData(cb, this)
-	});
+    method: 'GET',
+    relPath: '/source',
+    cb: callbackWithData(cb, this)
+  });
 };
 
 // element must be specified
-var _rawText = function(element) {
-  var cb = findCallback(arguments);
+const _rawText = function(element) {
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/text'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/text',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -1962,16 +2072,20 @@ var _rawText = function(element) {
  * @docOrder 1
  */
 commands.text = function() {
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var element = fargs.all[0];
-  var _this = this;
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const element = fargs.all[0];
+  const _this = this;
   if (!element || element === 'body') {
-    commands.element.apply(this, ['tag name', 'body', function(err, bodyEl) {
-      if (!err) {_rawText.apply(_this, [bodyEl, cb]);} else {cb(err);}
-    }]);
-  }else {
-    _rawText.apply(_this, [element, cb]);
+    commands.element.apply(this, [ 'tag name', 'body', function(err, bodyEl) {
+      if (!err) {
+        _rawText.apply(_this, [ bodyEl, cb ]);
+      } else {
+        cb(err);
+      }
+    } ]);
+  } else {
+    _rawText.apply(_this, [ element, cb ]);
   }
 };
 
@@ -1984,14 +2098,14 @@ commands.text = function() {
  * @docOrder 3
  */
 commands.textPresent = function(searchText, element) {
-  var cb = findCallback(arguments);
-  commands.text.apply(this, [element, function(err, text) {
+  const cb = findCallback(arguments);
+  commands.text.apply(this, [ element, function(err, text) {
     if (err) {
       cb(err, null);
     } else {
       cb(err, text.indexOf(searchText) >= 0);
     }
-  }]);
+  } ]);
 };
 
 /**
@@ -2000,11 +2114,11 @@ commands.textPresent = function(searchText, element) {
  * @jsonWire GET /session/:sessionId/alert_text
  */
 commands.alertText = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/alert_text'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/alert_text',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2014,12 +2128,12 @@ commands.alertText = function() {
  * @jsonWire POST /session/:sessionId/alert_text
  */
 commands.alertKeys = function(keys) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/alert_text'
-    , data: {text: keys}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/alert_text',
+    data: { text: keys },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2029,11 +2143,11 @@ commands.alertKeys = function(keys) {
  * @jsonWire POST /session/:sessionId/accept_alert
  */
 commands.acceptAlert = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/accept_alert'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/accept_alert',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2043,11 +2157,11 @@ commands.acceptAlert = function() {
  * @jsonWire POST /session/:sessionId/dismiss_alert
  */
 commands.dismissAlert = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/dismiss_alert'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/dismiss_alert',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2057,11 +2171,11 @@ commands.dismissAlert = function() {
  * @jsonWire POST /session/:sessionId/element/active
  */
 commands.active = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/element/active'
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/element/active',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2071,11 +2185,11 @@ commands.active = function() {
  * @jsonWire GET /session/:sessionId/url
  */
 commands.url = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/url'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/url',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2085,11 +2199,11 @@ commands.url = function() {
  * @jsonWire GET /session/:sessionId/cookie
  */
 commands.allCookies = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/cookie'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/cookie',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2103,15 +2217,17 @@ commands.allCookies = function() {
  * @jsonWire POST /session/:sessionId/cookie
  */
 commands.setCookie = function(cookie) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   // setting secure otherwise selenium server throws
-  if(cookie){ cookie.secure = cookie.secure || false; }
+  if (cookie) {
+    cookie.secure = cookie.secure || false;
+  }
 
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/cookie'
-    , data: { cookie: cookie }
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/cookie',
+    data: { cookie: cookie },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2121,11 +2237,11 @@ commands.setCookie = function(cookie) {
  * @jsonWire DELETE /session/:sessionId/cookie
  */
 commands.deleteAllCookies = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'DELETE'
-    , relPath: '/cookie'
-    , cb: simpleCallback(cb)
+    method: 'DELETE',
+    relPath: '/cookie',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2135,11 +2251,11 @@ commands.deleteAllCookies = function() {
  * @jsonWire DELETE /session/:sessionId/cookie/:name
  */
 commands.deleteCookie = function(name) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'DELETE'
-    , relPath: '/cookie/' + encodeURIComponent(name)
-    , cb: simpleCallback(cb)
+    method: 'DELETE',
+    relPath: '/cookie/' + encodeURIComponent(name),
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2149,11 +2265,11 @@ commands.deleteCookie = function(name) {
  * @jsonWire GET /session/:sessionId/orientation
  */
 commands.getOrientation = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/orientation'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/orientation',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2163,12 +2279,12 @@ commands.getOrientation = function() {
  * @jsonWire POST /session/:sessionId/orientation
  */
 commands.setOrientation = function(orientation) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/orientation'
-    , data: { orientation: orientation }
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/orientation',
+    data: { orientation: orientation },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2180,14 +2296,14 @@ commands.setOrientation = function(orientation) {
  * @jsonWire POST /session/:sessionId/local_storage
  */
 commands.setLocalStorageKey = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      key = fargs.all[0],
-      value = fargs.all[1];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const key = fargs.all[0];
+  const value = fargs.all[1];
 
   commands.safeExecute.apply(
     this,
-    ["localStorage.setItem(arguments[0], arguments[1])", [key, value], cb]
+    [ 'localStorage.setItem(arguments[0], arguments[1])', [ key, value ], cb ]
   );
 };
 
@@ -2199,13 +2315,13 @@ commands.setLocalStorageKey = function() {
  * @jsonWire GET /session/:sessionId/local_storage/key/:key
  */
 commands.getLocalStorageKey = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      key = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const key = fargs.all[0];
 
   commands.safeEval.apply(
     this,
-    ["localStorage.getItem('" + key + "')", cb]
+    [ "localStorage.getItem('" + key + "')", cb ]
   );
 };
 
@@ -2217,13 +2333,13 @@ commands.getLocalStorageKey = function() {
  * @jsonWire DELETE /session/:sessionId/local_storage/key/:key
  */
 commands.removeLocalStorageKey = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      key = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const key = fargs.all[0];
 
   commands.safeExecute.apply(
     this,
-    ["localStorage.removeItem(arguments[0])", [key], cb]
+    [ 'localStorage.removeItem(arguments[0])', [ key ], cb ]
   );
 };
 
@@ -2235,47 +2351,48 @@ commands.removeLocalStorageKey = function() {
  * @jsonWire DELETE /session/:sessionId/local_storage
  */
 commands.clearLocalStorage = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
 
   commands.safeExecute.apply(
     this,
-    ["localStorage.clear()", cb]
+    [ 'localStorage.clear()', cb ]
   );
 };
 
 // deprecated
-var _isVisible1 = function(element){
-  var cb = findCallback(arguments);
-  commands.getComputedCSS.apply(this, [element, "display", function(err, display){
-    if(err){
+const _isVisible1 = function(element) {
+  const cb = findCallback(arguments);
+  commands.getComputedCSS.apply(this, [ element, 'display', function(err, display) {
+    if (err) {
       return cb(err);
     }
 
-    cb(null, display !== "none");
-  }]);
+    cb(null, display !== 'none');
+  } ]);
 };
 
 // deprecated
-var _isVisible2 = function(queryType, querySelector){
-  var cb = findCallback(arguments);
-  commands.elementIfExists.apply(this, [queryType, querySelector, function(err, element){
-    if(err){
+const _isVisible2 = function(queryType, querySelector) {
+  const cb = findCallback(arguments);
+  commands.elementIfExists.apply(this, [ queryType, querySelector, function(err, element) {
+    if (err) {
       return cb(err);
     }
 
-    if(element){
+    if (element) {
       element.isVisible(cb);
     } else {
-      cb(null, false); }
-  }]);
+      cb(null, false);
+    }
+  } ]);
 };
 
 // deprecated
 commands.isVisible = function() {
   deprecator.warn('isVisible', 'isVisible has been deprecated, use isDisplayed instead.');
 
-  var args = __slice.call(arguments, 0);
+  const args = __slice.call(arguments, 0);
   if (args.length <= 2) {
     _isVisible1.apply(this, args);
   } else {
@@ -2288,11 +2405,11 @@ commands.isVisible = function() {
  * getPageIndex(element, cb) -> cb(err, pageIndex)
  */
 commands.getPageIndex = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/pageIndex'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/pageIndex',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2302,11 +2419,11 @@ commands.getPageIndex = function(element) {
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
 commands.getLocation = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/location'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/location',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2316,11 +2433,11 @@ commands.getLocation = function(element) {
  * @jsonWire GET /session/:sessionId/element/:id/location_in_view
  */
 commands.getLocationInView = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/location_in_view'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/location_in_view',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2330,11 +2447,11 @@ commands.getLocationInView = function(element) {
  * @jsonWire GET /session/:sessionId/element/:id/size
  */
 commands.getSize = function(element) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/element/' + element + '/size'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/element/' + element + '/size',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -2344,34 +2461,34 @@ commands.getSize = function(element) {
  * uploadFile(filepath, cb) -> cb(err, filepath)
  */
 commands.uploadFile = function(filepath) {
-  var cb = findCallback(arguments);
-  var _this = this;
-  var archiver = require('archiver');
+  const cb = findCallback(arguments);
+  const _this = this;
+  const archiver = require('archiver');
 
-  var archive = archiver('zip');
-  var dataList = [];
+  const archive = archiver('zip');
+  const dataList = [];
 
   archive
-  .on('error', function(err) {
-    cb(err);
-  })
-  .on('data', function(data) {
-    dataList.push(data);
-  })
-  .on('end', function() {
-    _this._jsonWireCall({
-    method: 'POST'
-      , relPath: '/file'
-      , data: { file: Buffer.concat(dataList).toString('base64') },
-      cb: callbackWithData(cb, _this)
+    .on('error', function(err) {
+      cb(err);
+    })
+    .on('data', function(data) {
+      dataList.push(data);
+    })
+    .on('end', function() {
+      _this._jsonWireCall({
+        method: 'POST',
+        relPath: '/file',
+        data: { file: Buffer.concat(dataList).toString('base64') },
+        cb: callbackWithData(cb, _this)
+      });
     });
-  });
 
   archive
-  .append(
-    fs.createReadStream(filepath),
-    { name: path.basename(filepath) }
-  );
+    .append(
+      fs.createReadStream(filepath),
+      { name: path.basename(filepath) }
+    );
 
   archive.finalize(function(err) {
     if (err) {
@@ -2380,33 +2497,33 @@ commands.uploadFile = function(filepath) {
   });
 };
 
-commands.waitForJsCondition = function(){
+commands.waitForJsCondition = function() {
   deprecator.warn('waitForJsCondition',
     'waitForJsCondition has been deprecated, use waitFor + jsCondition asserter instead.');
 
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var jsConditionExpr = fargs.all[0],
-      timeout = fargs.all[1],
-      pollFreq = fargs.all[2];
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const jsConditionExpr = fargs.all[0];
+  const timeout = fargs.all[1];
+  const pollFreq = fargs.all[2];
   commands.waitFor.apply(this, [
     {
       asserter: asserters.jsCondition(jsConditionExpr, true),
       timeout: timeout,
       pollFreq: pollFreq
     }, function(err, value) {
-      if(err && err.message && err.message.match(/Condition/)) {
+      if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
       } else {
         cb(err, value);
       }
-    }]);
+    } ]);
 };
 commands.waitForCondition = commands.waitForJsCondition;
 
 // script to be executed in browser
-var _waitForConditionInBrowserJsScript =
-  utils.inlineJs(fs.readFileSync( __dirname + "/../browser-scripts/wait-for-cond-in-browser.js", 'utf8'));
+const _waitForConditionInBrowserJsScript =
+    utils.inlineJs(fs.readFileSync(__dirname + '/../browser-scripts/wait-for-cond-in-browser.js', 'utf8'));
 
 /**
  * Waits for JavaScript condition to be true (async script polling within browser):
@@ -2416,19 +2533,23 @@ var _waitForConditionInBrowserJsScript =
  * return true if condition satisfied, error otherwise.
  */
 commands.waitForConditionInBrowser = function() {
-  var _this = this;
+  const _this = this;
   // parsing args
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      conditionExpr = fargs.all[0],
-      timeout = fargs.all[1] || 1000,
-      poll = fargs.all[2] || 100;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const conditionExpr = fargs.all[0];
+  const timeout = fargs.all[1] || 1000;
+  const poll = fargs.all[2] || 100;
 
   // calling script
-  commands.safeExecuteAsync.apply( _this, [_waitForConditionInBrowserJsScript,
-    [conditionExpr,timeout,poll], function(err,res) {
-      if(err) {return cb(err);}
-      if(res !== true) {return cb("waitForConditionInBrowser failure for: " + conditionExpr);}
+  commands.safeExecuteAsync.apply(_this, [ _waitForConditionInBrowserJsScript,
+    [ conditionExpr, timeout, poll ], function(err, res) {
+      if (err) {
+        return cb(err);
+      }
+      if (res !== true) {
+        return cb('waitForConditionInBrowser failure for: ' + conditionExpr);
+      }
       cb(null, res);
     }
   ]);
@@ -2438,15 +2559,18 @@ commands.waitForConditionInBrowser = function() {
  * sleep(ms, cb) -> cb(err)
  */
 commands.sleep = function(ms, cb) {
-  cb = cb || function() {};
-  setTimeout(cb , ms);
+  cb = cb || function() {
+  };
+  setTimeout(cb, ms);
 };
 
 /**
  * noop(cb) -> cb(err)
  */
 commands.noop = function(cb) {
-  if(cb) { cb(); }
+  if (cb) {
+    cb();
+  }
 };
 
 /**
@@ -2455,11 +2579,11 @@ commands.noop = function(cb) {
  * @jsonWire POST /session/:sessionId/appium/device/shake
  */
 commands.shakeDevice = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/shake'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/shake',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2475,14 +2599,14 @@ commands.shake = commands.shakeDevice;
  * @jsonWire POST /session/:sessionId/appium/device/lock
  */
 commands.lockDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-           seconds = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const seconds = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/lock'
-    , data: {seconds: seconds}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/lock',
+    data: { seconds: seconds },
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2498,12 +2622,12 @@ commands.lock = commands.lockDevice;
  * @jsonWire POST /session/:sessionId/appium/device/lock
  */
 commands.unlockDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/unlock'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/unlock',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2519,12 +2643,12 @@ commands.unlock = commands.unlockDevice;
  * @jsonWire POST /session/:sessionId/appium/device/is_locked
  */
 commands.isLocked = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/is_locked'
-    , cb: callbackWithData(cb)
+    method: 'POST',
+    relPath: '/appium/device/is_locked',
+    cb: callbackWithData(cb)
   });
 };
 
@@ -2535,17 +2659,19 @@ commands.isLocked = function() {
  * @jsonWire POST /session/:sessionId/appium/device/keyevent
  */
 commands.deviceKeyEvent = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      keycode = fargs.all[0],
-      metastate = fargs.all[1];
-  var data = {keycode: keycode};
-  if(metastate) { data.metastate = metastate; }
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const keycode = fargs.all[0];
+  const metastate = fargs.all[1];
+  const data = { keycode: keycode };
+  if (metastate) {
+    data.metastate = metastate;
+  }
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/keyevent'
-    , data: data
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/keyevent',
+    data: data,
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2565,21 +2691,23 @@ commands.pressDeviceKey = commands.deviceKeyEvent;
  * @jsonWire POST /session/:sessionId/appium/device/rotate
  */
 commands.rotateDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      element = fargs.all[0],
-      opts = fargs.all[1];
-  if(!(element && element.value)) {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const opts = fargs.all[1];
+  if (!(element && element.value)) {
     opts = element;
     element = null;
   }
-  var data = _.clone(opts);
-  if(element) { data.element = element.value.toString(); }
+  const data = _.clone(opts);
+  if (element) {
+    data.element = element.value.toString();
+  }
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/rotate'
-    , data: data
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/rotate',
+    data: data,
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2598,11 +2726,11 @@ commands.rotate = commands.rotateDevice;
  * @jsonWire GET /session/:sessionId/appium/device/current_activity
  */
 commands.getCurrentDeviceActivity = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/appium/device/current_activity'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/appium/device/current_activity',
+    cb: callbackWithData(cb, this)
   });
 };
 /**
@@ -2618,14 +2746,14 @@ commands.getCurrentActivity = commands.getCurrentDeviceActivity;
  * @jsonWire POST /session/:sessionId/appium/device/install_app
  */
 commands.installAppOnDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      appPath = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const appPath = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/install_app'
-    , data: { appPath: appPath}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/install_app',
+    data: { appPath: appPath },
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2641,14 +2769,14 @@ commands.installApp = commands.installAppOnDevice;
  * @jsonWire POST /session/:sessionId/appium/device/remove_app
  */
 commands.removeAppFromDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      appId = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const appId = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/remove_app'
-    , data: { appId: appId}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/remove_app',
+    data: { appId: appId },
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2664,14 +2792,14 @@ commands.removeApp = commands.removeAppFromDevice;
  * @jsonWire POST /session/:sessionId/appium/device/app_installed
  */
 commands.isAppInstalledOnDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      bundleId = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const bundleId = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/app_installed'
-    , data: {bundleId: bundleId}
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/appium/device/app_installed',
+    data: { bundleId: bundleId },
+    cb: callbackWithData(cb, this)
   });
 };
 /**
@@ -2690,24 +2818,24 @@ commands.isAppInstalled = commands.isAppInstalledOnDevice;
  * @jsonWire POST /session/:sessionId/appium/device/hide_keyboard
  */
 commands.hideDeviceKeyboard = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
-  var data = {};
-  switch(typeof fargs.all[0]) {
-    case 'string':
-      data = {keyName: fargs.all[0]};
-      break;
-    case 'object':
-      data = fargs.all[0];
-      break;
-    default:
-      data= null;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  let data = {};
+  switch (typeof fargs.all[0]) {
+  case 'string':
+    data = { keyName: fargs.all[0] };
+    break;
+  case 'object':
+    data = fargs.all[0];
+    break;
+  default:
+    data = null;
   }
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/hide_keyboard'
-    , data: data
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/hide_keyboard',
+    data: data,
+    cb: simpleCallback(cb)
   });
 };
 commands.hideKeyboard = commands.hideDeviceKeyboard;
@@ -2718,15 +2846,15 @@ commands.hideKeyboard = commands.hideDeviceKeyboard;
  * @jsonWire POST /session/:sessionId/appium/device/push_file
  */
 commands.pushFileToDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      pathOnDevice = fargs.all[0],
-      base64Data = fargs.all[1];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const pathOnDevice = fargs.all[0];
+  const base64Data = fargs.all[1];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/push_file'
-    , data: {path: pathOnDevice, data: base64Data}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/push_file',
+    data: { path: pathOnDevice, data: base64Data },
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2736,21 +2864,20 @@ commands.pushFileToDevice = function() {
  */
 commands.pushFile = commands.pushFileToDevice;
 
-
 /**
  * pullFileFromDevice(pathOnDevice, cb) -> cb(base64EncodedData, err)
  *
  * @jsonWire POST /session/:sessionId/appium/device/pull_file
  */
 commands.pullFileFromDevice = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      pathOnDevice = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const pathOnDevice = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/pull_file'
-    , data: {path: pathOnDevice}
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/appium/device/pull_file',
+    data: { path: pathOnDevice },
+    cb: callbackWithData(cb, this)
   });
 };
 /**
@@ -2765,23 +2892,23 @@ commands.pullFile = commands.pullFileFromDevice;
  *
  * @jsonWire POST /session/:sessionId/appium/device/pull_folder
  */
- commands.pullFolderFromDevice = function() {
-   var fargs = utils.varargs(arguments);
-   var cb = fargs.callback,
-       pathOnDevice = fargs.all[0];
-   this._jsonWireCall({
-     method: 'POST'
-     , relPath: '/appium/device/pull_folder'
-     , data: {path: pathOnDevice}
-     , cb: callbackWithData(cb, this)
-   });
- };
+commands.pullFolderFromDevice = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const pathOnDevice = fargs.all[0];
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: '/appium/device/pull_folder',
+    data: { path: pathOnDevice },
+    cb: callbackWithData(cb, this)
+  });
+};
 
- /**
-  * pullFolder(pathOnDevice, cb) -> cb(base64EncodedData, err)
-  *
-  * @jsonWire POST /session/:sessionId/appium/device/pull_folder
-  */
+/**
+ * pullFolder(pathOnDevice, cb) -> cb(base64EncodedData, err)
+ *
+ * @jsonWire POST /session/:sessionId/appium/device/pull_folder
+ */
 commands.pullFolder = commands.pullFolderFromDevice;
 
 /**
@@ -2790,11 +2917,11 @@ commands.pullFolder = commands.pullFolderFromDevice;
  * @jsonWire POST /session/:sessionId/appium/device/toggle_airplane_mode
  */
 commands.toggleAirplaneModeOnDevice = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/toggle_airplane_mode'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/toggle_airplane_mode',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2816,11 +2943,11 @@ commands.toggleFlightMode = commands.toggleAirplaneModeOnDevice;
  * @jsonWire POST /session/:sessionId/appium/device/toggle_wifi
  */
 commands.toggleWiFiOnDevice = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/toggle_wifi'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/toggle_wifi',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2836,11 +2963,11 @@ commands.toggleWiFi = commands.toggleWiFiOnDevice;
  * @jsonWire POST /session/:sessionId/appium/device/toggle_location_services
  */
 commands.toggleLocationServicesOnDevice = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/toggle_location_services'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/toggle_location_services',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2856,11 +2983,11 @@ commands.toggleLocationServices = commands.toggleLocationServicesOnDevice;
  * @jsonWire POST /session/:sessionId/appium/device/toggle_data
  */
 commands.toggleDataOnDevice = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/toggle_data'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/toggle_data',
+    cb: simpleCallback(cb)
   });
 };
 /**
@@ -2876,11 +3003,11 @@ commands.toggleData = commands.toggleDataOnDevice;
  * @jsonWire POST /session/:sessionId/appium/app/launch
  */
 commands.launchApp = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/launch'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/app/launch',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2890,14 +3017,13 @@ commands.launchApp = function() {
  * @jsonWire POST /session/:sessionId/appium/app/close
  */
 commands.closeApp = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/close'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/app/close',
+    cb: simpleCallback(cb)
   });
 };
-
 
 /**
  * resetApp(cb) -> cb(err)
@@ -2905,11 +3031,11 @@ commands.closeApp = function() {
  * @jsonWire POST /session/:sessionId/appium/app/reset
  */
 commands.resetApp = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/reset'
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/app/reset',
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2919,14 +3045,14 @@ commands.resetApp = function() {
  * @jsonWire POST /session/:sessionId/appium/app/background
  */
 commands.backgroundApp = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      seconds = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const seconds = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/background'
-    , data: {seconds: seconds}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/app/background',
+    data: { seconds: seconds },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -2936,15 +3062,15 @@ commands.backgroundApp = function() {
  * @jsonWire POST /session/:sessionId/appium/app/end_test_coverage
  */
 commands.endTestCoverageForApp = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      intent = fargs.all[0],
-      path = fargs.all[1];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const intent = fargs.all[0];
+  const path = fargs.all[1];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/end_test_coverage'
-    , data: {intent: intent, path: path}
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/appium/app/end_test_coverage',
+    data: { intent: intent, path: path },
+    cb: callbackWithData(cb, this)
   });
 };
 /**
@@ -2968,14 +3094,14 @@ commands.endCoverage = commands.endTestCoverageForApp;
  * @jsonWire POST /session/:sessionId/appium/app/complex_find
  */
 commands.complexFindInApp = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      selector = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const selector = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/complex_find'
-    , data: {selector: selector}
-    , cb: elementOrElementsCallback(cb, this)
+    method: 'POST',
+    relPath: '/appium/app/complex_find',
+    data: { selector: selector },
+    cb: elementOrElementsCallback(cb, this)
   });
 };
 
@@ -2994,14 +3120,14 @@ commands.complexFind = commands.complexFindInApp;
  * @jsonWire POST /session/:sessionId/appium/app/strings
  */
 commands.getAppStrings = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      language = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const language = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/app/strings'
-    , data: {language: language}
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/appium/app/strings',
+    data: { language: language },
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3011,12 +3137,12 @@ commands.getAppStrings = function() {
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 commands.setImmediateValueInApp = function(element, value) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/element/' + element.value.toString() + '/value'
-    , data: {value: value}
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/element/' + element.value.toString() + '/value',
+    data: { value: value },
+    cb: simpleCallback(cb)
   });
 };
 
@@ -3028,14 +3154,14 @@ commands.setImmediateValueInApp = function(element, value) {
  * @jsonWire POST /session/:sessionId/appium/device/start_activity
  */
 commands.startActivity = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-    options = fargs.all[0];
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const options = fargs.all[0];
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/start_activity'
-    , data: options
-    , cb: simpleCallback(cb)
+    method: 'POST',
+    relPath: '/appium/device/start_activity',
+    data: options,
+    cb: simpleCallback(cb)
   });
 };
 
@@ -3052,13 +3178,13 @@ commands.setImmediateValue = commands.setImmediateValueInApp;
  * @jsonWire POST /session/:sessionId/network_connection
  */
 commands.setNetworkConnection = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/network_connection'
-    , data: {parameters: {type: fargs.all[0]}}
-    , cb: callbackWithData(cb, this)
+    method: 'POST',
+    relPath: '/network_connection',
+    data: { parameters: { type: fargs.all[0] } },
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3068,11 +3194,11 @@ commands.setNetworkConnection = function() {
  * @jsonWire GET /session/:sessionId/network_connection
  */
 commands.getNetworkConnection = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/network_connection'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/network_connection',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3082,11 +3208,11 @@ commands.getNetworkConnection = function() {
  * @jsonWire POST /session/:sessionId/appium/device/open_notifications
  */
 commands.openNotifications = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/device/open_notifications'
-    , cb: simpleCallback(cb, this)
+    method: 'POST',
+    relPath: '/appium/device/open_notifications',
+    cb: simpleCallback(cb, this)
   });
 };
 
@@ -3096,11 +3222,11 @@ commands.openNotifications = function() {
  * @jsonWire GET /session/:sessionId/appium/settings
  */
 commands.settings = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/appium/settings'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/appium/settings',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3110,13 +3236,13 @@ commands.settings = function() {
  * @jsonWire POST /session/:sessionId/appium/settings
  */
 commands.updateSettings = function() {
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback;
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/appium/settings'
-    , data: {settings: fargs.all[0]}
-    , cb: simpleCallback(cb, this)
+    method: 'POST',
+    relPath: '/appium/settings',
+    data: { settings: fargs.all[0] },
+    cb: simpleCallback(cb, this)
   });
 };
 
@@ -3126,11 +3252,11 @@ commands.updateSettings = function() {
  * @jsonWire GET /session/:sessionId/ime/available_engines
  */
 commands.availableIMEEngines = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/ime/available_engines'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/ime/available_engines',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3140,12 +3266,12 @@ commands.availableIMEEngines = function() {
  * @jsonWire POST /session/:sessionId/ime/activate
  */
 commands.activateIMEEngine = function(engine) {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/ime/activate'
-    , data: { engine: engine }
-    , cb: simpleCallback(cb, this)
+    method: 'POST',
+    relPath: '/ime/activate',
+    data: { engine: engine },
+    cb: simpleCallback(cb, this)
   });
 };
 
@@ -3155,11 +3281,11 @@ commands.activateIMEEngine = function(engine) {
  * @jsonWire POST /session/:sessionId/ime/deactivate
  */
 commands.deactivateIMEEngine = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'POST'
-    , relPath: '/ime/deactivate'
-    , cb: simpleCallback(cb, this)
+    method: 'POST',
+    relPath: '/ime/deactivate',
+    cb: simpleCallback(cb, this)
   });
 };
 
@@ -3169,11 +3295,11 @@ commands.deactivateIMEEngine = function() {
  * @jsonWire GET /session/:sessionId/ime/activated
  */
 commands.isIMEActive = function() {
-  var cb = findCallback(arguments);
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/ime/activated'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/ime/activated',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3182,12 +3308,12 @@ commands.isIMEActive = function() {
  *
  * @jsonWire GET /session/:sessionId/ime/active_engine
  */
-commands.activeIMEEngine = function () {
-  var cb = findCallback(arguments);
+commands.activeIMEEngine = function() {
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/ime/active_engine'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/ime/active_engine',
+    cb: callbackWithData(cb, this)
   });
 };
 
@@ -3196,27 +3322,26 @@ commands.activeIMEEngine = function () {
  *
  * @jsonWire GET /session/:sessionId/appium/device/system_time
  */
-commands.getDeviceTime = function () {
-  var cb = findCallback(arguments);
+commands.getDeviceTime = function() {
+  const cb = findCallback(arguments);
   this._jsonWireCall({
-    method: 'GET'
-    , relPath: '/appium/device/system_time'
-    , cb: callbackWithData(cb, this)
+    method: 'GET',
+    relPath: '/appium/device/system_time',
+    cb: callbackWithData(cb, this)
   });
 };
 
-commands.touch = function () {
-  var cb = findCallback(arguments);
-  var fargs = utils.varargs(arguments);
-  var cb = fargs.callback,
-      code = fargs.all[0],
-      args = fargs.all[1] || {},
-      actions = [];
+commands.touch = function() {
+  const cb = findCallback(arguments);
+  const fargs = utils.varargs(arguments);
+  const code = fargs.all[0];
+  const args = fargs.all[1] || {};
+  const actions = [];
   if (Array.isArray(code)) {
-    for (var i = 0, len = code.length; i < len; i++) {
+    for (let i = 0, len = code.length; i < len; i++) {
       if (i > 0) {
-        var curr = code[i];
-        var prev = code[i-1];
+        const curr = code[i];
+        const prev = code[i - 1];
         if (!curr.type) {
           curr.type = prev.type;
         }
@@ -3225,15 +3350,15 @@ commands.touch = function () {
     }
   } else if (typeof code === 'string') {
     args['type'] = code;
-    actions = [args];
+    actions = [ args ];
   } else {
-    cb(new Error('Touch function only accept a action name or a list of actions.'))
+    cb(new Error('Touch function only accept a action name or a list of actions.'));
   }
 
   this._jsonWireCall({
     method: 'POST',
     relPath: '/actions',
-    data: {actions: actions},
+    data: { actions: actions },
     cb: simpleCallback(cb)
   });
 };
