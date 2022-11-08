@@ -63,6 +63,27 @@ commands.sessions = function() {
 };
 
 /**
+ * next(cb) -> cb(err)
+ *
+ * @jsonWire POST /next
+ */
+commands.next = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const method = fargs.all[0];
+  const args = fargs.all[1] || [];
+  this._jsonWireCall({
+    method: 'POST',
+    absPath: 'next',
+    cb: callbackWithData(cb, this),
+    data: {
+      method,
+      args,
+    },
+  });
+};
+
+/**
  * Retrieves the current session id.
  * getSessionId(cb) -> cb(err, sessionId)
  * getSessionId()
@@ -1504,6 +1525,20 @@ commands.clickElement = function(element) {
     method: 'POST'
     , relPath: '/element/' + element + '/click'
     , cb: simpleCallback(cb)
+  });
+};
+
+/**
+ * takeElementScreenshot(element, cb) -> cb(err)
+ *
+ * @jsonWire POST /session/:sessionId/element/:id/screenshot
+ */
+commands.takeElementScreenshot = function(element) {
+  var cb = findCallback(arguments);
+  this._jsonWireCall({
+    method: 'POST',
+    relPath: `/element/${element}/screenshot`,
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3199,42 +3234,6 @@ commands.touch = function () {
     method: 'POST',
     relPath: '/actions',
     data: {actions: actions},
-    cb: simpleCallback(cb)
-  });
-};
-
-commands.keyboard = function () {
-  const fargs = utils.varargs(arguments);
-  const cb = fargs.callback;
-  const [ type, ...args ] = fargs.all;
-
-  const data = {
-    type,
-    args,
-  };
-
-  this._jsonWireCall({
-    method: 'POST',
-    relPath: '/keyboard',
-    data,
-    cb: simpleCallback(cb)
-  });
-};
-
-commands.mouse = function () {
-  const fargs = utils.varargs(arguments);
-  const cb = fargs.callback;
-  const [ type, ...args ] = fargs.all;
-
-  const data = {
-    type,
-    args,
-  };
-
-  this._jsonWireCall({
-    method: 'POST',
-    relPath: '/mouse',
-    data,
     cb: simpleCallback(cb)
   });
 };
