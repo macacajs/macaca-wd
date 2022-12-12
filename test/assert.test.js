@@ -110,7 +110,6 @@ describe('test/asserter.test.js', function() {
    * https://macacajs.github.io/macaca-wd/#hasElementByCss
    * https://macacajs.github.io/macaca-wd/#hasElementById
    * https://macacajs.github.io/macaca-wd/#hasElementByName
-   * https://macacajs.github.io/macaca-wd/#hasElementByLinkText
    * https://macacajs.github.io/macaca-wd/#hasElementByPartialLinkText
    * https://macacajs.github.io/macaca-wd/#hasElementByTagName
    * https://macacajs.github.io/macaca-wd/#hasElementByXPath
