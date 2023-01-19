@@ -14,3 +14,64 @@ Macaca is an open-source automation test solution for native, hybrid, mobile web
 ```bash
 $ npm i macaca-wd -D
 ```
+
+## Usage
+
+```javascript
+const wd = require('macaca-wd');
+
+const remoteConfig = {
+  host: 'localhost',
+  port: 3456
+};
+
+var driver = wd.promiseChainRemote(remoteConfig);
+
+before(function() {
+  return driver.init({
+    platformName: 'desktop', // iOS, Android, Desktop, Playwright
+    browserName: 'chrome',   // chromium, firefox, webkit
+    app: 'path/to/app',      // Only for mobile
+  });
+});
+
+after(function() {
+  return driver
+    .sleep(1000)
+    .quit();
+});
+
+it('#1 should', function() {
+
+  ...
+
+});
+
+...
+
+```
+
+## Mixin Helper
+
+```javascript
+import wd from 'macaca-wd';
+import {
+  extendsMixIn,
+} from 'macaca-wd/lib/helper'
+
+extendsMixIn(wd)
+```
+
+## Extend WD chain
+
+```javascript
+import wd from 'macaca-wd';
+
+wd.addPromiseChainMethod(name, method);
+```
+
+[API](//macacajs.github.io/macaca-wd/apis)
+
+## Demo
+
+[Macaca Getting Started](//macacajs.github.io/environment-setup)
