@@ -24,7 +24,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm i vuepress macaca-ecosystem -D
+        run: npm i lodash@4 -D
 
       - name: Build docs
         run: npm run docs:build
