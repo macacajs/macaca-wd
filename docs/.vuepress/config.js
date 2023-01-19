@@ -1,23 +1,46 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const macacaEcosystem = require('macaca-ecosystem');
 const traceFragment = require('macaca-ecosystem/lib/trace-fragment');
 
 const { name } = require('../../package');
 
+function getAPIList() {
+  const apisDir = path.resolve(__dirname, '..', 'apis');
+  return fs.readdirSync(apisDir)
+    .map(item => path.resolve(apisDir, item))
+    .filter(item => fs.statSync(item).isDirectory())
+    .map(groupDir => {
+      const groupName = path.relative(apisDir, groupDir);
+      const children = fs.readdirSync(groupDir).map(item => {
+        const fileName = item.replace(path.extname(item), '');
+        return [
+          `${groupName}/${fileName}`,
+          fileName,
+        ];
+      });
+      return {
+        title: groupName,
+        collapsable: false,
+        children,
+      };
+    });
+}
+
 module.exports = {
   dest: 'docs_dist',
   base: `/${name}/`,
-
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Macaca Webdriver API(Node.js)',
+      title: 'Macaca WD',
       description: 'Node.js WebDriver Client for Macaca',
     },
     '/zh/': {
       lang: 'zh-CN',
-      title: 'Macaca Webdriver API(Node.js)',
+      title: 'Macaca WD',
       description: 'Macaca Node.js 客户端 API 模块',
     },
   },
@@ -56,13 +79,11 @@ module.exports = {
           },
         },
         nav: [
-          {
-            text: 'Guide',
-            link: '/guide/'
-          },
           macacaEcosystem.en,
         ],
-        sidebar: {},
+        sidebar: {
+          '/apis/': getAPIList(),
+        },
       },
       '/zh/': {
         label: '简体中文',
@@ -76,13 +97,11 @@ module.exports = {
           },
         },
         nav: [
-          {
-            text: '指南',
-            link: '/zh/guide/'
-          },
           macacaEcosystem.zh,
         ],
-        sidebar: {},
+        sidebar: {
+          '/zh/apis/': getAPIList(),
+        },
       },
     },
   },
