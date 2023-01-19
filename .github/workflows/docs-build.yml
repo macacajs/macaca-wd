@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'docs/**'
 
 jobs:
   docs-build:
@@ -22,16 +24,14 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install jsdoc -D
+        run: npm i vuepress macaca-ecosystem -D
 
       - name: Build docs
-        run: |
-          npm run docs:build
-          cp -rf ./assets ./docs
+        run: npm run docs:build
 
       - name: Deploy to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./docs_dist
