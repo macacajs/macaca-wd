@@ -1,6 +1,6 @@
 # elementsByXPath
 
-* Search for multiple elements on the page, starting from the document root.
-* @summary Support: Android iOS Web(WebView)
-* @see {@link https://w3c.github.io/webdriver/#elements|POST /session/:sessionId/elements}
-* @param {string} value The XPath expression
+* 功能描述: 搜索页面上的多个元素。
+* 支持平台: Android iOS Web(WebView)
+* 标准链接: [POST /session/:sessionId/element](https://w3c.github.io/webdriver/#elements)
+* 参数: {string} value XPath 表达式。

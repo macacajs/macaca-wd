@@ -1,4 +1,4 @@
 # text
 
-* Returns the visible text for the element.
-* @summary Support: Android iOS Web(WebView)
+* 功能描述: 返回元素的可见文本。
+* 支持平台: Android iOS Web(WebView)

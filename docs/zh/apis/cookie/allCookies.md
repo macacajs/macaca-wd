@@ -1,5 +1,5 @@
 # allCookies
 
-* Returns all cookies associated with the address of the current browsing context’s active document.
-* @summary Support: Web(WebView)
-* @see {@link https://w3c.github.io/webdriver/#get-all-cookies|GET /session/:sessionId/cookie}
+* 功能描述: 获取与当前上下文关联的所有 cookie。
+* 支持平台: Web(WebView)
+* 标准链接: [POST /session/:sessionId/cookie](https://w3c.github.io/webdriver/#get-all-cookies)
