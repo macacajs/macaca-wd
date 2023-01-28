@@ -1,5 +1,5 @@
 # deleteAllCookies
 
-* Allows deletion of all cookies associated with the active document’s address.
-* @summary Support: Web(WebView)
-* @see {@link https://w3c.github.io/webdriver/#delete-all-cookies|DELETE /session/:sessionId/cookie/:name}
+* 功能描述: 删除当前上下文关联的所有 cookie。
+* 支持平台: Web(WebView)
+* 标准链接: [DELETE /session/:sessionId/cookie/:name](https://w3c.github.io/webdriver/#delete-all-cookies)

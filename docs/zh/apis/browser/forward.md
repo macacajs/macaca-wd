@@ -1,5 +1,5 @@
 # forward
 
-* Navigate forwards in the browser history, if possible.
-* @summary Support: Web(WebView)
-* @see {@link https://w3c.github.io/webdriver/#back|POST /session/:sessionId/forward}
+* 功能描述: 在浏览器历史记录中向前导航。
+* 支持平台: Web(WebView)
+* 标准链接: [POST /session/:sessionId/forwar](https://w3c.github.io/webdriver/#forward)

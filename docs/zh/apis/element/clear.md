@@ -1,5 +1,5 @@
 # clear
 
-* Clear a TEXTAREA or text INPUT element's value.
-* @summary Support: Android iOS Web(WebView)
-* @see {@link https://w3c.github.io/webdriver/#element-clear|POST /session/:sessionId/element/:id/clear}
+* 功能描述: 清除 TEXTAREA 或 INPUT 元素的值。
+* 支持平台: Android iOS Web(WebView)
+* 标准链接: [POST /session/:sessionId/element/:id/clear](https://w3c.github.io/webdriver/#element-clear)
