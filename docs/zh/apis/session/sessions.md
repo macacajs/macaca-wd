@@ -1,4 +1,4 @@
 # sessions
 
-* Returns a list of the currently active sessions.
-* @summary Support: Android iOS Web(WebView)
+* 功能描述: 返回当前活动会话的列表。
+* 支持平台: Android iOS Web(WebView)
