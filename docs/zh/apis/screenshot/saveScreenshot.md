@@ -1,6 +1,6 @@
 # saveScreenshot
 
-* Save the screenshot of the current page.
-* @summary Support: Android iOS Web(WebView)
-* @param {str} filepath The path to save the screenshot or left blank (will create a file in the system temp dir).
-* @returns The filepath of the screenshot.
+* 功能描述: 保存当前页面的截图。
+* 支持平台: Android iOS Web(WebView)
+* 参数: {string} filepath 保存屏幕截图的路径或为空（将在系统临时目录中创建一个文件）。
+* 返回: {string} 屏幕截图的文件路径。

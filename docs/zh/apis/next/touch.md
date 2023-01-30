@@ -1,8 +1,13 @@
 # touch
 
-* Apply touch actions on devices.
-* @summary Support: iOS, Android
-* @see {@link https://w3c.github.io/webdriver/#actions|POST /session/:sessionId/actions}
-* @param {string} action Name of the action, tap/doubleTap/press/pinch/rotate/drag.
-* @param [object] args Parameters of the action {@link https://github.com/alibaba/macaca/issues/366 more params}
-* @example driver.touch('doubleTap', {x: 100, y: 100});
+* 功能描述: 在设备上进行触摸操作。
+* 支持平台: iOS Android
+* 标准链接: [POST /session/:sessionId/actions](https://w3c.github.io/webdriver/#actions)
+* 参数: {string} action 动作名称, tap/doubleTap/press/pinch/rotate/drag
+* 参数: {object} args 动作参数, [更多参数](https://github.com/alibaba/macaca/issues/366)
+
+## 示例 
+
+```javascript
+driver.touch('doubleTap', { x: 100, y: 100 });
+```

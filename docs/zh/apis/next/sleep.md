@@ -1,5 +1,5 @@
 # sleep
 
-* Set the amount of time the driver should wait.
-* @summary Support: Android iOS Web(WebView)
-* @param {number} ms The amount of time to wait, in milliseconds
+* 功能描述: 设置程序应等待的时间。
+* 支持平台: Android iOS Web(WebView)
+* 参数: {string} ms 等待的时间，以毫秒为单位
