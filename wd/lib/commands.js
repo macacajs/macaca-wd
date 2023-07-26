@@ -1638,7 +1638,7 @@ commands.takeElementScreenshot = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
-    cb: simpleCallback(cb)
+    cb: callbackWithData(cb, this)
   });
 };
 
