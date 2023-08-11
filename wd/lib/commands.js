@@ -1073,7 +1073,6 @@ commands.waitForElement = function() {
  * asserter like: function(element , cb) -> cb(err, satisfied, el)
  */
 commands.waitForElements = function() {
-
   const cb = findCallback(arguments);
   const fargs = utils.varargs(arguments);
   const using = fargs.all[0];
@@ -1631,10 +1630,11 @@ commands.clickElement = function(element) {
  *
  * @jsonWire GET /session/:sessionId/element/:id/screenshot
  */
-commands.takeElementScreenshot = function(element) {
-  const cb = findCallback(arguments);
+commands.takeElementScreenshot = function() {
   const fargs = utils.varargs(arguments);
-  const params = fargs[0];
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const params = fargs.all[1] || {};
   this._jsonWireCall({
     method: 'GET',
     relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
