@@ -163,7 +163,7 @@ Webdriver.prototype._jsonWireCall = function(opts) {
   // logging
   httpUtils.emit(this, httpOpts.method, url, opts.data);
 
-  // writting data
+  // writing data
   const data = opts.data || {};
   httpOpts.prepareToSend(url, data);
   // building request

@@ -165,4 +165,20 @@ describe('test/utility.test.js', function() {
       assert.ok(driver);
     });
   });
+
+  /**
+   * https://macacajs.github.io/macaca-wd/#elementStatus
+   */
+  describe('elementStatus', async () => {
+    it('should work', async () => {
+      await driver.elementStatus();
+      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/next');
+      assert.equal(server.ctx.method, 'POST');
+      assert.deepEqual(server.ctx.response.body, {
+        sessionId: 'sessionId',
+        status: 0,
+        value: ''
+      });
+    });
+  });
 });
