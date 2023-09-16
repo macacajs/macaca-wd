@@ -1616,11 +1616,15 @@ commands.getValue = function() {
  *
  * @jsonWire POST /session/:sessionId/element/:id/click
  */
-commands.clickElement = function(element) {
-  const cb = findCallback(arguments);
+commands.clickElement = function() {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const element = fargs.all[0];
+  const params = fargs.all[1] || {};
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/click',
+    data: { clickOpts: params },
     cb: simpleCallback(cb)
   });
 };

@@ -98,8 +98,11 @@ elementCommands.replaceKeys = function (keys, cb) {
  *
  * @jsonWire POST /session/:sessionId/element/:id/click
  */
-elementCommands.click = function (cb) {
-  commands.clickElement.apply(this.browser, [this, cb]);
+elementCommands.click = function () {
+  const fargs = utils.varargs(arguments);
+  const cb = fargs.callback;
+  const clickOpts = fargs.all[0] || {};
+  commands.clickElement.apply(this.browser, [this, clickOpts, cb]);
 };
 
 /**
