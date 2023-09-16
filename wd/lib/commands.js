@@ -1624,7 +1624,7 @@ commands.clickElement = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/click',
-    data: params,
+    data: { clickOpts: params },
     cb: simpleCallback(cb)
   });
 };
