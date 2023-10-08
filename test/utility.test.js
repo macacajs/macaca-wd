@@ -181,4 +181,36 @@ describe('test/utility.test.js', function() {
       });
     });
   });
+
+  /**
+   * https://macacajs.github.io/macaca-wd/#page
+   */
+  describe('page', async () => {
+    it('should work', async () => {
+      await driver.page('url');
+      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/next');
+      assert.equal(server.ctx.method, 'POST');
+      assert.deepEqual(server.ctx.response.body, {
+        sessionId: 'sessionId',
+        status: 0,
+        value: ''
+      });
+    });
+  });
+
+  /**
+   * https://macacajs.github.io/macaca-wd/#page
+   */
+  describe('popup', async () => {
+    it('should work', async () => {
+      await driver.popup('url');
+      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/next');
+      assert.equal(server.ctx.method, 'POST');
+      assert.deepEqual(server.ctx.response.body, {
+        sessionId: 'sessionId',
+        status: 0,
+        value: ''
+      });
+    });
+  });
 });
