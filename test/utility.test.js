@@ -199,11 +199,11 @@ describe('test/utility.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#page
+   * https://macacajs.github.io/macaca-wd/#pagePopup
    */
-  describe('popup', async () => {
+  describe('pagePopup', async () => {
     it('should work', async () => {
-      await driver.popup('url');
+      await driver.pagePopup('url');
       assert.equal(server.ctx.url, '/wd/hub/session/sessionId/next');
       assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.response.body, {
