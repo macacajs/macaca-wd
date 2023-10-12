@@ -2273,7 +2273,7 @@ commands.allCookies = function() {
 commands.setCookie = function(cookie) {
   const cb = findCallback(arguments);
   // setting secure otherwise selenium server throws
-  if (cookie) {
+  if (cookie && typeof cookie === 'object') {
     cookie.secure = cookie.secure || false;
   }
 
