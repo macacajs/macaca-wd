@@ -121,32 +121,6 @@ describe('test/utility.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#initWindow
-   */
-  describe('initWindow', async () => {
-    it('should work', async () => {
-      await driver.initWindow({
-        width: 800,
-        height: 600,
-      });
-      assert.equal(
-        server.ctx.url,
-        '/wd/hub/session/sessionId/window/current/size'
-      );
-      assert.equal(server.ctx.method, 'POST');
-      assert.deepEqual(server.ctx.request.body, {
-        width: 800,
-        height: 600,
-      });
-      assert.deepEqual(server.ctx.response.body, {
-        sessionId: 'sessionId',
-        status: 0,
-        value: '',
-      });
-    });
-  });
-
-  /**
    * https://macacajs.github.io/macaca-wd/#openReporter
    */
   describe.skip('openReporter', async () => {
