@@ -1,3 +1,5 @@
+'use strict';
+
 const request = require('request');
 const utils = require('./utils');
 const urllib = require('url');
@@ -19,10 +21,10 @@ exports.emit = function(browser, method, url, data) {
 };
 
 exports.buildJsonCallUrl = function(baseUrl, sessionID, relPath, absPath) {
-  let path = ['session'];
+  let path = [ 'session' ];
   if (sessionID) { path.push('/', sessionID); }
   if (relPath) { path.push(relPath); }
-  if (absPath) { path = [absPath]; }
+  if (absPath) { path = [ absPath ]; }
   path = path.join('');
 
   return utils.resolveUrl(baseUrl, path);

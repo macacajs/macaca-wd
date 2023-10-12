@@ -1,3 +1,5 @@
+'use strict';
+
 const __slice = Array.prototype.slice;
 const Q = require('q');
 const _ = require('./lodash');
@@ -21,7 +23,7 @@ const elementChainableMethods = [
   'keys',
   'moveTo',
   'sleep',
-  'noop'
+  'noop',
 ];
 
 // gets the list of methods to be promisified.
@@ -29,7 +31,8 @@ function filterPromisedMethods(Obj) {
   return _(Obj).functions().filter(function(fname) {
     return !fname.match('^newElement$|^toJSON$|^toString$|^_') &&
             !EventEmitter.prototype[fname];
-  }).value();
+  })
+    .value();
 }
 
 module.exports = function(WebDriver, Element, chainable) {
@@ -72,9 +75,9 @@ module.exports = function(WebDriver, Element, chainable) {
 
       if (chainable) {
         return this._enrich(deferred.promise);
-      } else {
-        return deferred.promise;
       }
+      return deferred.promise;
+
     };
   }
 
@@ -131,7 +134,8 @@ module.exports = function(WebDriver, Element, chainable) {
           return this._enrich(
             _orig.apply(this, __slice.call(arguments, 0)), currentEl);
         };
-      }).value();
+      })
+        .value();
 
       // we get the list of methods dynamically.
       const promisedMethods = filterPromisedMethods(Object.getPrototypeOf(_this));
@@ -197,14 +201,14 @@ module.exports = function(WebDriver, Element, chainable) {
                   // method like click, where no result is expected, we return
                   // the element to make it chainable
                   return el;
-                } else {
-                  return res; // we have no choice but loosing the scope
                 }
+                return res; // we have no choice but loosing the scope
+
               });
-            } else {
-              // browser case.
-              return _this[fname].apply(_this, args);
             }
+            // browser case.
+            return _this[fname].apply(_this, args);
+
           });
         };
       }).value();
@@ -279,6 +283,7 @@ module.exports = function(WebDriver, Element, chainable) {
    * Resolves the promise (promised driver only)
    * browser.resolve(promise)
    * element.resolve(promise)
+   * @param promise
    */
   PromiseWebdriver.prototype.resolve = function(promise) {
     const qPromise = new Q(promise);
@@ -316,16 +321,16 @@ module.exports = function(WebDriver, Element, chainable) {
           return arg.toString();
         } else if (typeof arg === 'object') {
           return JSON.stringify(arg);
-        } else {
-          return arg;
         }
+        return arg;
+
       }).join(', ') + ' )';
       console.log(' --> ' + status + context + ' ' + method + args);
     });
   };
 
   return {
-    PromiseWebdriver: PromiseWebdriver,
-    PromiseElement: PromiseElement
+    PromiseWebdriver,
+    PromiseElement,
   };
 };

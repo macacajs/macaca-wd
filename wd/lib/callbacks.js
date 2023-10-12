@@ -1,9 +1,13 @@
+'use strict';
+
 const utils = require('./utils');
 const newError = utils.newError;
 const getJsonwireError = utils.getJsonwireError;
 const isWebDriverException = utils.isWebDriverException;
 
-const cbStub = function() {};
+const cbStub = function() {
+  // none
+};
 
 // just calls the callback when there is no result
 exports.simpleCallback = function(cb) {
@@ -16,7 +20,11 @@ exports.simpleCallback = function(cb) {
     } else {
       // looking for JsonWire response
       let jsonWireRes;
-      try {jsonWireRes = JSON.parse(data);} catch (ign) {}
+      try {
+        jsonWireRes = JSON.parse(data);
+      } catch (ign) {
+        // none
+      }
       if (jsonWireRes && (jsonWireRes.status !== undefined)) {
         // valid JsonWire response
         if (jsonWireRes.status === 0) {
@@ -40,7 +48,7 @@ exports.simpleCallback = function(cb) {
       } else {
         // something wrong
         cb(newError(
-          {message: 'Unexpected data in simpleCallback.', data: jsonWireRes || data}));
+          { message: 'Unexpected data in simpleCallback.', data: jsonWireRes || data }));
       }
     }
   };
@@ -56,7 +64,7 @@ const callbackWithDataBase = function(cb) {
     try {
       obj = JSON.parse(data);
     } catch (e) {
-      return cb(newError({message: 'Not JSON response', data: data}));
+      return cb(newError({ message: 'Not JSON response', data }));
     }
     try {
       alertText = obj.value.alert.text;
@@ -88,10 +96,10 @@ const callbackWithDataBase = function(cb) {
 exports.callbackWithData = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if (err) {return cb(err);}
+    if (err) { return cb(err); }
     if (isWebDriverException(obj.value)) {
       return cb(newError(
-        {message: obj.value.message, cause: obj.value}));
+        { message: obj.value.message, cause: obj.value }));
     }
     // we might get a WebElement back as part of executeScript, so let's
     // check to make sure we convert if necessary to element objects
@@ -112,14 +120,14 @@ exports.callbackWithData = function(cb, browser) {
 exports.elementCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if (err) {return cb(err);}
+    if (err) { return cb(err); }
     if (isWebDriverException(obj.value)) {
       return cb(newError(
-        {message: obj.value.message, cause: obj.value}));
+        { message: obj.value.message, cause: obj.value }));
     }
     if (!obj.value.ELEMENT) {
       cb(newError(
-        {message: 'no ELEMENT in response value field.', cause: obj}));
+        { message: 'no ELEMENT in response value field.', cause: obj }));
     } else {
       const el = browser.newElement(obj.value.ELEMENT);
       cb(null, el);
@@ -131,14 +139,14 @@ exports.elementCallback = function(cb, browser) {
 exports.elementsCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if (err) {return cb(err);}
+    if (err) { return cb(err); }
     if (isWebDriverException(obj.value)) {
       return cb(newError(
-        {message: obj.value.message, cause: obj.value}));
+        { message: obj.value.message, cause: obj.value }));
     }
     if (!(obj.value instanceof Array)) {
       return cb(newError(
-        {message: 'Response value field is not an Array.', cause: obj.value}));
+        { message: 'Response value field is not an Array.', cause: obj.value }));
     }
     let i;
     const elements = [];
@@ -154,10 +162,10 @@ exports.elementsCallback = function(cb, browser) {
 exports.elementOrElementsCallback = function(cb, browser) {
   cb = cb || cbStub;
   return callbackWithDataBase(function(err, obj) {
-    if (err) {return cb(err);}
+    if (err) { return cb(err); }
     if (isWebDriverException(obj.value)) {
       return cb(newError(
-        {message: obj.value.message, cause: obj.value}));
+        { message: obj.value.message, cause: obj.value }));
     }
     let el;
     if (obj.value.ELEMENT) {
@@ -173,7 +181,7 @@ exports.elementOrElementsCallback = function(cb, browser) {
       cb(null, elements);
     } else {
       cb(newError(
-        {message: 'no element or element array in response value field.', cause: obj}));
+        { message: 'no element or element array in response value field.', cause: obj }));
     }
   });
 };

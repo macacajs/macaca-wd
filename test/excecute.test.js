@@ -7,20 +7,21 @@ const { Server } = require('./helper');
 const wd = require('../lib/macaca-wd');
 
 describe('test/execute.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
   before(() => {
     server = new Server();
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
 
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   });
 
@@ -38,7 +39,7 @@ describe('test/execute.test.js', function() {
       assert.equal(server.ctx.url, '/wd/hub/session/execute');
       assert.deepEqual(server.ctx.request.body, {
         args: [],
-        script: 'return window'
+        script: 'return window',
       });
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',

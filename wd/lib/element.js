@@ -1,3 +1,5 @@
+'use strict';
+
 // Element object
 // Wrapper around browser methods
 const __slice = Array.prototype.slice;
@@ -24,11 +26,11 @@ Element.prototype.emit = function() {
   this.browser.emit.apply(this.browser, __slice.call(arguments, 0));
 };
 
-Element.prototype.toString = function () {
+Element.prototype.toString = function() {
   return String(this.value);
 };
 
-Element.prototype.toJSON = function () {
+Element.prototype.toJSON = function() {
   return { ELEMENT: this.value };
 };
 
@@ -48,7 +50,7 @@ _(elementCommands).each(function(fn, name) {
         fargs.callback.apply(null, cbArgs);
       }
     };
-    const args = fargs.all.concat([cb]);
+    const args = fargs.all.concat([ cb ]);
     return fn.apply(this, args);
   };
 }).value();

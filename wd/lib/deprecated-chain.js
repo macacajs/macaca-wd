@@ -1,3 +1,5 @@
+'use strict';
+
 const async = require('async');
 const _ = require('./lodash');
 
@@ -19,7 +21,7 @@ deprecatedChain.chain = function(obj) {
 
   // Add queue if not already here
   if (!_this._queue) {
-    _this._queue = async.queue(function (task, callback) {
+    _this._queue = async.queue(function(task, callback) {
       if (task.args.length > 0 && typeof task.args[task.args.length - 1] === 'function') {
         // wrap the existing callback
         // if this is queueAddAsync, we instead create a callback that will be
@@ -50,22 +52,22 @@ deprecatedChain.chain = function(obj) {
 
     // add unshift method if we need to add sth to the queue
     _this._queue = _.extend(_this._queue, {
-      unshift: function (data, callback) {
+      unshift(data, callback) {
         const _this = this;
         if (data.constructor !== Array) {
-          data = [data];
+          data = [ data ];
         }
         data.forEach(function(task) {
           _this.tasks.unshift({
             data: task,
-            callback: typeof callback === 'function' ? callback : null
+            callback: typeof callback === 'function' ? callback : null,
           });
           if (_this.saturated && _this.tasks.length === _this.concurrency) {
             _this.saturated();
           }
           async.nextTick(_this.process);
         });
-      }
+      },
     });
   }
 
@@ -74,7 +76,7 @@ deprecatedChain.chain = function(obj) {
   // builds a placeHolder functions
   const buildPlaceholder = function(name) {
     return function() {
-      _this._queue.push({name: name, args: Array.prototype.slice.call(arguments, 0)});
+      _this._queue.push({ name, args: Array.prototype.slice.call(arguments, 0) });
       return chain;
     };
   };
@@ -103,7 +105,7 @@ deprecatedChain.pauseChain = function(timeoutMs, cb) {
 };
 
 deprecatedChain.next = function() {
-  this._queue.unshift({name: arguments[0], args: _.rest(arguments)});
+  this._queue.unshift({ name: arguments[0], args: _.rest(arguments) });
 };
 
 deprecatedChain.queueAdd = function(func) {
@@ -117,9 +119,10 @@ deprecatedChain.queueAddAsync = function(func, cb) {
 };
 
 module.exports = {
-  patch: function(browser) {
+  patch(browser) {
     _(deprecatedChain).methods().each(function(methodName) {
       browser[methodName] = deprecatedChain[methodName].bind(browser);
-    }).value();
-  }
+    })
+      .value();
+  },
 };

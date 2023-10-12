@@ -7,20 +7,21 @@ const { Server } = require('./helper');
 const wd = require('../lib/macaca-wd');
 
 describe('test/cookie.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
   before(() => {
     server = new Server();
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
 
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   });
 
@@ -31,7 +32,7 @@ describe('test/cookie.test.js', function() {
   beforeEach(async () => {
     await driver.init({
       platformName: 'desktop',
-      browserName: 'chrome'
+      browserName: 'chrome',
     });
   });
 
@@ -58,7 +59,7 @@ describe('test/cookie.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -78,7 +79,7 @@ describe('test/cookie.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -92,12 +93,12 @@ describe('test/cookie.test.js', function() {
       assert.equal(server.ctx.url, '/wd/hub/session/sessionId/cookie');
       assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.request.body, {
-        cookie: 'test_cookie'
+        cookie: 'test_cookie',
       });
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });

@@ -10,7 +10,7 @@ class Server {
   constructor(options) {
     this.options = Object.assign(
       {
-        port: 3456
+        port: 3456,
       },
       options || {}
     );
@@ -35,7 +35,7 @@ class Server {
         this.ctx.body = {
           sessionId: 'sessionId',
           status: 0,
-          value: ''
+          value: '',
         };
       });
     }

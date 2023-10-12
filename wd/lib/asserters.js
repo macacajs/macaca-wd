@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('./lodash');
 const __slice = Array.prototype.slice;
 const utils = require('./utils');
@@ -13,7 +15,7 @@ function Asserter(_assert) {
  * @asserter
  */
 const nonEmptyText = new Asserter(
-  function (target, cb) {
+  function(target, cb) {
     target.text(function(err, text) {
       if (err) { return cb(err); }
       const satisfied = text && _(text).trim().value().length > 0;
@@ -25,6 +27,7 @@ const nonEmptyText = new Asserter(
 /**
  * asserters.textInclude(content) -> Asserter
  *
+ * @param content
  * @asserter
  */
 function textInclude(content) {
@@ -85,6 +88,8 @@ const isHidden = new Asserter(
  * asserters.jsCondition(jsConditionExpr) -> Asserter
  * jsConditionExpr: js script expression, should evaluate as boolean.
  *
+ * @param jsConditionExpr
+ * @param safe
  * @asserter
  */
 function jsCondition(jsConditionExpr, safe) {
@@ -93,22 +98,22 @@ function jsCondition(jsConditionExpr, safe) {
   return new Asserter(
     function(browser, cb) {
       const _eval = safe ? browser.safeEval : browser.eval;
-      _eval.apply(browser, [jsConditionExpr, function(err, res) {
-        if (err) {return cb(err);}
+      _eval.apply(browser, [ jsConditionExpr, function(err, res) {
+        if (err) { return cb(err); }
         cb(null, res, res);
-      }]);
+      } ]);
     }
   );
 }
 
 module.exports = {
-  Asserter: Asserter,
-  nonEmptyText: nonEmptyText,
-  isDisplayed: isDisplayed,
-  isNotDisplayed: isNotDisplayed,
-  textInclude: textInclude,
-  jsCondition: jsCondition,
+  Asserter,
+  nonEmptyText,
+  isDisplayed,
+  isNotDisplayed,
+  textInclude,
+  jsCondition,
   // deprecated
-  isVisible: isVisible,
-  isHidden: isHidden
+  isVisible,
+  isHidden,
 };

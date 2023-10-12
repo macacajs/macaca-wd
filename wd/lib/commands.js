@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const url = require('url');
 const path = require('path');
@@ -45,7 +47,7 @@ commands.status = function() {
   this._jsonWireCall({
     method: 'GET',
     absPath: 'status',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -59,7 +61,7 @@ commands.sessions = function() {
   this._jsonWireCall({
     method: 'GET',
     absPath: 'sessions',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -79,8 +81,8 @@ commands.next = function() {
     cb: callbackWithData(cb, this),
     data: {
       method,
-      args
-    }
+      args,
+    },
   });
 };
 
@@ -117,7 +119,7 @@ commands.execute = function() {
     method: 'POST',
     relPath: '/execute',
     cb: callbackWithData(cb, this),
-    data: { script: code, args: args }
+    data: { script: code, args },
   });
 };
 
@@ -145,7 +147,7 @@ commands.safeExecute = function() {
     method: 'POST',
     relPath: '/execute',
     cb: callbackWithData(cb, this),
-    data: { script: safeExecuteJsScript, args: [ code, args ] }
+    data: { script: safeExecuteJsScript, args: [ code, args ] },
   });
 };
 
@@ -174,6 +176,7 @@ commands.safeExecute = function() {
  * Safely evaluate expression, always returning  (using safeExecute):
  * safeEval(code, cb) -> cb(err, value)
  *
+ * @param code
  * @jsonWire POST /session/:sessionId/execute
  */
 commands.safeEval = function(code) {
@@ -197,7 +200,7 @@ commands.safeEval = function(code) {
 commands.executeAsync = function() {
   const fargs = utils.varargs(arguments);
   const cb = fargs.callback;
-  const code = fargs.all[0];
+  let code = fargs.all[0];
   const args = fargs.all[1] || [];
 
   code = codeToString(code);
@@ -205,7 +208,7 @@ commands.executeAsync = function() {
     method: 'POST',
     relPath: '/execute_async',
     cb: callbackWithData(cb, this),
-    data: { script: code, args: args }
+    data: { script: code, args },
   });
 };
 
@@ -232,7 +235,7 @@ commands.safeExecuteAsync = function() {
     method: 'POST',
     relPath: '/execute_async',
     cb: callbackWithData(cb, this),
-    data: { script: safeExecuteAsyncJsScript, args: [ code, args ] }
+    data: { script: safeExecuteAsyncJsScript, args: [ code, args ] },
   });
 };
 
@@ -268,7 +271,7 @@ commands.sessionCapabilities = function() {
   this._jsonWireCall({
     method: 'GET',
     // default url
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -301,7 +304,7 @@ commands.close = function() {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/window',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -315,13 +318,14 @@ commands.currentContext = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/context',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * context(contextRef, cb) -> cb(err, context)
  *
+ * @param contextRef
  * @jsonWire POST /session/:sessionId/context
  */
 commands.context = function(contextRef) {
@@ -330,7 +334,7 @@ commands.context = function(contextRef) {
     method: 'POST',
     relPath: '/context',
     cb: simpleCallback(cb),
-    data: { name: contextRef }
+    data: { name: contextRef },
   });
 };
 
@@ -344,13 +348,14 @@ commands.contexts = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/contexts',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * window(name, cb) -> cb(err)
  *
+ * @param windowRef
  * @jsonWire POST /session/:sessionId/window
  */
 commands.window = function(windowRef) {
@@ -359,13 +364,14 @@ commands.window = function(windowRef) {
     method: 'POST',
     relPath: '/window',
     cb: simpleCallback(cb),
-    data: { name: windowRef }
+    data: { name: windowRef },
   });
 };
 
 /**
  * frame(frameRef, cb) -> cb(err)
  *
+ * @param frameRef
  * @jsonWire POST /session/:sessionId/frame
  */
 commands.frame = function(frameRef) {
@@ -383,7 +389,7 @@ commands.frame = function(frameRef) {
     method: 'POST',
     relPath: '/frame',
     cb: simpleCallback(cb),
-    data: { id: frameRef }
+    data: { id: frameRef },
   });
 };
 
@@ -406,7 +412,7 @@ commands.windowHandle = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window_handle',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -420,7 +426,7 @@ commands.windowHandles = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window_handles',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -434,13 +440,16 @@ commands.getGeoLocation = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/location',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * setGeoLocation(lat, lon, alt, cb) -> cb(err)
  *
+ * @param lat
+ * @param lon
+ * @param alt
  * @jsonWire POST /session/:sessionId/location
  */
 commands.setGeoLocation = function(lat, lon, alt) {
@@ -452,13 +461,15 @@ commands.setGeoLocation = function(lat, lon, alt) {
     method: 'POST',
     relPath: '/location',
     cb: simpleCallback(cb),
-    data: { location: { latitude: lat, longitude: lon, altitude: alt } }
+    data: { location: { latitude: lat, longitude: lon, altitude: alt } },
   });
 };
 
 /**
  * scroll(xOffset, yOffset, cb) -> cb(err)
  *
+ * @param xOffset
+ * @param yOffset
  * @jsonWire POST /session/:sessionId/touch/scroll
  */
 commands.scroll = function(xOffset, yOffset) {
@@ -467,7 +478,7 @@ commands.scroll = function(xOffset, yOffset) {
     method: 'POST',
     relPath: '/touch/scroll',
     cb: simpleCallback(cb, this),
-    data: { xoffset: xOffset, yoffset: yOffset }
+    data: { xoffset: xOffset, yoffset: yOffset },
   });
 };
 
@@ -481,13 +492,14 @@ commands.logTypes = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/log/types',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * log(logType, cb) -> cb(err, arrayOfLogs)
  *
+ * @param logType
  * @jsonWire POST /session/:sessionId/log
  */
 commands.log = function(logType) {
@@ -496,7 +508,7 @@ commands.log = function(logType) {
     method: 'POST',
     relPath: '/log',
     cb: callbackWithData(cb, this),
-    data: { type: logType }
+    data: { type: logType },
   });
 };
 
@@ -512,7 +524,7 @@ commands.quit = function() {
     method: 'DELETE',
     // default url
     emit: { event: 'status', message: '\nEnding your web drivage..\n' },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -520,6 +532,7 @@ commands.quit = function() {
  * get(url,cb) -> cb(err)
  * Get a new url.
  *
+ * @param _url
  * @jsonWire POST /session/:sessionId/url
  */
 commands.get = function(_url) {
@@ -530,8 +543,8 @@ commands.get = function(_url) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/url',
-    data: { 'url': _url },
-    cb: simpleCallback(cb)
+    data: { url: _url },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -545,13 +558,14 @@ commands.refresh = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/refresh',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * maximize(handle, cb) -> cb(err)
  *
+ * @param win
  * @jsonWire POST /session/:sessionId/window/:windowHandle/maximize
  */
 commands.maximize = function(win) {
@@ -562,13 +576,16 @@ commands.maximize = function(win) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/window/' + win + '/maximize',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * windowSize(handle, width, height, cb) -> cb(err)
  *
+ * @param win
+ * @param width
+ * @param height
  * @jsonWire POST /session/:sessionId/window/:windowHandle/size
  */
 commands.windowSize = function(win, width, height) {
@@ -576,8 +593,8 @@ commands.windowSize = function(win, width, height) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/window/' + win + '/size',
-    data: { 'width': width, 'height': height },
-    cb: simpleCallback(cb)
+    data: { width, height },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -595,7 +612,7 @@ commands.getWindowSize = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window/' + win + '/size',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -617,7 +634,7 @@ commands.setWindowSize = function() {
     method: 'POST',
     relPath: '/window/' + win + '/size',
     cb: simpleCallback(cb),
-    data: { width: width, height: height }
+    data: { width, height },
   });
 };
 
@@ -635,7 +652,7 @@ commands.getWindowPosition = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window/' + win + '/position',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -657,7 +674,7 @@ commands.setWindowPosition = function() {
     method: 'POST',
     relPath: '/window/' + win + '/position',
     cb: simpleCallback(cb),
-    data: { x: x, y: y }
+    data: { x, y },
   });
 };
 
@@ -671,7 +688,7 @@ commands.forward = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/forward',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -685,7 +702,7 @@ commands.back = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/back',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -721,6 +738,7 @@ commands.configureHttp = function() {
 /**
  * setImplicitWaitTimeout(ms, cb) -> cb(err)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts/implicit_wait
  */
 commands.setImplicitWaitTimeout = function(ms) {
@@ -728,8 +746,8 @@ commands.setImplicitWaitTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts/implicit_wait',
-    data: { ms: ms },
-    cb: simpleCallback(cb)
+    data: { ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -739,6 +757,7 @@ commands.setWaitTimeout = commands.setImplicitWaitTimeout;
 /**
  * setAsyncScriptTimeout(ms, cb) -> cb(err)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts/async_script
  */
 commands.setAsyncScriptTimeout = function(ms) {
@@ -746,8 +765,8 @@ commands.setAsyncScriptTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts/async_script',
-    data: { ms: ms },
-    cb: simpleCallback(cb)
+    data: { ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -755,6 +774,7 @@ commands.setAsyncScriptTimeout = function(ms) {
  * setPageLoadTimeout(ms, cb) -> cb(err)
  * (use setImplicitWaitTimeout and setAsyncScriptTimeout to set the other timeouts)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setPageLoadTimeout = function(ms) {
@@ -762,14 +782,15 @@ commands.setPageLoadTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts',
-    data: { type: 'page load', ms: ms },
-    cb: simpleCallback(cb)
+    data: { type: 'page load', ms },
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * setCommandTimeout(ms, cb) -> cb(err)
  * (this is for Appium only)
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setCommandTimeout = function(ms) {
@@ -777,14 +798,16 @@ commands.setCommandTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts',
-    data: { type: 'command', ms: ms },
-    cb: simpleCallback(cb)
+    data: { type: 'command', ms },
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * element(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/element
  */
 commands.element = function(using, value) {
@@ -792,8 +815,8 @@ commands.element = function(using, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element',
-    data: { using: using, value: value },
-    cb: elementCallback(cb, this)
+    data: { using, value },
+    cb: elementCallback(cb, this),
   });
 };
 
@@ -801,6 +824,8 @@ commands.element = function(using, value) {
  * Retrieve an element avoiding not found exception and returning null instead:
  * elementOrNull(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 3
  */
@@ -817,7 +842,7 @@ commands.elementOrNull = function(using, value) {
       } else {
         cb(err);
       }
-    }
+    },
   ]);
 };
 
@@ -825,6 +850,8 @@ commands.elementOrNull = function(using, value) {
  * Retrieve an element avoiding not found exception and returning undefined instead:
  * elementIfExists(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 5
  */
@@ -841,13 +868,15 @@ commands.elementIfExists = function(using, value) {
       } else {
         cb(err);
       }
-    }
+    },
   ]);
 };
 
 /**
  * elements(using, value, cb) -> cb(err, elements)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 1
  */
@@ -856,8 +885,8 @@ commands.elements = function(using, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/elements',
-    data: { using: using, value: value },
-    cb: elementsCallback(cb, this)
+    data: { using, value },
+    cb: elementsCallback(cb, this),
   });
 };
 
@@ -865,6 +894,8 @@ commands.elements = function(using, value) {
  * Check if element exists:
  * hasElement(using, value, cb) -> cb(err, boolean)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 7
  */
@@ -897,13 +928,13 @@ commands.waitFor = function() {
     opts = {
       asserter: fargs.all[0],
       timeout: fargs.all[1],
-      pollFreq: fargs.all[2]
+      pollFreq: fargs.all[2],
     };
   }
 
   const {
     MACACA_WD_CLIENT_WAITFOR_TIMEOUT,
-    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ
+    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ,
   } = process.env;
     // default
   opts.timeout = opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
@@ -968,7 +999,6 @@ commands.waitFor = function() {
  * asserter like: function(element , cb) -> cb(err, satisfied, el)
  */
 commands.waitForElement = function() {
-
   const cb = findCallback(arguments);
   const fargs = utils.varargs(arguments);
   const using = fargs.all[0];
@@ -982,12 +1012,12 @@ commands.waitForElement = function() {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
-      pollFreq: fargs.all[4]
+      pollFreq: fargs.all[4],
     };
   } else {
     opts = {
       timeout: fargs.all[2],
-      pollFreq: fargs.all[3]
+      pollFreq: fargs.all[3],
     };
   }
 
@@ -1054,7 +1084,7 @@ commands.waitForElement = function() {
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
-      pollFreq: opts.pollFreq
+      pollFreq: opts.pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -1086,12 +1116,12 @@ commands.waitForElements = function() {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
-      pollFreq: fargs.all[4]
+      pollFreq: fargs.all[4],
     };
   } else {
     opts = {
       timeout: fargs.all[2],
-      pollFreq: fargs.all[3]
+      pollFreq: fargs.all[3],
     };
   }
 
@@ -1155,7 +1185,7 @@ commands.waitForElements = function() {
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
-      pollFreq: opts.pollFreq
+      pollFreq: opts.pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -1191,7 +1221,7 @@ commands.takeScreenshot = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: `/screenshot${url.format({ query: params })}`,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1248,6 +1278,7 @@ commands.saveScreenshot = function() {
       if (_params && _params.video) {
         cb(null, base64Data);
       }
+      // eslint-disable-next-line node/prefer-promises/fs
       require('fs').writeFile(filePath, base64Data, 'base64', function(err) {
         if (err) {
           return cb(err);
@@ -1467,6 +1498,7 @@ _.each(utils.elementFuncTypes, function(suffix) {
 /**
  * getTagName(element, cb) -> cb(err, name)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/name
  */
 commands.getTagName = function(element) {
@@ -1474,7 +1506,7 @@ commands.getTagName = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/name',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1498,7 +1530,7 @@ commands.getAttribute = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/attribute/' + attrName,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1522,7 +1554,7 @@ commands.getProperty = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/property/' + propertyName,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1542,13 +1574,14 @@ commands.getRect = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/rect',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * isDisplayed(element, cb) -> cb(err, displayed)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/displayed
  */
 commands.isDisplayed = function(element) {
@@ -1556,7 +1589,7 @@ commands.isDisplayed = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/displayed',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1565,6 +1598,7 @@ commands.displayed = commands.isDisplayed;
 /**
  * isEnabled(element, cb) -> cb(err, enabled)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/enabled
  */
 commands.isEnabled = function(element) {
@@ -1572,7 +1606,7 @@ commands.isEnabled = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/enabled',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1581,6 +1615,7 @@ commands.enabled = commands.isEnabled;
 /**
  * isSelected(element, cb) -> cb(err, selected)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/selected
  */
 commands.isSelected = function(element) {
@@ -1588,7 +1623,7 @@ commands.isSelected = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/selected',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1625,7 +1660,7 @@ commands.clickElement = function() {
     method: 'POST',
     relPath: '/element/' + element + '/click',
     data: { clickOpts: params },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1642,13 +1677,15 @@ commands.takeElementScreenshot = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * getComputedCss(element, cssProperty , cb) -> cb(err, value)
  *
+ * @param element
+ * @param cssProperty
  * @jsonWire GET /session/:sessionId/element/:id/css/:propertyName
  */
 commands.getComputedCss = function(element, cssProperty) {
@@ -1656,7 +1693,7 @@ commands.getComputedCss = function(element, cssProperty) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/css/' + cssProperty,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1665,6 +1702,8 @@ commands.getComputedCSS = commands.getComputedCss;
 /**
  * equalsElement(element, other , cb) -> cb(err, value)
  *
+ * @param element
+ * @param other
  * @jsonWire GET /session/:sessionId/element/:id/equals/:other
  */
 commands.equalsElement = function(element, other) {
@@ -1672,7 +1711,7 @@ commands.equalsElement = function(element, other) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/equals/' + other,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1683,7 +1722,7 @@ const _flick1 = function() {
   const yspeed = fargs.all[1];
   const swipe = fargs.all[2];
 
-  const data = { xspeed: xspeed, yspeed: yspeed };
+  const data = { xspeed, yspeed };
   if (swipe) {
     data.swipe = swipe;
   }
@@ -1691,8 +1730,8 @@ const _flick1 = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/touch/flick',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1707,8 +1746,8 @@ const _flick2 = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/touch/flick',
-    data: { element: element, xoffset: xoffset, yoffset: yoffset, speed: speed },
-    cb: simpleCallback(cb)
+    data: { element, xoffset, yoffset, speed },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1734,6 +1773,8 @@ commands.flick = function() {
  * tapElement(element) -> cb(err)
  * Taps element
  *
+ * @param element
+ * @param cb
  * @jsonWire POST /session/:sessionId/touch/click
  */
 commands.tapElement = function(element, cb) {
@@ -1741,7 +1782,7 @@ commands.tapElement = function(element, cb) {
     method: 'POST',
     relPath: '/touch/click',
     data: { element: element.value.toString() },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1761,7 +1802,7 @@ commands.performTouchAction = function() {
       method: 'POST',
       relPath: '/touch/perform',
       data: { actions: touchAction.toJSON() },
-      cb: callbackWithData(cb, this)
+      cb: callbackWithData(cb, this),
     });
   } catch (err) {
     return cb(err);
@@ -1777,7 +1818,7 @@ commands.performTouchAction = function() {
 commands.performMultiAction = function() {
   const _this = this;
   const fargs = utils.varargs(arguments);
-  let cb = fargs.callback;
+  const cb = fargs.callback;
   let element = fargs.all[0];
   let multiTouchAction = fargs.all[1];
   if (!multiTouchAction) {
@@ -1793,8 +1834,8 @@ commands.performMultiAction = function() {
     _this._jsonWireCall({
       method: 'POST',
       relPath: '/touch/multi/perform',
-      data: data,
-      cb: callbackWithData(cb, this)
+      data,
+      cb: callbackWithData(cb, this),
     });
   } catch (err) {
     return cb(err);
@@ -1821,10 +1862,10 @@ commands.moveTo = function() {
     data: {
       element:
                 element ? element.toString() : null,
-      xoffset: xoffset,
-      yoffset: yoffset
+      xoffset,
+      yoffset,
     },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1843,8 +1884,8 @@ commands.buttonDown = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/buttondown',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1863,8 +1904,8 @@ commands.buttonUp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/buttonup',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1884,8 +1925,8 @@ commands.click = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/click',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1906,13 +1947,13 @@ commands.swipe = function() {
     method: 'POST',
     relPath: `/element/${startX}/swipe`,
     data: {
-      startX: startX,
-      startY: startY,
-      endX: endX,
-      endY: endY,
-      duration: duration
+      startX,
+      startY,
+      endX,
+      endY,
+      duration,
     },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1926,7 +1967,7 @@ commands.doubleclick = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/doubleclick',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1935,6 +1976,8 @@ commands.doubleclick = function() {
  * Type keys (all keys are up at the end of command).
  * special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
  *
+ * @param element
+ * @param keys
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
 commands.type = function(element, keys) {
@@ -1952,7 +1995,7 @@ commands.type = function(element, keys) {
     method: 'POST',
     relPath: '/element/' + element + '/value',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1971,7 +2014,7 @@ commands.replace = function(element, keys) {
     method: 'POST',
     relPath: '/appium/element/' + element + '/replace_value',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1979,6 +2022,7 @@ commands.replace = function(element, keys) {
  * submit(element, cb) -> cb(err)
  * Submit a `FORM` element.
  *
+ * @param element
  * @jsonWire POST /session/:sessionId/element/:id/submit
  */
 commands.submit = function(element) {
@@ -1986,7 +2030,7 @@ commands.submit = function(element) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/submit',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1995,6 +2039,7 @@ commands.submit = function(element) {
  * Press keys (keys may still be down at the end of command).
  * special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
  *
+ * @param keys
  * @jsonWire POST /session/:sessionId/keys
  */
 commands.keys = function(keys) {
@@ -2012,13 +2057,14 @@ commands.keys = function(keys) {
     method: 'POST',
     relPath: '/keys',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * clear(element, cb) -> cb(err)
  *
+ * @param element
  * @jsonWire POST /session/:sessionId/element/:id/clear
  */
 commands.clear = function(element) {
@@ -2026,7 +2072,7 @@ commands.clear = function(element) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/clear',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2040,7 +2086,7 @@ commands.title = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/title',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2054,7 +2100,7 @@ commands.source = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/source',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2064,7 +2110,7 @@ const _rawText = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/text',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2098,6 +2144,8 @@ commands.text = function() {
  * textPresent(searchText, element, cb) -> cb(err, boolean)
  * element: specific element, 'body', or undefined
  *
+ * @param searchText
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/text
  * @docOrder 3
  */
@@ -2122,13 +2170,14 @@ commands.alertText = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/alert_text',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * alertKeys(keys, cb) -> cb(err)
  *
+ * @param keys
  * @jsonWire POST /session/:sessionId/alert_text
  */
 commands.alertKeys = function(keys) {
@@ -2137,7 +2186,7 @@ commands.alertKeys = function(keys) {
     method: 'POST',
     relPath: '/alert_text',
     data: { text: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2151,7 +2200,7 @@ commands.acceptAlert = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/accept_alert',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2165,7 +2214,7 @@ commands.dismissAlert = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/dismiss_alert',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2179,7 +2228,7 @@ commands.active = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/active',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2193,7 +2242,7 @@ commands.url = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/url',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2207,7 +2256,7 @@ commands.allCookies = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/cookie',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2218,20 +2267,21 @@ commands.allCookies = function() {
  * Optional cookie fields:
  *  path, domain, secure, expiry
  *
+ * @param cookie
  * @jsonWire POST /session/:sessionId/cookie
  */
 commands.setCookie = function(cookie) {
   const cb = findCallback(arguments);
   // setting secure otherwise selenium server throws
-  if (cookie) {
+  if (cookie && typeof cookie === 'object') {
     cookie.secure = cookie.secure || false;
   }
 
   this._jsonWireCall({
     method: 'POST',
     relPath: '/cookie',
-    data: { cookie: cookie },
-    cb: simpleCallback(cb)
+    data: { cookie },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2245,13 +2295,14 @@ commands.deleteAllCookies = function() {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/cookie',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
 /**
  * deleteCookie(name, cb) -> cb(err)
  *
+ * @param name
  * @jsonWire DELETE /session/:sessionId/cookie/:name
  */
 commands.deleteCookie = function(name) {
@@ -2259,7 +2310,7 @@ commands.deleteCookie = function(name) {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/cookie/' + encodeURIComponent(name),
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2273,13 +2324,14 @@ commands.getOrientation = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/orientation',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * setOrientation(cb) -> cb(err, orientation)
  *
+ * @param orientation
  * @jsonWire POST /session/:sessionId/orientation
  */
 commands.setOrientation = function(orientation) {
@@ -2287,8 +2339,8 @@ commands.setOrientation = function(orientation) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/orientation',
-    data: { orientation: orientation },
-    cb: simpleCallback(cb)
+    data: { orientation },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2407,19 +2459,21 @@ commands.isVisible = function() {
 /**
  * Retrieves the pageIndex element (added for Appium):
  * getPageIndex(element, cb) -> cb(err, pageIndex)
+ * @param element
  */
 commands.getPageIndex = function(element) {
   const cb = findCallback(arguments);
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/pageIndex',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * getLocation(element, cb) -> cb(err, location)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
 commands.getLocation = function(element) {
@@ -2427,13 +2481,14 @@ commands.getLocation = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/location',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * getLocationInView(element, cb) -> cb(err, location)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/location_in_view
  */
 commands.getLocationInView = function(element) {
@@ -2441,13 +2496,14 @@ commands.getLocationInView = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/location_in_view',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * getSize(element, cb) -> cb(err, size)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/size
  */
 commands.getSize = function(element) {
@@ -2455,7 +2511,7 @@ commands.getSize = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/size',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2463,6 +2519,7 @@ commands.getSize = function(element) {
  * Uploads a local file using undocumented
  * POST /session/:sessionId/file
  * uploadFile(filepath, cb) -> cb(err, filepath)
+ * @param filepath
  */
 commands.uploadFile = function(filepath) {
   const cb = findCallback(arguments);
@@ -2484,7 +2541,7 @@ commands.uploadFile = function(filepath) {
         method: 'POST',
         relPath: '/file',
         data: { file: Buffer.concat(dataList).toString('base64') },
-        cb: callbackWithData(cb, _this)
+        cb: callbackWithData(cb, _this),
       });
     });
 
@@ -2513,8 +2570,8 @@ commands.waitForJsCondition = function() {
   commands.waitFor.apply(this, [
     {
       asserter: asserters.jsCondition(jsConditionExpr, true),
-      timeout: timeout,
-      pollFreq: pollFreq
+      timeout,
+      pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -2555,21 +2612,25 @@ commands.waitForConditionInBrowser = function() {
         return cb('waitForConditionInBrowser failure for: ' + conditionExpr);
       }
       cb(null, res);
-    }
+    },
   ]);
 };
 
 /**
  * sleep(ms, cb) -> cb(err)
+ * @param ms
+ * @param cb
  */
 commands.sleep = function(ms, cb) {
   cb = cb || function() {
+    // none
   };
   setTimeout(cb, ms);
 };
 
 /**
  * noop(cb) -> cb(err)
+ * @param cb
  */
 commands.noop = function(cb) {
   if (cb) {
@@ -2587,7 +2648,7 @@ commands.shakeDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/shake',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2609,8 +2670,8 @@ commands.lockDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/lock',
-    data: { seconds: seconds },
-    cb: simpleCallback(cb)
+    data: { seconds },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2631,7 +2692,7 @@ commands.unlockDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/unlock',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2652,7 +2713,7 @@ commands.isLocked = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/is_locked',
-    cb: callbackWithData(cb)
+    cb: callbackWithData(cb),
   });
 };
 
@@ -2667,15 +2728,15 @@ commands.deviceKeyEvent = function() {
   const cb = fargs.callback;
   const keycode = fargs.all[0];
   const metastate = fargs.all[1];
-  const data = { keycode: keycode };
+  const data = { keycode };
   if (metastate) {
     data.metastate = metastate;
   }
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/keyevent',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2697,8 +2758,8 @@ commands.pressDeviceKey = commands.deviceKeyEvent;
 commands.rotateDevice = function() {
   const fargs = utils.varargs(arguments);
   const cb = fargs.callback;
-  const element = fargs.all[0];
-  const opts = fargs.all[1];
+  let element = fargs.all[0];
+  let opts = fargs.all[1];
   if (!(element && element.value)) {
     opts = element;
     element = null;
@@ -2710,8 +2771,8 @@ commands.rotateDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/rotate',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2734,7 +2795,7 @@ commands.getCurrentDeviceActivity = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/device/current_activity',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2756,8 +2817,8 @@ commands.installAppOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/install_app',
-    data: { appPath: appPath },
-    cb: simpleCallback(cb)
+    data: { appPath },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2779,8 +2840,8 @@ commands.removeAppFromDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/remove_app',
-    data: { appId: appId },
-    cb: simpleCallback(cb)
+    data: { appId },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2802,8 +2863,8 @@ commands.isAppInstalledOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/app_installed',
-    data: { bundleId: bundleId },
-    cb: callbackWithData(cb, this)
+    data: { bundleId },
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2826,20 +2887,20 @@ commands.hideDeviceKeyboard = function() {
   const cb = fargs.callback;
   let data = {};
   switch (typeof fargs.all[0]) {
-  case 'string':
-    data = { keyName: fargs.all[0] };
-    break;
-  case 'object':
-    data = fargs.all[0];
-    break;
-  default:
-    data = null;
+    case 'string':
+      data = { keyName: fargs.all[0] };
+      break;
+    case 'object':
+      data = fargs.all[0];
+      break;
+    default:
+      data = null;
   }
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/hide_keyboard',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 commands.hideKeyboard = commands.hideDeviceKeyboard;
@@ -2858,7 +2919,7 @@ commands.pushFileToDevice = function() {
     method: 'POST',
     relPath: '/appium/device/push_file',
     data: { path: pathOnDevice, data: base64Data },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2881,7 +2942,7 @@ commands.pullFileFromDevice = function() {
     method: 'POST',
     relPath: '/appium/device/pull_file',
     data: { path: pathOnDevice },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2904,7 +2965,7 @@ commands.pullFolderFromDevice = function() {
     method: 'POST',
     relPath: '/appium/device/pull_folder',
     data: { path: pathOnDevice },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2925,7 +2986,7 @@ commands.toggleAirplaneModeOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_airplane_mode',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2951,7 +3012,7 @@ commands.toggleWiFiOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_wifi',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2971,7 +3032,7 @@ commands.toggleLocationServicesOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_location_services',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2991,7 +3052,7 @@ commands.toggleDataOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_data',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -3011,7 +3072,7 @@ commands.launchApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/launch',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3025,7 +3086,7 @@ commands.closeApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/close',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3039,7 +3100,7 @@ commands.resetApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/reset',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3055,8 +3116,8 @@ commands.backgroundApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/background',
-    data: { seconds: seconds },
-    cb: simpleCallback(cb)
+    data: { seconds },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3073,8 +3134,8 @@ commands.endTestCoverageForApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/end_test_coverage',
-    data: { intent: intent, path: path },
-    cb: callbackWithData(cb, this)
+    data: { intent, path },
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -3104,8 +3165,8 @@ commands.complexFindInApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/complex_find',
-    data: { selector: selector },
-    cb: elementOrElementsCallback(cb, this)
+    data: { selector },
+    cb: elementOrElementsCallback(cb, this),
   });
 };
 
@@ -3130,14 +3191,16 @@ commands.getAppStrings = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/strings',
-    data: { language: language },
-    cb: callbackWithData(cb, this)
+    data: { language },
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * setImmediateValueInApp(element, value, cb) -> cb(err)
  *
+ * @param element
+ * @param value
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 commands.setImmediateValueInApp = function(element, value) {
@@ -3145,8 +3208,8 @@ commands.setImmediateValueInApp = function(element, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/element/' + element.value.toString() + '/value',
-    data: { value: value },
-    cb: simpleCallback(cb)
+    data: { value },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3165,7 +3228,7 @@ commands.startActivity = function() {
     method: 'POST',
     relPath: '/appium/device/start_activity',
     data: options,
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3188,7 +3251,7 @@ commands.setNetworkConnection = function() {
     method: 'POST',
     relPath: '/network_connection',
     data: { parameters: { type: fargs.all[0] } },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3202,7 +3265,7 @@ commands.getNetworkConnection = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/network_connection',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3216,7 +3279,7 @@ commands.openNotifications = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/open_notifications',
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3230,7 +3293,7 @@ commands.settings = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/settings',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3246,7 +3309,7 @@ commands.updateSettings = function() {
     method: 'POST',
     relPath: '/appium/settings',
     data: { settings: fargs.all[0] },
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3260,13 +3323,14 @@ commands.availableIMEEngines = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/available_engines',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
 /**
  * activateIMEEngine(cb, engine) -> cb(err)
  *
+ * @param engine
  * @jsonWire POST /session/:sessionId/ime/activate
  */
 commands.activateIMEEngine = function(engine) {
@@ -3274,8 +3338,8 @@ commands.activateIMEEngine = function(engine) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/ime/activate',
-    data: { engine: engine },
-    cb: simpleCallback(cb, this)
+    data: { engine },
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3289,7 +3353,7 @@ commands.deactivateIMEEngine = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/ime/deactivate',
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3303,7 +3367,7 @@ commands.isIMEActive = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/activated',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3317,7 +3381,7 @@ commands.activeIMEEngine = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/active_engine',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3331,7 +3395,7 @@ commands.getDeviceTime = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/device/system_time',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3340,7 +3404,7 @@ commands.touch = function() {
   const fargs = utils.varargs(arguments);
   const code = fargs.all[0];
   const args = fargs.all[1] || {};
-  const actions = [];
+  let actions = [];
   if (Array.isArray(code)) {
     for (let i = 0, len = code.length; i < len; i++) {
       if (i > 0) {
@@ -3353,7 +3417,7 @@ commands.touch = function() {
       actions[i] = code[i];
     }
   } else if (typeof code === 'string') {
-    args['type'] = code;
+    args.type = code;
     actions = [ args ];
   } else {
     cb(new Error('Touch function only accept a action name or a list of actions.'));
@@ -3362,8 +3426,8 @@ commands.touch = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/actions',
-    data: { actions: actions },
-    cb: simpleCallback(cb)
+    data: { actions },
+    cb: simpleCallback(cb),
   });
 };
 

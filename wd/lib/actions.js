@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const __slice = Array.prototype.slice;
 const Webdriver = require('./webdriver');
@@ -7,9 +9,10 @@ const Element = require('./element');
  * new wd.TouchAction()
  * TouchAction constructor
  *
+ * @param driver
  * @actions
  */
-const TouchAction = function (driver) {
+const TouchAction = function(driver) {
   this.driver = driver;
   this.gestures = [];
 };
@@ -39,8 +42,8 @@ TouchAction.prototype.addGesture = function(action, opts) {
 
   // adding action
   this.gestures.push({
-    action: action,
-    options: finalOpts
+    action,
+    options: finalOpts,
   });
 };
 
@@ -52,9 +55,10 @@ TouchAction.prototype.toJSON = function() {
  * touchAction.longPress({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
-TouchAction.prototype.longPress = function (opts) {
+TouchAction.prototype.longPress = function(opts) {
   this.addGesture('longPress', opts);
   return this;
 };
@@ -63,9 +67,10 @@ TouchAction.prototype.longPress = function (opts) {
  * touchAction.moveTo({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
-TouchAction.prototype.moveTo = function (opts) {
+TouchAction.prototype.moveTo = function(opts) {
   this.addGesture('moveTo', opts);
   return this;
 };
@@ -74,9 +79,10 @@ TouchAction.prototype.moveTo = function (opts) {
  * touchAction.press({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
-TouchAction.prototype.press = function (opts) {
+TouchAction.prototype.press = function(opts) {
   this.addGesture('press', opts);
   return this;
 };
@@ -86,7 +92,7 @@ TouchAction.prototype.press = function (opts) {
  *
  * @actions
  */
-TouchAction.prototype.release = function () {
+TouchAction.prototype.release = function() {
   this.addGesture('release', {});
   return this;
 };
@@ -96,9 +102,10 @@ TouchAction.prototype.release = function () {
  * pass el or (x,y) or both
  * count is optional
  *
+ * @param opts
  * @actions
  */
-TouchAction.prototype.tap = function (opts) {
+TouchAction.prototype.tap = function(opts) {
   this.addGesture('tap', opts);
   return this;
 };
@@ -108,10 +115,11 @@ TouchAction.prototype.tap = function (opts) {
  * touchAction.wait(ms)
  * ms is optional
  *
+ * @param opts
  * @actions
  */
-TouchAction.prototype.wait = function (opts) {
-  if (_.isNumber(opts)) { opts = {ms: opts}; }
+TouchAction.prototype.wait = function(opts) {
+  if (_.isNumber(opts)) { opts = { ms: opts }; }
   this.addGesture('wait', opts);
   return this;
 };
@@ -121,13 +129,14 @@ TouchAction.prototype.wait = function (opts) {
  *
  * @actions
  */
-TouchAction.prototype.cancel = function () {
+TouchAction.prototype.cancel = function() {
   this.gestures = [];
 };
 
 /**
  * perform the action
  *
+ * @param cb
  * @actions
  */
 TouchAction.prototype.perform = function(cb) {
@@ -142,9 +151,10 @@ TouchAction.prototype.perform = function(cb) {
  * new wd.MultiAction()
  * MultiAction constructor
  *
+ * @param browserOrElement
  * @actions
  */
-const MultiAction = function (browserOrElement) {
+const MultiAction = function(browserOrElement) {
   if (browserOrElement instanceof Element) {
     this.element = browserOrElement;
     this.browser = this.element.browser;
@@ -168,7 +178,7 @@ MultiAction.prototype.toJSON = function() {
  *
  * @actions
  */
-MultiAction.prototype.add = function () {
+MultiAction.prototype.add = function() {
   const actions = __slice.call(arguments, 0);
   this.actions = this.actions.concat(actions);
   return this;
@@ -186,6 +196,7 @@ MultiAction.prototype.cancel = function() {
 /**
  * multiAction.perform()
  *
+ * @param cb
  * @actions
  */
 MultiAction.prototype.perform = function(cb) {
@@ -198,13 +209,13 @@ MultiAction.prototype.perform = function(cb) {
   } else {
     if (this.element) {
       return this.element.performMultiAction(this);
-    } else {
-      return this.browser.performMultiAction(this);
     }
+    return this.browser.performMultiAction(this);
+
   }
 };
 
 module.exports = {
-  TouchAction: TouchAction,
-  MultiAction: MultiAction
+  TouchAction,
+  MultiAction,
 };
