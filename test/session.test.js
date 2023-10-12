@@ -1,4 +1,4 @@
-'use strict';
+
 
 const assert = require('assert');
 
@@ -13,14 +13,14 @@ describe('test/session.test.js', function() {
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
 
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   });
 
@@ -35,7 +35,7 @@ describe('test/session.test.js', function() {
     it('should work', async () => {
       await driver.init({
         platformName: 'desktop',
-        browserName: 'chrome'
+        browserName: 'chrome',
       });
       assert.equal(server.ctx.method, 'POST');
       assert.equal(server.ctx.url, '/wd/hub/session');
@@ -63,7 +63,7 @@ describe('test/session.test.js', function() {
     beforeEach(async () => {
       await driver.init({
         platformName: 'desktop',
-        browserName: 'chrome'
+        browserName: 'chrome',
       });
     });
     it('should work', async () => {
@@ -85,7 +85,7 @@ describe('test/session.test.js', function() {
     beforeEach(async () => {
       await driver.init({
         platformName: 'desktop',
-        browserName: 'chrome'
+        browserName: 'chrome',
       });
     });
     it('should work', async () => {

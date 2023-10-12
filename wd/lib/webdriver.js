@@ -28,7 +28,7 @@ const Webdriver = module.exports = function(configUrl) {
     browserName: 'firefox',
     version: '',
     javascriptEnabled: true,
-    platform: 'ANY'
+    platform: 'ANY',
   };
 
   this._httpConfig = _.clone(config.httpConfig);
@@ -72,8 +72,8 @@ Webdriver.prototype._init = function() {
   delete this.sessionID;
   const _this = this;
   const fargs = utils.varargs(arguments);
-  let cb = fargs.callback;
-  let desired = fargs.all[0] || {};
+  const cb = fargs.callback;
+  const desired = fargs.all[0] || {};
 
   const _desired = _.clone(desired);
 
@@ -93,7 +93,7 @@ Webdriver.prototype._init = function() {
   const url = httpUtils.buildInitUrl(this.configUrl);
 
   // building request
-  const data = {desiredCapabilities: _desired};
+  const data = { desiredCapabilities: _desired };
 
   httpUtils.emit(this, httpOpts.method, url, data);
 
@@ -110,13 +110,17 @@ Webdriver.prototype._init = function() {
         _this.sessionID = jsonData.sessionId;
         resData = jsonData.value;
       }
-    } catch (ignore) {}
+    } catch (ignore) {
+      // none
+    }
     if (!_this.sessionID) {
       // attempting to retrieve the session the old way
       try {
         const locationArr = res.headers.location.replace(/\/$/, '').split('/');
         _this.sessionID = locationArr[locationArr.length - 1];
-      } catch (ignore) {}
+      } catch (ignore) {
+        // none
+      }
     }
 
     if (_this.sessionID) {
@@ -128,13 +132,13 @@ Webdriver.prototype._init = function() {
         err = new Error('The environment you requested was unavailable.');
         err.data = data;
         return cb(err);
-      } else {
-        console.error('\x1b[31mError\x1b[0m: The environment you requested was unavailable.\n');
-        console.error('\x1b[33mReason\x1b[0m:\n');
-        console.error(data);
-        console.error('\nFor the available values please consult the WebDriver JSONWireProtocol,');
-        console.error('located at: \x1b[33mhttp://code.google.com/p/selenium/wiki/JsonWireProtocol#/session\x1b[0m');
       }
+      console.error('\x1b[31mError\x1b[0m: The environment you requested was unavailable.\n');
+      console.error('\x1b[33mReason\x1b[0m:\n');
+      console.error(data);
+      console.error('\nFor the available values please consult the WebDriver JSONWireProtocol,');
+      console.error('located at: \x1b[33mhttp://code.google.com/p/selenium/wiki/JsonWireProtocol#/session\x1b[0m');
+
     }
   });
 };
@@ -190,7 +194,7 @@ _(commands).each(function(fn, name) {
         if (fargs.callback) { fargs.callback.apply(null, cbArgs); }
       }
     };
-    const args = fargs.all.concat([cb]);
+    const args = fargs.all.concat([ cb ]);
     return fn.apply(this, args);
   };
 }).value();

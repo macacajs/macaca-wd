@@ -1,4 +1,4 @@
-'use strict';
+
 
 const assert = require('assert');
 
@@ -13,14 +13,14 @@ describe('test/cookie.test.js', function() {
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
 
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   });
 
@@ -31,7 +31,7 @@ describe('test/cookie.test.js', function() {
   beforeEach(async () => {
     await driver.init({
       platformName: 'desktop',
-      browserName: 'chrome'
+      browserName: 'chrome',
     });
   });
 
@@ -58,7 +58,7 @@ describe('test/cookie.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -71,14 +71,14 @@ describe('test/cookie.test.js', function() {
       await driver.deleteCookie('test_cookie');
       assert.equal(
         server.ctx.url,
-        '/wd/hub/session/sessionId/cookie/test_cookie'
+        '/wd/hub/session/sessionId/cookie/test_cookie',
       );
       assert.equal(server.ctx.method, 'DELETE');
       assert.deepEqual(server.ctx.request.body, {});
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -92,12 +92,12 @@ describe('test/cookie.test.js', function() {
       assert.equal(server.ctx.url, '/wd/hub/session/sessionId/cookie');
       assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.request.body, {
-        cookie: 'test_cookie'
+        cookie: 'test_cookie',
       });
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });

@@ -69,7 +69,7 @@ function _getTmpName(options, callback) {
         (_isUndefined(opts.prefix)) ? 'tmp-' : opts.prefix,
         process.pid,
         (Math.random() * 0x1000000000).toString(36),
-        opts.postfix
+        opts.postfix,
       ].join('');
 
       return path.join(opts.dir || _TMP, name);

@@ -14,15 +14,15 @@ exports.emit = function(browser, method, url, data) {
   if (typeof url === 'string') { url = urllib.parse(url); }
   browser.emit('http', method,
     url.path.replace(browser.sessionID, ':sessionID')
-      .replace(browser.configUrl.pathname, ''), data
+      .replace(browser.configUrl.pathname, ''), data,
   );
 };
 
 exports.buildJsonCallUrl = function(baseUrl, sessionID, relPath, absPath) {
-  let path = ['session'];
+  let path = [ 'session' ];
   if (sessionID) { path.push('/', sessionID); }
   if (relPath) { path.push(relPath); }
-  if (absPath) { path = [absPath]; }
+  if (absPath) { path = [ absPath ]; }
   path = path.join('');
 
   return utils.resolveUrl(baseUrl, path);

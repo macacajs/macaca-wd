@@ -1,4 +1,4 @@
-'use strict';
+
 
 const http = require('http');
 const Koa = require('koa');
@@ -10,9 +10,9 @@ class Server {
   constructor(options) {
     this.options = Object.assign(
       {
-        port: 3456
+        port: 3456,
       },
-      options || {}
+      options || {},
     );
     this.app = new Koa();
     this.app.use(bodyParser());
@@ -35,12 +35,12 @@ class Server {
         this.ctx.body = {
           sessionId: 'sessionId',
           status: 0,
-          value: ''
+          value: '',
         };
       });
     }
     this.server = stoppable(
-      http.createServer(this.app.callback()).listen(this.options.port)
+      http.createServer(this.app.callback()).listen(this.options.port),
     );
   }
 

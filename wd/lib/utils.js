@@ -20,13 +20,13 @@ exports.findCallback = function(_arguments) {
 // convert to type to something like ById, ByCssSelector, etc...
 const STRAT_MAPPING = {
   '-ios uiautomation': 'ByIosUIAutomation',
-  '-android uiautomator': 'ByAndroidUIAutomator'
+  '-android uiautomator': 'ByAndroidUIAutomator',
 };
 exports.elFuncSuffix = function(type) {
   let suffix = STRAT_MAPPING[type];
   if (!suffix) {
     suffix = (' by ' + type).replace(/(\s[a-z])/g,
-      function($1) {return $1.toUpperCase().replace(' ', '');})
+      function($1) { return $1.toUpperCase().replace(' ', ''); })
       .replace('Xpath', 'XPath');
   }
   return suffix;
@@ -34,13 +34,13 @@ exports.elFuncSuffix = function(type) {
 
 // return correct jsonwire type
 exports.elFuncFullType = function(type) {
-  if (type === 'css') {return 'css selector'; } // shortcut for css
+  if (type === 'css') { return 'css selector'; } // shortcut for css
   return type;
 };
 
 // from JsonWire spec + shortcuts + mobile JsonWire spec
-exports.elementFuncTypes = ['class name', 'css selector', 'id', 'name', 'link text',
-  'partial link text', 'tag name', 'xpath', 'css', '-ios uiautomation', '-android uiautomator', 'accessibility id'];
+exports.elementFuncTypes = [ 'class name', 'css selector', 'id', 'name', 'link text',
+  'partial link text', 'tag name', 'xpath', 'css', '-ios uiautomation', '-android uiautomator', 'accessibility id' ];
 
 // chai-as-promised promisifier
 // just adding the core method for the sake of safety.\
@@ -48,7 +48,7 @@ exports.elementFuncTypes = ['class name', 'css selector', 'id', 'name', 'link te
 const Q_CORE_METHODS = [
   // core methods:
   'then', 'catch', 'fail', 'progress', 'finally', 'fin', 'done',
-  'thenResolve', 'thenReject', 'nodeify'
+  'thenResolve', 'thenReject', 'nodeify',
 ];
 
 exports.transferPromiseness = function(target, promise) {
@@ -70,15 +70,15 @@ exports.isPromise = function(x) {
 exports.deprecator = {
   deprecationMessageShown: {},
   warnDeprecated: true,
-  showHideDeprecation: function(status) {
+  showHideDeprecation(status) {
     if (status !== undefined) { this.warnDeprecated = status; } else { this.warnDeprecated = !this.warnDeprecated; }
   },
-  warn: function(cat, message) {
+  warn(cat, message) {
     if (this.warnDeprecated && !this.deprecationMessageShown[cat]) {
       this.deprecationMessageShown[cat] = 1;
       console.warn(message);
     }
-  }
+  },
 };
 
 // Android doesn't like cariage return

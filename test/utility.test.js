@@ -1,4 +1,4 @@
-'use strict';
+
 
 const assert = require('assert');
 
@@ -13,14 +13,14 @@ describe('test/utility.test.js', function() {
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
 
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   });
 
@@ -31,7 +31,7 @@ describe('test/utility.test.js', function() {
   beforeEach(async () => {
     await driver.init({
       platformName: 'desktop',
-      browserName: 'chrome'
+      browserName: 'chrome',
     });
   });
 
@@ -46,7 +46,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -63,7 +63,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -80,7 +80,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -97,7 +97,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -114,7 +114,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -126,21 +126,21 @@ describe('test/utility.test.js', function() {
     it('should work', async () => {
       await driver.initWindow({
         width: 800,
-        height: 600
+        height: 600,
       });
       assert.equal(
         server.ctx.url,
-        '/wd/hub/session/sessionId/window/current/size'
+        '/wd/hub/session/sessionId/window/current/size',
       );
       assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.request.body, {
         width: 800,
-        height: 600
+        height: 600,
       });
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -177,7 +177,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -193,7 +193,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -209,7 +209,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });
@@ -224,7 +224,7 @@ describe('test/utility.test.js', function() {
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
-        value: ''
+        value: '',
       });
     });
   });

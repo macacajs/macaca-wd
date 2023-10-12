@@ -2,7 +2,7 @@
 // Wrapper around browser methods
 const _ = require('./lodash');
 const utils = require('./utils.js');
-const deprecator = utils.deprecator;
+const { deprecator } = utils;
 const fs = require('fs');
 const callbacks = require('./callbacks');
 const elementCallback = callbacks.elementCallback;
@@ -17,8 +17,8 @@ const elementCommands = {};
  *
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
-elementCommands.type = function (keys, cb) {
-  commands.type.apply(this.browser, [this, keys, cb]);
+elementCommands.type = function(keys, cb) {
+  commands.type.apply(this.browser, [ this, keys, cb ]);
 };
 
 /**
@@ -26,14 +26,15 @@ elementCommands.type = function (keys, cb) {
  *
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
-elementCommands.keys = function (keys, cb) {
-  commands.keys.apply(this.browser, [keys, cb]);
+elementCommands.keys = function(keys, cb) {
+  commands.keys.apply(this.browser, [ keys, cb ]);
 };
 
 function _isLocalFile(path, cb) {
-  fs.exists(path, function (exists) {
+  fs.exists(path, function(exists) {
     if (exists) {
-      fs.lstat(path, function (err, stats) {
+      // eslint-disable-next-line node/prefer-promises/fs
+      fs.lstat(path, function(err, stats) {
         cb(err, stats.isFile());
       });
     } else { cb(null, false); }
@@ -45,9 +46,9 @@ function _isLocalFile(path, cb) {
  * a local file is detected, otherwise behaves like type.
  * element.sendKeys(keys, cb) -> cb(err)
  */
-elementCommands.sendKeys = function (keys, cb) {
+elementCommands.sendKeys = function(keys, cb) {
   const _this = this;
-  if (!(keys instanceof Array)) {keys = [keys];}
+  if (!(keys instanceof Array)) { keys = [ keys ]; }
 
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
@@ -57,15 +58,15 @@ elementCommands.sendKeys = function (keys, cb) {
   });
 
   const path = keys.join('');
-  _isLocalFile(path, function (err, isLocalFile) {
+  _isLocalFile(path, function(err, isLocalFile) {
     if (err) { return cb(err); }
     if (isLocalFile) {
-      commands.uploadFile.apply(_this.browser, [path, function (err, distantFilePath) {
+      commands.uploadFile.apply(_this.browser, [ path, function(err, distantFilePath) {
         if (err) { return cb(err); }
-        return commands.type.apply(_this.browser, [_this, distantFilePath, cb]);
-      }]);
+        return commands.type.apply(_this.browser, [ _this, distantFilePath, cb ]);
+      } ]);
     } else {
-      commands.type.apply(_this.browser, [_this, keys, cb]);
+      commands.type.apply(_this.browser, [ _this, keys, cb ]);
     }
   });
 };
@@ -75,9 +76,9 @@ elementCommands.sendKeys = function (keys, cb) {
  * a local file is detected, otherwise behaves like type.
  * element.setText(keys, cb) -> cb(err)
  */
-elementCommands.setText = function (keys, cb) {
+elementCommands.setText = function(keys, cb) {
   const _this = this;
-  if (!(keys instanceof Array)) {keys = [keys];}
+  if (!(keys instanceof Array)) { keys = [ keys ]; }
 
   // ensure all keystrokes are strings to conform to JSONWP
   _.each(keys, function(key, idx) {
@@ -85,10 +86,10 @@ elementCommands.setText = function (keys, cb) {
       keys[idx] = key.toString();
     }
   });
-  commands.replace.apply(_this.browser, [_this, keys, cb]);
+  commands.replace.apply(_this.browser, [ _this, keys, cb ]);
 };
 
-elementCommands.replaceKeys = function (keys, cb) {
+elementCommands.replaceKeys = function(keys, cb) {
   deprecator.warn('element.replaceKeys', 'element.replaceKeys has been deprecated, use element.setText instead.');
   elementCommands.setText.call(this, keys, cb);
 };
@@ -98,11 +99,11 @@ elementCommands.replaceKeys = function (keys, cb) {
  *
  * @jsonWire POST /session/:sessionId/element/:id/click
  */
-elementCommands.click = function () {
+elementCommands.click = function() {
   const fargs = utils.varargs(arguments);
   const cb = fargs.callback;
   const clickOpts = fargs.all[0] || {};
-  commands.clickElement.apply(this.browser, [this, clickOpts, cb]);
+  commands.clickElement.apply(this.browser, [ this, clickOpts, cb ]);
 };
 
 /**
@@ -110,8 +111,8 @@ elementCommands.click = function () {
  *
  * @jsonWire POST /session/:sessionId/element/:id/screenshot
  */
-elementCommands.screenshot = function (cb) {
-  commands.takeElementScreenshot.apply(this.browser, [this, cb]);
+elementCommands.screenshot = function(cb) {
+  commands.takeElementScreenshot.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -119,8 +120,8 @@ elementCommands.screenshot = function (cb) {
  *
  * @jsonWire POST /session/:sessionId/touch/click
  */
-elementCommands.tap = function (cb) {
-  commands.tapElement.apply(this.browser, [this, cb]);
+elementCommands.tap = function(cb) {
+  commands.tapElement.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -129,10 +130,10 @@ elementCommands.tap = function (cb) {
  * @jsonWire POST /session/:sessionId/doubleclick
  */
 elementCommands.doubleclick = function(cb) {
-  return commands.moveTo.apply(this.browser, [this, function(err) {
+  return commands.moveTo.apply(this.browser, [ this, function(err) {
     if (err) { return cb(err); }
-    commands.doubleclick.apply(this.browser, [cb]);
-  }.bind(this)]);
+    commands.doubleclick.apply(this.browser, [ cb ]);
+  }.bind(this) ]);
 };
 
 elementCommands.doubleClick = elementCommands.doubleclick;
@@ -148,7 +149,7 @@ elementCommands.moveTo = function() {
   const cb = fargs.callback;
   const xoffset = fargs.all[0];
   const yoffset = fargs.all[1];
-  commands.moveTo.apply(this.browser, [this, xoffset, yoffset, cb]);
+  commands.moveTo.apply(this.browser, [ this, xoffset, yoffset, cb ]);
 };
 
 /**
@@ -156,8 +157,8 @@ elementCommands.moveTo = function() {
  *
  * @jsonWire POST /session/:sessionId/touch/flick
  */
-elementCommands.flick = function (xoffset, yoffset, speed, cb) {
-  commands.flick.apply(this.browser, [this.value, xoffset, yoffset, speed, cb]);
+elementCommands.flick = function(xoffset, yoffset, speed, cb) {
+  commands.flick.apply(this.browser, [ this.value, xoffset, yoffset, speed, cb ]);
 };
 
 /**
@@ -166,8 +167,8 @@ elementCommands.flick = function (xoffset, yoffset, speed, cb) {
  * @jsonWire GET /session/:sessionId/element/:id/text
  * @docOrder 2
  */
-elementCommands.text = function (cb) {
-  commands.text.apply(this.browser, [this, cb]);
+elementCommands.text = function(cb) {
+  commands.text.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -177,7 +178,7 @@ elementCommands.text = function (cb) {
  * @docOrder 4
  */
 elementCommands.textPresent = function(searchText, cb) {
-  commands.textPresent.apply(this.browser, [searchText, this, cb]);
+  commands.textPresent.apply(this.browser, [ searchText, this, cb ]);
 };
 
 /**
@@ -187,7 +188,7 @@ elementCommands.textPresent = function(searchText, cb) {
  * @docOrder 2
  */
 elementCommands.getAttribute = function(name, cb) {
-  commands.getAttribute.apply(this.browser, [this, name, cb]);
+  commands.getAttribute.apply(this.browser, [ this, name, cb ]);
 };
 
 /**
@@ -197,7 +198,7 @@ elementCommands.getAttribute = function(name, cb) {
  * @docOrder 2
  */
 elementCommands.getProperty = function(name, cb) {
-  commands.getProperty.apply(this.browser, [this, name, cb]);
+  commands.getProperty.apply(this.browser, [ this, name, cb ]);
 };
 
 /**
@@ -207,7 +208,7 @@ elementCommands.getProperty = function(name, cb) {
  * @docOrder 2
  */
 elementCommands.getRect = function(cb) {
-  commands.getRect.apply(this.browser, [this, cb]);
+  commands.getRect.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -216,7 +217,7 @@ elementCommands.getRect = function(cb) {
  * @jsonWire GET /session/:sessionId/element/:id/name
  */
 elementCommands.getTagName = function(cb) {
-  commands.getTagName.apply(this.browser, [this, cb]);
+  commands.getTagName.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -225,7 +226,7 @@ elementCommands.getTagName = function(cb) {
  * @jsonWire GET /session/:sessionId/element/:id/displayed
  */
 elementCommands.isDisplayed = function(cb) {
-  commands.isDisplayed.apply(this.browser, [this, cb]);
+  commands.isDisplayed.apply(this.browser, [ this, cb ]);
 };
 
 elementCommands.displayed = elementCommands.isDisplayed;
@@ -236,7 +237,7 @@ elementCommands.displayed = elementCommands.isDisplayed;
  * @jsonWire GET /session/:sessionId/element/:id/selected
  */
 elementCommands.isSelected = function(cb) {
-  commands.isSelected.apply(this.browser, [this, cb]);
+  commands.isSelected.apply(this.browser, [ this, cb ]);
 };
 
 elementCommands.selected = elementCommands.isSelected;
@@ -247,7 +248,7 @@ elementCommands.selected = elementCommands.isSelected;
   * @jsonWire GET /session/:sessionId/element/:id/enabled
   */
 elementCommands.isEnabled = function(cb) {
-  commands.isEnabled.apply(this.browser, [this, cb]);
+  commands.isEnabled.apply(this.browser, [ this, cb ]);
 };
 
 elementCommands.enabled = elementCommands.isEnabled;
@@ -257,7 +258,7 @@ elementCommands.enabled = elementCommands.isEnabled;
  */
 elementCommands.isVisible = function(cb) {
   deprecator.warn('element.isVisible', 'element.isVisible has been deprecated, use element.isDisplayed instead.');
-  commands.isVisible.apply(this.browser, [this, cb]);
+  commands.isVisible.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -265,8 +266,8 @@ elementCommands.isVisible = function(cb) {
  *
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
-elementCommands.getLocation = function (cb) {
-  commands.getLocation.apply(this.browser, [this, cb]);
+elementCommands.getLocation = function(cb) {
+  commands.getLocation.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -274,8 +275,8 @@ elementCommands.getLocation = function (cb) {
  *
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
-elementCommands.getLocationInView = function (cb) {
-  commands.getLocationInView.apply(this.browser, [this, cb]);
+elementCommands.getLocationInView = function(cb) {
+  commands.getLocationInView.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -283,8 +284,8 @@ elementCommands.getLocationInView = function (cb) {
  *
  * @jsonWire GET /session/:sessionId/element/:id/size
  */
-elementCommands.getSize = function (cb) {
-  commands.getSize.apply(this.browser, [this, cb]);
+elementCommands.getSize = function(cb) {
+  commands.getSize.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -294,7 +295,7 @@ elementCommands.getSize = function (cb) {
  * @docOrder 4
  */
 elementCommands.getValue = function(cb) {
-  commands.getValue.apply(this.browser, [this, cb]);
+  commands.getValue.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -303,7 +304,7 @@ elementCommands.getValue = function(cb) {
  * @jsonWire GET /session/:sessionId/element/:id/css/:propertyName
  */
 elementCommands.getComputedCss = function(styleName, cb) {
-  commands.getComputedCss.apply(this.browser, [this, styleName, cb]);
+  commands.getComputedCss.apply(this.browser, [ this, styleName, cb ]);
 };
 
 elementCommands.getComputedCSS = elementCommands.getComputedCss;
@@ -314,7 +315,7 @@ elementCommands.getComputedCSS = elementCommands.getComputedCss;
  * @jsonWire POST /session/:sessionId/element/:id/clear
  */
 elementCommands.clear = function(cb) {
-  commands.clear.apply(this.browser, [this, cb]);
+  commands.clear.apply(this.browser, [ this, cb ]);
 };
 
 /**
@@ -323,7 +324,7 @@ elementCommands.clear = function(cb) {
  * @jsonWire POST /session/:sessionId/element/:id/submit
  */
 elementCommands.submit = function(cb) {
-  commands.submit.apply(this.browser, [this, cb]);
+  commands.submit.apply(this.browser, [ this, cb ]);
 };
 
 _.each(utils.elementFuncTypes, function(type) {
@@ -345,7 +346,7 @@ _.each(utils.elementFuncTypes, function(type) {
    * @docOrder 2
    */
   elementCommands['element' + utils.elFuncSuffix(type)] = function(value, cb) {
-    elementCommands.element.apply(this, [utils.elFuncFullType(type), value, cb]);
+    elementCommands.element.apply(this, [ utils.elFuncFullType(type), value, cb ]);
   };
 
   /**
@@ -366,7 +367,7 @@ _.each(utils.elementFuncTypes, function(type) {
    * @docOrder 2
    */
   elementCommands['elements' + utils.elFuncSuffix(type)] = function(value, cb) {
-    elementCommands.elements.apply(this, [utils.elFuncFullType(type), value, cb]);
+    elementCommands.elements.apply(this, [ utils.elFuncFullType(type), value, cb ]);
   };
 });
 
@@ -381,8 +382,8 @@ elementCommands.element = function(using, value, cb) {
   this.browser._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + _this.value + '/element',
-    data: {using: using, value: value},
-    cb: elementCallback(cb, this.browser)
+    data: { using, value },
+    cb: elementCallback(cb, this.browser),
   });
 };
 
@@ -397,8 +398,8 @@ elementCommands.elements = function(using, value, cb) {
   this.browser._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + _this.value + '/elements',
-    data: {using: using, value: value},
-    cb: elementsCallback(cb, this.browser)
+    data: { using, value },
+    cb: elementsCallback(cb, this.browser),
   });
 };
 
@@ -409,14 +410,16 @@ elementCommands.elements = function(using, value, cb) {
  * @docOrder 1
  */
 elementCommands.equals = function(other, cb) {
-  commands.equalsElement.apply(this.browser, [this, other, cb]);
+  commands.equalsElement.apply(this.browser, [ this, other, cb ]);
 };
 
 /**
  * element.sleep(ms, cb) -> cb(err)
  */
 elementCommands.sleep = function(ms, cb) {
-  cb = cb || function() {};
+  cb = cb || function() {
+    // none
+  };
   setTimeout(cb, ms);
 };
 
@@ -432,8 +435,8 @@ elementCommands.noop = function(cb) {
  *
  * @jsonWire POST /session/:sessionId/touch/multi/perform
  */
-elementCommands.performMultiAction = function (actions, cb) {
-  commands.performMultiAction.apply(this.browser, [this, actions, cb]);
+elementCommands.performMultiAction = function(actions, cb) {
+  commands.performMultiAction.apply(this.browser, [ this, actions, cb ]);
 };
 
 /**
@@ -444,7 +447,7 @@ elementCommands.performMultiAction = function (actions, cb) {
  * @jsonWire POST /session/:sessionId/appium/device/rotate
  */
 elementCommands.rotate = function(opts, cb) {
-  commands.rotateDevice.apply(this.browser, [this, opts, cb]);
+  commands.rotateDevice.apply(this.browser, [ this, opts, cb ]);
 };
 
 elementCommands.touch = function() {
@@ -456,13 +459,13 @@ elementCommands.touch = function() {
   let actions = [];
   if (Array.isArray(code)) {
     actions = code.map(function(el) {
-      el['element'] = _this.value;
+      el.element = _this.value;
       return el;
     });
   } else if (typeof code === 'string') {
-    args['type'] = code;
-    args['element'] = _this.value;
-    actions = [args];
+    args.type = code;
+    args.element = _this.value;
+    actions = [ args ];
   } else {
     cb(new Error('Touch function only accept a action name or a list of actions.'));
   }
@@ -470,8 +473,8 @@ elementCommands.touch = function() {
   this.browser._jsonWireCall({
     method: 'POST',
     relPath: '/actions',
-    data: {actions: actions},
-    cb: simpleCallback(cb)
+    data: { actions },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -481,7 +484,7 @@ elementCommands.touch = function() {
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 elementCommands.setImmediateValueInApp = function(value, cb) {
-  commands.setImmediateValueInApp.apply(this.browser, [this, value, cb]);
+  commands.setImmediateValueInApp.apply(this.browser, [ this, value, cb ]);
 };
 /**
  * element.setImmediateValue(value, cb) -> cb(err)

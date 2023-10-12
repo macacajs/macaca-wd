@@ -5,8 +5,6 @@ const repl = require('repl');
 const assert = require('assert');
 const wd = require('./main');
 
-let connections = 0;
-
 const startRepl = function() {
   const r = repl.start('(wd): ');
   r.context.assert = assert;
@@ -16,8 +14,7 @@ const startRepl = function() {
     console.log("Access the webdriver object via the object: 'wd'");
   };
 
-  const server = net.createServer(function (socket) {
-    connections += 1;
+  const server = net.createServer(function(socket) {
     socket.setTimeout(5 * 60 * 1000, function() {
       socket.destroy();
     });
@@ -26,7 +23,7 @@ const startRepl = function() {
     '\\\\.\\pipe\\node-repl-sock-' + process.pid :
     '/tmp/node-repl-sock-' + process.pid);
 
-  r.on('exit', function () {
+  r.on('exit', function() {
     server.close();
     process.exit();
   });

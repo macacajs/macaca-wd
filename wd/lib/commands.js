@@ -45,7 +45,7 @@ commands.status = function() {
   this._jsonWireCall({
     method: 'GET',
     absPath: 'status',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -59,7 +59,7 @@ commands.sessions = function() {
   this._jsonWireCall({
     method: 'GET',
     absPath: 'sessions',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -79,8 +79,8 @@ commands.next = function() {
     cb: callbackWithData(cb, this),
     data: {
       method,
-      args
-    }
+      args,
+    },
   });
 };
 
@@ -117,7 +117,7 @@ commands.execute = function() {
     method: 'POST',
     relPath: '/execute',
     cb: callbackWithData(cb, this),
-    data: { script: code, args: args }
+    data: { script: code, args },
   });
 };
 
@@ -145,7 +145,7 @@ commands.safeExecute = function() {
     method: 'POST',
     relPath: '/execute',
     cb: callbackWithData(cb, this),
-    data: { script: safeExecuteJsScript, args: [ code, args ] }
+    data: { script: safeExecuteJsScript, args: [ code, args ] },
   });
 };
 
@@ -197,7 +197,7 @@ commands.safeEval = function(code) {
 commands.executeAsync = function() {
   const fargs = utils.varargs(arguments);
   const cb = fargs.callback;
-  const code = fargs.all[0];
+  let code = fargs.all[0];
   const args = fargs.all[1] || [];
 
   code = codeToString(code);
@@ -205,7 +205,7 @@ commands.executeAsync = function() {
     method: 'POST',
     relPath: '/execute_async',
     cb: callbackWithData(cb, this),
-    data: { script: code, args: args }
+    data: { script: code, args },
   });
 };
 
@@ -232,7 +232,7 @@ commands.safeExecuteAsync = function() {
     method: 'POST',
     relPath: '/execute_async',
     cb: callbackWithData(cb, this),
-    data: { script: safeExecuteAsyncJsScript, args: [ code, args ] }
+    data: { script: safeExecuteAsyncJsScript, args: [ code, args ] },
   });
 };
 
@@ -268,7 +268,7 @@ commands.sessionCapabilities = function() {
   this._jsonWireCall({
     method: 'GET',
     // default url
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -301,7 +301,7 @@ commands.close = function() {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/window',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -315,7 +315,7 @@ commands.currentContext = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/context',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -330,7 +330,7 @@ commands.context = function(contextRef) {
     method: 'POST',
     relPath: '/context',
     cb: simpleCallback(cb),
-    data: { name: contextRef }
+    data: { name: contextRef },
   });
 };
 
@@ -344,7 +344,7 @@ commands.contexts = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/contexts',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -359,7 +359,7 @@ commands.window = function(windowRef) {
     method: 'POST',
     relPath: '/window',
     cb: simpleCallback(cb),
-    data: { name: windowRef }
+    data: { name: windowRef },
   });
 };
 
@@ -383,7 +383,7 @@ commands.frame = function(frameRef) {
     method: 'POST',
     relPath: '/frame',
     cb: simpleCallback(cb),
-    data: { id: frameRef }
+    data: { id: frameRef },
   });
 };
 
@@ -406,7 +406,7 @@ commands.windowHandle = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window_handle',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -420,7 +420,7 @@ commands.windowHandles = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window_handles',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -434,7 +434,7 @@ commands.getGeoLocation = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/location',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -452,7 +452,7 @@ commands.setGeoLocation = function(lat, lon, alt) {
     method: 'POST',
     relPath: '/location',
     cb: simpleCallback(cb),
-    data: { location: { latitude: lat, longitude: lon, altitude: alt } }
+    data: { location: { latitude: lat, longitude: lon, altitude: alt } },
   });
 };
 
@@ -467,7 +467,7 @@ commands.scroll = function(xOffset, yOffset) {
     method: 'POST',
     relPath: '/touch/scroll',
     cb: simpleCallback(cb, this),
-    data: { xoffset: xOffset, yoffset: yOffset }
+    data: { xoffset: xOffset, yoffset: yOffset },
   });
 };
 
@@ -481,7 +481,7 @@ commands.logTypes = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/log/types',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -496,7 +496,7 @@ commands.log = function(logType) {
     method: 'POST',
     relPath: '/log',
     cb: callbackWithData(cb, this),
-    data: { type: logType }
+    data: { type: logType },
   });
 };
 
@@ -512,7 +512,7 @@ commands.quit = function() {
     method: 'DELETE',
     // default url
     emit: { event: 'status', message: '\nEnding your web drivage..\n' },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -530,8 +530,8 @@ commands.get = function(_url) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/url',
-    data: { 'url': _url },
-    cb: simpleCallback(cb)
+    data: { url: _url },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -545,7 +545,7 @@ commands.refresh = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/refresh',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -562,7 +562,7 @@ commands.maximize = function(win) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/window/' + win + '/maximize',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -576,8 +576,8 @@ commands.windowSize = function(win, width, height) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/window/' + win + '/size',
-    data: { 'width': width, 'height': height },
-    cb: simpleCallback(cb)
+    data: { width, height },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -595,7 +595,7 @@ commands.getWindowSize = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window/' + win + '/size',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -617,7 +617,7 @@ commands.setWindowSize = function() {
     method: 'POST',
     relPath: '/window/' + win + '/size',
     cb: simpleCallback(cb),
-    data: { width: width, height: height }
+    data: { width, height },
   });
 };
 
@@ -635,7 +635,7 @@ commands.getWindowPosition = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/window/' + win + '/position',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -657,7 +657,7 @@ commands.setWindowPosition = function() {
     method: 'POST',
     relPath: '/window/' + win + '/position',
     cb: simpleCallback(cb),
-    data: { x: x, y: y }
+    data: { x, y },
   });
 };
 
@@ -671,7 +671,7 @@ commands.forward = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/forward',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -685,7 +685,7 @@ commands.back = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/back',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -728,8 +728,8 @@ commands.setImplicitWaitTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts/implicit_wait',
-    data: { ms: ms },
-    cb: simpleCallback(cb)
+    data: { ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -746,8 +746,8 @@ commands.setAsyncScriptTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts/async_script',
-    data: { ms: ms },
-    cb: simpleCallback(cb)
+    data: { ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -762,8 +762,8 @@ commands.setPageLoadTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts',
-    data: { type: 'page load', ms: ms },
-    cb: simpleCallback(cb)
+    data: { type: 'page load', ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -777,8 +777,8 @@ commands.setCommandTimeout = function(ms) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/timeouts',
-    data: { type: 'command', ms: ms },
-    cb: simpleCallback(cb)
+    data: { type: 'command', ms },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -792,8 +792,8 @@ commands.element = function(using, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element',
-    data: { using: using, value: value },
-    cb: elementCallback(cb, this)
+    data: { using, value },
+    cb: elementCallback(cb, this),
   });
 };
 
@@ -817,7 +817,7 @@ commands.elementOrNull = function(using, value) {
       } else {
         cb(err);
       }
-    }
+    },
   ]);
 };
 
@@ -841,7 +841,7 @@ commands.elementIfExists = function(using, value) {
       } else {
         cb(err);
       }
-    }
+    },
   ]);
 };
 
@@ -856,8 +856,8 @@ commands.elements = function(using, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/elements',
-    data: { using: using, value: value },
-    cb: elementsCallback(cb, this)
+    data: { using, value },
+    cb: elementsCallback(cb, this),
   });
 };
 
@@ -897,13 +897,13 @@ commands.waitFor = function() {
     opts = {
       asserter: fargs.all[0],
       timeout: fargs.all[1],
-      pollFreq: fargs.all[2]
+      pollFreq: fargs.all[2],
     };
   }
 
   const {
     MACACA_WD_CLIENT_WAITFOR_TIMEOUT,
-    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ
+    MACACA_WD_CLIENT_WAITFOR_POLL_FREQ,
   } = process.env;
     // default
   opts.timeout = opts.timeout || parseInt(MACACA_WD_CLIENT_WAITFOR_TIMEOUT, 10) || 10 * 1000;
@@ -930,10 +930,10 @@ commands.waitFor = function() {
             } else {
               throw err;
             }
-          }
+          },
         );
       }
-    }
+    },
   );
 
   function poll(isFinalCheck) {
@@ -982,12 +982,12 @@ commands.waitForElement = function() {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
-      pollFreq: fargs.all[4]
+      pollFreq: fargs.all[4],
     };
   } else {
     opts = {
       timeout: fargs.all[2],
-      pollFreq: fargs.all[3]
+      pollFreq: fargs.all[3],
     };
   }
 
@@ -1010,10 +1010,10 @@ commands.waitForElement = function() {
             } else {
               throw err;
             }
-          }
+          },
         );
       }
-    }
+    },
   );
 
   const wrappedAsserter = new Asserter(
@@ -1047,14 +1047,14 @@ commands.waitForElement = function() {
           cb(err, !_.isUndefined(satisfiedEl), satisfiedEl);
         });
       });
-    }
+    },
   );
 
   commands.waitFor.apply(this, [
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
-      pollFreq: opts.pollFreq
+      pollFreq: opts.pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -1086,12 +1086,12 @@ commands.waitForElements = function() {
     opts = {
       asserter: fargs.all[2],
       timeout: fargs.all[3],
-      pollFreq: fargs.all[4]
+      pollFreq: fargs.all[4],
     };
   } else {
     opts = {
       timeout: fargs.all[2],
-      pollFreq: fargs.all[3]
+      pollFreq: fargs.all[3],
     };
   }
 
@@ -1114,10 +1114,10 @@ commands.waitForElements = function() {
             } else {
               throw err;
             }
-          }
+          },
         );
       }
-    }
+    },
   );
 
   const wrappedAsserter = new Asserter(
@@ -1148,14 +1148,14 @@ commands.waitForElements = function() {
           cb(err, satisfiedEls.length > 0, satisfiedEls);
         });
       });
-    }
+    },
   );
 
   commands.waitFor.apply(this, [
     {
       asserter: wrappedAsserter,
       timeout: opts.timeout,
-      pollFreq: opts.pollFreq
+      pollFreq: opts.pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -1191,7 +1191,7 @@ commands.takeScreenshot = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: `/screenshot${url.format({ query: params })}`,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1248,6 +1248,7 @@ commands.saveScreenshot = function() {
       if (_params && _params.video) {
         cb(null, base64Data);
       }
+      // eslint-disable-next-line node/prefer-promises/fs
       require('fs').writeFile(filePath, base64Data, 'base64', function(err) {
         if (err) {
           return cb(err);
@@ -1317,7 +1318,7 @@ const addMethodsForSuffix = function(type, singular, plural) {
           } else {
             cb(err);
           }
-        }
+        },
       );
       commands.elements.apply(this, args);
     };
@@ -1355,7 +1356,7 @@ const addMethodsForSuffix = function(type, singular, plural) {
           } else {
             cb(err);
           }
-        }
+        },
       );
       commands.elements.apply(this, args);
     };
@@ -1474,7 +1475,7 @@ commands.getTagName = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/name',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1498,7 +1499,7 @@ commands.getAttribute = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/attribute/' + attrName,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1522,7 +1523,7 @@ commands.getProperty = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/property/' + propertyName,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1542,7 +1543,7 @@ commands.getRect = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/rect',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1556,7 +1557,7 @@ commands.isDisplayed = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/displayed',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1572,7 +1573,7 @@ commands.isEnabled = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/enabled',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1588,7 +1589,7 @@ commands.isSelected = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/selected',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1625,7 +1626,7 @@ commands.clickElement = function() {
     method: 'POST',
     relPath: '/element/' + element + '/click',
     data: { clickOpts: params },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1642,7 +1643,7 @@ commands.takeElementScreenshot = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: `/element/${element}/screenshot${url.format({ query: params })}`,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1656,7 +1657,7 @@ commands.getComputedCss = function(element, cssProperty) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/css/' + cssProperty,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1672,7 +1673,7 @@ commands.equalsElement = function(element, other) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/equals/' + other,
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -1683,7 +1684,7 @@ const _flick1 = function() {
   const yspeed = fargs.all[1];
   const swipe = fargs.all[2];
 
-  const data = { xspeed: xspeed, yspeed: yspeed };
+  const data = { xspeed, yspeed };
   if (swipe) {
     data.swipe = swipe;
   }
@@ -1691,8 +1692,8 @@ const _flick1 = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/touch/flick',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1707,8 +1708,8 @@ const _flick2 = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/touch/flick',
-    data: { element: element, xoffset: xoffset, yoffset: yoffset, speed: speed },
-    cb: simpleCallback(cb)
+    data: { element, xoffset, yoffset, speed },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1741,7 +1742,7 @@ commands.tapElement = function(element, cb) {
     method: 'POST',
     relPath: '/touch/click',
     data: { element: element.value.toString() },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1761,7 +1762,7 @@ commands.performTouchAction = function() {
       method: 'POST',
       relPath: '/touch/perform',
       data: { actions: touchAction.toJSON() },
-      cb: callbackWithData(cb, this)
+      cb: callbackWithData(cb, this),
     });
   } catch (err) {
     return cb(err);
@@ -1777,7 +1778,7 @@ commands.performTouchAction = function() {
 commands.performMultiAction = function() {
   const _this = this;
   const fargs = utils.varargs(arguments);
-  let cb = fargs.callback;
+  const cb = fargs.callback;
   let element = fargs.all[0];
   let multiTouchAction = fargs.all[1];
   if (!multiTouchAction) {
@@ -1793,8 +1794,8 @@ commands.performMultiAction = function() {
     _this._jsonWireCall({
       method: 'POST',
       relPath: '/touch/multi/perform',
-      data: data,
-      cb: callbackWithData(cb, this)
+      data,
+      cb: callbackWithData(cb, this),
     });
   } catch (err) {
     return cb(err);
@@ -1821,10 +1822,10 @@ commands.moveTo = function() {
     data: {
       element:
                 element ? element.toString() : null,
-      xoffset: xoffset,
-      yoffset: yoffset
+      xoffset,
+      yoffset,
     },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1843,8 +1844,8 @@ commands.buttonDown = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/buttondown',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1863,8 +1864,8 @@ commands.buttonUp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/buttonup',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1884,8 +1885,8 @@ commands.click = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/click',
-    data: { button: button },
-    cb: simpleCallback(cb)
+    data: { button },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1906,13 +1907,13 @@ commands.swipe = function() {
     method: 'POST',
     relPath: `/element/${startX}/swipe`,
     data: {
-      startX: startX,
-      startY: startY,
-      endX: endX,
-      endY: endY,
-      duration: duration
+      startX,
+      startY,
+      endX,
+      endY,
+      duration,
     },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1926,7 +1927,7 @@ commands.doubleclick = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/doubleclick',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1952,7 +1953,7 @@ commands.type = function(element, keys) {
     method: 'POST',
     relPath: '/element/' + element + '/value',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1971,7 +1972,7 @@ commands.replace = function(element, keys) {
     method: 'POST',
     relPath: '/appium/element/' + element + '/replace_value',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -1986,7 +1987,7 @@ commands.submit = function(element) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/submit',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2012,7 +2013,7 @@ commands.keys = function(keys) {
     method: 'POST',
     relPath: '/keys',
     data: { value: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2026,7 +2027,7 @@ commands.clear = function(element) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/' + element + '/clear',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2040,7 +2041,7 @@ commands.title = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/title',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2054,7 +2055,7 @@ commands.source = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/source',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2064,7 +2065,7 @@ const _rawText = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/text',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2122,7 +2123,7 @@ commands.alertText = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/alert_text',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2137,7 +2138,7 @@ commands.alertKeys = function(keys) {
     method: 'POST',
     relPath: '/alert_text',
     data: { text: keys },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2151,7 +2152,7 @@ commands.acceptAlert = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/accept_alert',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2165,7 +2166,7 @@ commands.dismissAlert = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/dismiss_alert',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2179,7 +2180,7 @@ commands.active = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/element/active',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2193,7 +2194,7 @@ commands.url = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/url',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2207,7 +2208,7 @@ commands.allCookies = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/cookie',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2230,8 +2231,8 @@ commands.setCookie = function(cookie) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/cookie',
-    data: { cookie: cookie },
-    cb: simpleCallback(cb)
+    data: { cookie },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2245,7 +2246,7 @@ commands.deleteAllCookies = function() {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/cookie',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2259,7 +2260,7 @@ commands.deleteCookie = function(name) {
   this._jsonWireCall({
     method: 'DELETE',
     relPath: '/cookie/' + encodeURIComponent(name),
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2273,7 +2274,7 @@ commands.getOrientation = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/orientation',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2287,8 +2288,8 @@ commands.setOrientation = function(orientation) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/orientation',
-    data: { orientation: orientation },
-    cb: simpleCallback(cb)
+    data: { orientation },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -2307,7 +2308,7 @@ commands.setLocalStorageKey = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.setItem(arguments[0], arguments[1])', [ key, value ], cb ]
+    [ 'localStorage.setItem(arguments[0], arguments[1])', [ key, value ], cb ],
   );
 };
 
@@ -2325,7 +2326,7 @@ commands.getLocalStorageKey = function() {
 
   commands.safeEval.apply(
     this,
-    [ "localStorage.getItem('" + key + "')", cb ]
+    [ "localStorage.getItem('" + key + "')", cb ],
   );
 };
 
@@ -2343,7 +2344,7 @@ commands.removeLocalStorageKey = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.removeItem(arguments[0])', [ key ], cb ]
+    [ 'localStorage.removeItem(arguments[0])', [ key ], cb ],
   );
 };
 
@@ -2360,7 +2361,7 @@ commands.clearLocalStorage = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.clear()', cb ]
+    [ 'localStorage.clear()', cb ],
   );
 };
 
@@ -2413,7 +2414,7 @@ commands.getPageIndex = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/pageIndex',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2427,7 +2428,7 @@ commands.getLocation = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/location',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2441,7 +2442,7 @@ commands.getLocationInView = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/location_in_view',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2455,7 +2456,7 @@ commands.getSize = function(element) {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/element/' + element + '/size',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2484,14 +2485,14 @@ commands.uploadFile = function(filepath) {
         method: 'POST',
         relPath: '/file',
         data: { file: Buffer.concat(dataList).toString('base64') },
-        cb: callbackWithData(cb, _this)
+        cb: callbackWithData(cb, _this),
       });
     });
 
   archive
     .append(
       fs.createReadStream(filepath),
-      { name: path.basename(filepath) }
+      { name: path.basename(filepath) },
     );
 
   archive.finalize(function(err) {
@@ -2513,8 +2514,8 @@ commands.waitForJsCondition = function() {
   commands.waitFor.apply(this, [
     {
       asserter: asserters.jsCondition(jsConditionExpr, true),
-      timeout: timeout,
-      pollFreq: pollFreq
+      timeout,
+      pollFreq,
     }, function(err, value) {
       if (err && err.message && err.message.match(/Condition/)) {
         cb(new Error("Element condition wasn't satisfied!"));
@@ -2555,7 +2556,7 @@ commands.waitForConditionInBrowser = function() {
         return cb('waitForConditionInBrowser failure for: ' + conditionExpr);
       }
       cb(null, res);
-    }
+    },
   ]);
 };
 
@@ -2564,6 +2565,7 @@ commands.waitForConditionInBrowser = function() {
  */
 commands.sleep = function(ms, cb) {
   cb = cb || function() {
+    // none
   };
   setTimeout(cb, ms);
 };
@@ -2587,7 +2589,7 @@ commands.shakeDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/shake',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2609,8 +2611,8 @@ commands.lockDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/lock',
-    data: { seconds: seconds },
-    cb: simpleCallback(cb)
+    data: { seconds },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2631,7 +2633,7 @@ commands.unlockDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/unlock',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2652,7 +2654,7 @@ commands.isLocked = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/is_locked',
-    cb: callbackWithData(cb)
+    cb: callbackWithData(cb),
   });
 };
 
@@ -2667,15 +2669,15 @@ commands.deviceKeyEvent = function() {
   const cb = fargs.callback;
   const keycode = fargs.all[0];
   const metastate = fargs.all[1];
-  const data = { keycode: keycode };
+  const data = { keycode };
   if (metastate) {
     data.metastate = metastate;
   }
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/keyevent',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2697,8 +2699,8 @@ commands.pressDeviceKey = commands.deviceKeyEvent;
 commands.rotateDevice = function() {
   const fargs = utils.varargs(arguments);
   const cb = fargs.callback;
-  const element = fargs.all[0];
-  const opts = fargs.all[1];
+  let element = fargs.all[0];
+  let opts = fargs.all[1];
   if (!(element && element.value)) {
     opts = element;
     element = null;
@@ -2710,8 +2712,8 @@ commands.rotateDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/rotate',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2734,7 +2736,7 @@ commands.getCurrentDeviceActivity = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/device/current_activity',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2756,8 +2758,8 @@ commands.installAppOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/install_app',
-    data: { appPath: appPath },
-    cb: simpleCallback(cb)
+    data: { appPath },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2779,8 +2781,8 @@ commands.removeAppFromDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/remove_app',
-    data: { appId: appId },
-    cb: simpleCallback(cb)
+    data: { appId },
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2802,8 +2804,8 @@ commands.isAppInstalledOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/app_installed',
-    data: { bundleId: bundleId },
-    cb: callbackWithData(cb, this)
+    data: { bundleId },
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2826,20 +2828,20 @@ commands.hideDeviceKeyboard = function() {
   const cb = fargs.callback;
   let data = {};
   switch (typeof fargs.all[0]) {
-  case 'string':
-    data = { keyName: fargs.all[0] };
-    break;
-  case 'object':
-    data = fargs.all[0];
-    break;
-  default:
-    data = null;
+    case 'string':
+      data = { keyName: fargs.all[0] };
+      break;
+    case 'object':
+      data = fargs.all[0];
+      break;
+    default:
+      data = null;
   }
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/hide_keyboard',
-    data: data,
-    cb: simpleCallback(cb)
+    data,
+    cb: simpleCallback(cb),
   });
 };
 commands.hideKeyboard = commands.hideDeviceKeyboard;
@@ -2858,7 +2860,7 @@ commands.pushFileToDevice = function() {
     method: 'POST',
     relPath: '/appium/device/push_file',
     data: { path: pathOnDevice, data: base64Data },
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2881,7 +2883,7 @@ commands.pullFileFromDevice = function() {
     method: 'POST',
     relPath: '/appium/device/pull_file',
     data: { path: pathOnDevice },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -2904,7 +2906,7 @@ commands.pullFolderFromDevice = function() {
     method: 'POST',
     relPath: '/appium/device/pull_folder',
     data: { path: pathOnDevice },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -2925,7 +2927,7 @@ commands.toggleAirplaneModeOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_airplane_mode',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2951,7 +2953,7 @@ commands.toggleWiFiOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_wifi',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2971,7 +2973,7 @@ commands.toggleLocationServicesOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_location_services',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -2991,7 +2993,7 @@ commands.toggleDataOnDevice = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/toggle_data',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 /**
@@ -3011,7 +3013,7 @@ commands.launchApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/launch',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3025,7 +3027,7 @@ commands.closeApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/close',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3039,7 +3041,7 @@ commands.resetApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/reset',
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3055,8 +3057,8 @@ commands.backgroundApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/background',
-    data: { seconds: seconds },
-    cb: simpleCallback(cb)
+    data: { seconds },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3073,8 +3075,8 @@ commands.endTestCoverageForApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/end_test_coverage',
-    data: { intent: intent, path: path },
-    cb: callbackWithData(cb, this)
+    data: { intent, path },
+    cb: callbackWithData(cb, this),
   });
 };
 /**
@@ -3104,8 +3106,8 @@ commands.complexFindInApp = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/complex_find',
-    data: { selector: selector },
-    cb: elementOrElementsCallback(cb, this)
+    data: { selector },
+    cb: elementOrElementsCallback(cb, this),
   });
 };
 
@@ -3130,8 +3132,8 @@ commands.getAppStrings = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/app/strings',
-    data: { language: language },
-    cb: callbackWithData(cb, this)
+    data: { language },
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3145,8 +3147,8 @@ commands.setImmediateValueInApp = function(element, value) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/element/' + element.value.toString() + '/value',
-    data: { value: value },
-    cb: simpleCallback(cb)
+    data: { value },
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3165,7 +3167,7 @@ commands.startActivity = function() {
     method: 'POST',
     relPath: '/appium/device/start_activity',
     data: options,
-    cb: simpleCallback(cb)
+    cb: simpleCallback(cb),
   });
 };
 
@@ -3188,7 +3190,7 @@ commands.setNetworkConnection = function() {
     method: 'POST',
     relPath: '/network_connection',
     data: { parameters: { type: fargs.all[0] } },
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3202,7 +3204,7 @@ commands.getNetworkConnection = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/network_connection',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3216,7 +3218,7 @@ commands.openNotifications = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/appium/device/open_notifications',
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3230,7 +3232,7 @@ commands.settings = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/settings',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3246,7 +3248,7 @@ commands.updateSettings = function() {
     method: 'POST',
     relPath: '/appium/settings',
     data: { settings: fargs.all[0] },
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3260,7 +3262,7 @@ commands.availableIMEEngines = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/available_engines',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3274,8 +3276,8 @@ commands.activateIMEEngine = function(engine) {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/ime/activate',
-    data: { engine: engine },
-    cb: simpleCallback(cb, this)
+    data: { engine },
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3289,7 +3291,7 @@ commands.deactivateIMEEngine = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/ime/deactivate',
-    cb: simpleCallback(cb, this)
+    cb: simpleCallback(cb, this),
   });
 };
 
@@ -3303,7 +3305,7 @@ commands.isIMEActive = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/activated',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3317,7 +3319,7 @@ commands.activeIMEEngine = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/ime/active_engine',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3331,7 +3333,7 @@ commands.getDeviceTime = function() {
   this._jsonWireCall({
     method: 'GET',
     relPath: '/appium/device/system_time',
-    cb: callbackWithData(cb, this)
+    cb: callbackWithData(cb, this),
   });
 };
 
@@ -3340,7 +3342,7 @@ commands.touch = function() {
   const fargs = utils.varargs(arguments);
   const code = fargs.all[0];
   const args = fargs.all[1] || {};
-  const actions = [];
+  let actions = [];
   if (Array.isArray(code)) {
     for (let i = 0, len = code.length; i < len; i++) {
       if (i > 0) {
@@ -3353,7 +3355,7 @@ commands.touch = function() {
       actions[i] = code[i];
     }
   } else if (typeof code === 'string') {
-    args['type'] = code;
+    args.type = code;
     actions = [ args ];
   } else {
     cb(new Error('Touch function only accept a action name or a list of actions.'));
@@ -3362,8 +3364,8 @@ commands.touch = function() {
   this._jsonWireCall({
     method: 'POST',
     relPath: '/actions',
-    data: { actions: actions },
-    cb: simpleCallback(cb)
+    data: { actions },
+    cb: simpleCallback(cb),
   });
 };
 

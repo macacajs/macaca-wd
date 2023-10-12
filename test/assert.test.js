@@ -1,4 +1,4 @@
-'use strict';
+
 
 const assert = require('assert');
 
@@ -16,13 +16,13 @@ describe('test/asserter.test.js', function() {
     server.start();
     const remoteConfig = {
       host: 'localhost',
-      port: 3456
+      port: 3456,
     };
     driver = wd.promiseChainRemote(remoteConfig);
     driver.configureHttp({
       timeout: 20 * 1000,
       retries: 5,
-      retryDelay: 5
+      retryDelay: 5,
     });
   };
 
@@ -34,7 +34,7 @@ describe('test/asserter.test.js', function() {
     beforeEach(async () => {
       await driver.init({
         platformName: 'desktop',
-        browserName: 'chrome'
+        browserName: 'chrome',
       });
     });
 
@@ -46,7 +46,7 @@ describe('test/asserter.test.js', function() {
         mockServer('ctx.body', {
           sessionId: 'sessionId',
           status: 0,
-          value: 'someClass'
+          value: 'someClass',
         });
       });
 
@@ -57,7 +57,7 @@ describe('test/asserter.test.js', function() {
         const { script, args } = server.ctx.request.body;
         assert.equal(
           script,
-          "return window.__macaca_current_element.getAttribute('class')"
+          "return window.__macaca_current_element.getAttribute('class')",
         );
         assert.equal(args.length, 0);
       });
@@ -71,7 +71,7 @@ describe('test/asserter.test.js', function() {
         await mockServer('ctx.body', {
           sessionId: 'sessionId',
           status: 0,
-          value: 'My Title'
+          value: 'My Title',
         });
       });
 
@@ -90,7 +90,7 @@ describe('test/asserter.test.js', function() {
         await mockServer('ctx.body', {
           sessionId: 'sessionId',
           status: 0,
-          value: [{ ELEMENT: 1 }, { ELEMENT: 2 }]
+          value: [{ ELEMENT: 1 }, { ELEMENT: 2 }],
         });
       });
 
@@ -123,11 +123,11 @@ describe('test/asserter.test.js', function() {
       await mockServer('ctx.body', {
         sessionId: 'sessionId',
         status: 0,
-        value: [{ ELEMENT: 1 }, { ELEMENT: 2 }]
+        value: [{ ELEMENT: 1 }, { ELEMENT: 2 }],
       });
       await driver.init({
         platformName: 'desktop',
-        browserName: 'chrome'
+        browserName: 'chrome',
       });
     });
 
@@ -139,11 +139,11 @@ describe('test/asserter.test.js', function() {
       'name',
       'partial link text',
       'tag name',
-      'xpath'
+      'xpath',
     ].map(type => {
       return {
         functionSuffix: `hasElement${elFuncSuffix(type)}`,
-        fullType: elFuncFullType(type)
+        fullType: elFuncFullType(type),
       };
     });
 

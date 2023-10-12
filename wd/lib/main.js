@@ -54,7 +54,7 @@ function buildConfigUrl(remoteWdConfig) {
     protocol: 'http:',
     hostname: '127.0.0.1',
     port: '4444',
-    pathname: '/wd/hub'
+    pathname: '/wd/hub',
   });
 
   // strip any trailing slashes from pathname
@@ -82,7 +82,7 @@ const parseRemoteWdConfig = function(args) {
       hostname: args[0],
       port: args[1],
       user: args[2],
-      pwd: args[3]
+      pwd: args[3],
     });
   }
 
@@ -103,9 +103,9 @@ let PromiseWebdriver, PromiseElement, PromiseChainWebdriver, PromiseChainElement
 function remote() {
   const args = arguments.length >= 1 ? __slice.call(arguments, 0) : [];
   const driverProtos = {
-    'async': Webdriver,
-    'promise': PromiseWebdriver,
-    'promiseChain': PromiseChainWebdriver
+    async: Webdriver,
+    promise: PromiseWebdriver,
+    promiseChain: PromiseChainWebdriver,
   };
   const driverTypes = _(driverProtos).keys().value();
   const driverType = driverTypes.indexOf(_(args).last()) > 0 ? args.pop() : 'async';
@@ -207,24 +207,24 @@ wrap();
 
 module.exports = {
   // Retrieves browser
-  remote: remote,
-  asyncRemote: asyncRemote,
+  remote,
+  asyncRemote,
 
   // Retrieves wrap browser
-  promiseRemote: promiseRemote,
-  promiseChainRemote: promiseChainRemote,
+  promiseRemote,
+  promiseChainRemote,
 
   // Webdriver and Wrapper base classes
-  Webdriver: Webdriver,
+  Webdriver,
   webdriver: Webdriver, // for backward compatibility
-  Element: Element,
-  PromiseChainWebdriver: PromiseChainWebdriver,
-  PromiseWebdriver: PromiseWebdriver,
+  Element,
+  PromiseChainWebdriver,
+  PromiseWebdriver,
   TouchAction: actions.TouchAction,
   MultiAction: actions.MultiAction,
 
   // Actualizes promise wrappers
-  rewrap: function() {
+  rewrap() {
     deprecator.warn('rewrap',
       'rewrap has been deprecated, use addAsyncMethod instead.');
     wrap();
@@ -241,7 +241,7 @@ module.exports = {
    * @wd
    */
   configureHttp: config.configureHttp,
-  getHttpConfig: function() { return _(config.httpConfig).clone(); },
+  getHttpConfig() { return _(config.httpConfig).clone(); },
 
   // deprecation
   /**
@@ -257,60 +257,60 @@ module.exports = {
    *
    * @wd
    */
-  addAsyncMethod: addAsyncMethod,
+  addAsyncMethod,
   /**
    * wd.addElementAsyncMethod(name, func)
    *
    * @wd
    */
-  addElementAsyncMethod: addElementAsyncMethod,
+  addElementAsyncMethod,
   /**
    * wd.addPromiseMethod(name, func)
    *
    * @wd
    */
-  addPromiseMethod: addPromiseMethod,
+  addPromiseMethod,
   /**
    * wd.addElementPromiseMethod(name, func)
    *
    * @wd
    */
-  addElementPromiseMethod: addElementPromiseMethod,
+  addElementPromiseMethod,
   /**
    * wd.addPromiseChainMethod(name, func)
    *
    * @wd
    */
-  addPromiseChainMethod: addPromiseChainMethod,
+  addPromiseChainMethod,
   /**
    * wd.addElementPromiseChainMethod(name, func)
    *
    * @wd
    */
-  addElementPromiseChainMethod: addElementPromiseChainMethod,
+  addElementPromiseChainMethod,
   /**
    * wd.removeMethod(name, func)
    *
    * @wd
    */
-  removeMethod: removeMethod,
+  removeMethod,
 
   // Useful stuff
   Asserter: require('./asserters').Asserter,
   asserters: require('./asserters'),
-  SPECIAL_KEYS: SPECIAL_KEYS,
-  Q: Q,
+  SPECIAL_KEYS,
+  Q,
   findCallback: utils.findCallback,
   varargs: utils.varargs,
   transferPromiseness: utils.transferPromiseness,
 
   // This is for people who write wrapper
   // todo: That should not be needed.
-  utils: utils,
+  utils,
 
-  setBaseClasses: function(_Webdriver, _Element) {
+  setBaseClasses(_Webdriver, _Element) {
     Webdriver = _Webdriver;
     Element = _Element;
     wrap();
-  }
+  },
 };
