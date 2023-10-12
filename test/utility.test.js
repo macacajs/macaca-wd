@@ -213,20 +213,4 @@ describe('test/utility.test.js', function() {
       });
     });
   });
-
-  /**
-   * https://macacajs.github.io/macaca-wd/#rebuildContextPage
-   */
-  describe('rebuildContextPage', async () => {
-    it('should work', async () => {
-      await driver.rebuildContextPage(null, {});
-      assert.equal(server.ctx.url, '/wd/hub/session/sessionId/next');
-      assert.equal(server.ctx.method, 'POST');
-      assert.deepEqual(server.ctx.response.body, {
-        sessionId: 'sessionId',
-        status: 0,
-        value: ''
-      });
-    });
-  });
 });
