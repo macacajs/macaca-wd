@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const __slice = Array.prototype.slice;
 const Webdriver = require('./webdriver');
@@ -7,6 +9,7 @@ const Element = require('./element');
  * new wd.TouchAction()
  * TouchAction constructor
  *
+ * @param driver
  * @actions
  */
 const TouchAction = function(driver) {
@@ -52,6 +55,7 @@ TouchAction.prototype.toJSON = function() {
  * touchAction.longPress({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
 TouchAction.prototype.longPress = function(opts) {
@@ -63,6 +67,7 @@ TouchAction.prototype.longPress = function(opts) {
  * touchAction.moveTo({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
 TouchAction.prototype.moveTo = function(opts) {
@@ -74,6 +79,7 @@ TouchAction.prototype.moveTo = function(opts) {
  * touchAction.press({el, x, y})
  * pass el or (x,y) or both
  *
+ * @param opts
  * @actions
  */
 TouchAction.prototype.press = function(opts) {
@@ -96,6 +102,7 @@ TouchAction.prototype.release = function() {
  * pass el or (x,y) or both
  * count is optional
  *
+ * @param opts
  * @actions
  */
 TouchAction.prototype.tap = function(opts) {
@@ -108,6 +115,7 @@ TouchAction.prototype.tap = function(opts) {
  * touchAction.wait(ms)
  * ms is optional
  *
+ * @param opts
  * @actions
  */
 TouchAction.prototype.wait = function(opts) {
@@ -128,6 +136,7 @@ TouchAction.prototype.cancel = function() {
 /**
  * perform the action
  *
+ * @param cb
  * @actions
  */
 TouchAction.prototype.perform = function(cb) {
@@ -142,6 +151,7 @@ TouchAction.prototype.perform = function(cb) {
  * new wd.MultiAction()
  * MultiAction constructor
  *
+ * @param browserOrElement
  * @actions
  */
 const MultiAction = function(browserOrElement) {
@@ -186,6 +196,7 @@ MultiAction.prototype.cancel = function() {
 /**
  * multiAction.perform()
  *
+ * @param cb
  * @actions
  */
 MultiAction.prototype.perform = function(cb) {

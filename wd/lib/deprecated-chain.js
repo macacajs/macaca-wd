@@ -1,3 +1,5 @@
+'use strict';
+
 const async = require('async');
 const _ = require('./lodash');
 

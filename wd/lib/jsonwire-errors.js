@@ -1,3 +1,5 @@
+'use strict';
+
 const JSONWIRE_ERRORS = [
   {
     status: 0,

@@ -1,3 +1,5 @@
+'use strict';
+
 const utils = require('./utils');
 const newError = utils.newError;
 const getJsonwireError = utils.getJsonwireError;

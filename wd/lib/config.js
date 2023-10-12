@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('./lodash');
 
 const httpConfig = {
@@ -17,6 +19,8 @@ function _configureHttp(httpConfig, opts) {
       case 'retries':
         if (opts[key] === 'always') { opts[key] = 0; }
         if (opts[key] === 'never') { opts[key] = -1; }
+        break;
+      default:
         break;
     }
     httpConfig[key] = opts[key];

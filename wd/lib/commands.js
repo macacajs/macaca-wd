@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const url = require('url');
 const path = require('path');
@@ -174,6 +176,7 @@ commands.safeExecute = function() {
  * Safely evaluate expression, always returning  (using safeExecute):
  * safeEval(code, cb) -> cb(err, value)
  *
+ * @param code
  * @jsonWire POST /session/:sessionId/execute
  */
 commands.safeEval = function(code) {
@@ -322,6 +325,7 @@ commands.currentContext = function() {
 /**
  * context(contextRef, cb) -> cb(err, context)
  *
+ * @param contextRef
  * @jsonWire POST /session/:sessionId/context
  */
 commands.context = function(contextRef) {
@@ -351,6 +355,7 @@ commands.contexts = function() {
 /**
  * window(name, cb) -> cb(err)
  *
+ * @param windowRef
  * @jsonWire POST /session/:sessionId/window
  */
 commands.window = function(windowRef) {
@@ -366,6 +371,7 @@ commands.window = function(windowRef) {
 /**
  * frame(frameRef, cb) -> cb(err)
  *
+ * @param frameRef
  * @jsonWire POST /session/:sessionId/frame
  */
 commands.frame = function(frameRef) {
@@ -441,6 +447,9 @@ commands.getGeoLocation = function() {
 /**
  * setGeoLocation(lat, lon, alt, cb) -> cb(err)
  *
+ * @param lat
+ * @param lon
+ * @param alt
  * @jsonWire POST /session/:sessionId/location
  */
 commands.setGeoLocation = function(lat, lon, alt) {
@@ -459,6 +468,8 @@ commands.setGeoLocation = function(lat, lon, alt) {
 /**
  * scroll(xOffset, yOffset, cb) -> cb(err)
  *
+ * @param xOffset
+ * @param yOffset
  * @jsonWire POST /session/:sessionId/touch/scroll
  */
 commands.scroll = function(xOffset, yOffset) {
@@ -488,6 +499,7 @@ commands.logTypes = function() {
 /**
  * log(logType, cb) -> cb(err, arrayOfLogs)
  *
+ * @param logType
  * @jsonWire POST /session/:sessionId/log
  */
 commands.log = function(logType) {
@@ -520,6 +532,7 @@ commands.quit = function() {
  * get(url,cb) -> cb(err)
  * Get a new url.
  *
+ * @param _url
  * @jsonWire POST /session/:sessionId/url
  */
 commands.get = function(_url) {
@@ -552,6 +565,7 @@ commands.refresh = function() {
 /**
  * maximize(handle, cb) -> cb(err)
  *
+ * @param win
  * @jsonWire POST /session/:sessionId/window/:windowHandle/maximize
  */
 commands.maximize = function(win) {
@@ -569,6 +583,9 @@ commands.maximize = function(win) {
 /**
  * windowSize(handle, width, height, cb) -> cb(err)
  *
+ * @param win
+ * @param width
+ * @param height
  * @jsonWire POST /session/:sessionId/window/:windowHandle/size
  */
 commands.windowSize = function(win, width, height) {
@@ -721,6 +738,7 @@ commands.configureHttp = function() {
 /**
  * setImplicitWaitTimeout(ms, cb) -> cb(err)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts/implicit_wait
  */
 commands.setImplicitWaitTimeout = function(ms) {
@@ -739,6 +757,7 @@ commands.setWaitTimeout = commands.setImplicitWaitTimeout;
 /**
  * setAsyncScriptTimeout(ms, cb) -> cb(err)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts/async_script
  */
 commands.setAsyncScriptTimeout = function(ms) {
@@ -755,6 +774,7 @@ commands.setAsyncScriptTimeout = function(ms) {
  * setPageLoadTimeout(ms, cb) -> cb(err)
  * (use setImplicitWaitTimeout and setAsyncScriptTimeout to set the other timeouts)
  *
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setPageLoadTimeout = function(ms) {
@@ -770,6 +790,7 @@ commands.setPageLoadTimeout = function(ms) {
 /**
  * setCommandTimeout(ms, cb) -> cb(err)
  * (this is for Appium only)
+ * @param ms
  * @jsonWire POST /session/:sessionId/timeouts
  */
 commands.setCommandTimeout = function(ms) {
@@ -785,6 +806,8 @@ commands.setCommandTimeout = function(ms) {
 /**
  * element(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/element
  */
 commands.element = function(using, value) {
@@ -801,6 +824,8 @@ commands.element = function(using, value) {
  * Retrieve an element avoiding not found exception and returning null instead:
  * elementOrNull(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 3
  */
@@ -825,6 +850,8 @@ commands.elementOrNull = function(using, value) {
  * Retrieve an element avoiding not found exception and returning undefined instead:
  * elementIfExists(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 5
  */
@@ -848,6 +875,8 @@ commands.elementIfExists = function(using, value) {
 /**
  * elements(using, value, cb) -> cb(err, elements)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 1
  */
@@ -865,6 +894,8 @@ commands.elements = function(using, value) {
  * Check if element exists:
  * hasElement(using, value, cb) -> cb(err, boolean)
  *
+ * @param using
+ * @param value
  * @jsonWire POST /session/:sessionId/elements
  * @docOrder 7
  */
@@ -930,10 +961,10 @@ commands.waitFor = function() {
             } else {
               throw err;
             }
-          },
+          }
         );
       }
-    },
+    }
   );
 
   function poll(isFinalCheck) {
@@ -968,7 +999,6 @@ commands.waitFor = function() {
  * asserter like: function(element , cb) -> cb(err, satisfied, el)
  */
 commands.waitForElement = function() {
-
   const cb = findCallback(arguments);
   const fargs = utils.varargs(arguments);
   const using = fargs.all[0];
@@ -1010,10 +1040,10 @@ commands.waitForElement = function() {
             } else {
               throw err;
             }
-          },
+          }
         );
       }
-    },
+    }
   );
 
   const wrappedAsserter = new Asserter(
@@ -1047,7 +1077,7 @@ commands.waitForElement = function() {
           cb(err, !_.isUndefined(satisfiedEl), satisfiedEl);
         });
       });
-    },
+    }
   );
 
   commands.waitFor.apply(this, [
@@ -1114,10 +1144,10 @@ commands.waitForElements = function() {
             } else {
               throw err;
             }
-          },
+          }
         );
       }
-    },
+    }
   );
 
   const wrappedAsserter = new Asserter(
@@ -1148,7 +1178,7 @@ commands.waitForElements = function() {
           cb(err, satisfiedEls.length > 0, satisfiedEls);
         });
       });
-    },
+    }
   );
 
   commands.waitFor.apply(this, [
@@ -1318,7 +1348,7 @@ const addMethodsForSuffix = function(type, singular, plural) {
           } else {
             cb(err);
           }
-        },
+        }
       );
       commands.elements.apply(this, args);
     };
@@ -1356,7 +1386,7 @@ const addMethodsForSuffix = function(type, singular, plural) {
           } else {
             cb(err);
           }
-        },
+        }
       );
       commands.elements.apply(this, args);
     };
@@ -1468,6 +1498,7 @@ _.each(utils.elementFuncTypes, function(suffix) {
 /**
  * getTagName(element, cb) -> cb(err, name)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/name
  */
 commands.getTagName = function(element) {
@@ -1550,6 +1581,7 @@ commands.getRect = function() {
 /**
  * isDisplayed(element, cb) -> cb(err, displayed)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/displayed
  */
 commands.isDisplayed = function(element) {
@@ -1566,6 +1598,7 @@ commands.displayed = commands.isDisplayed;
 /**
  * isEnabled(element, cb) -> cb(err, enabled)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/enabled
  */
 commands.isEnabled = function(element) {
@@ -1582,6 +1615,7 @@ commands.enabled = commands.isEnabled;
 /**
  * isSelected(element, cb) -> cb(err, selected)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/selected
  */
 commands.isSelected = function(element) {
@@ -1650,6 +1684,8 @@ commands.takeElementScreenshot = function() {
 /**
  * getComputedCss(element, cssProperty , cb) -> cb(err, value)
  *
+ * @param element
+ * @param cssProperty
  * @jsonWire GET /session/:sessionId/element/:id/css/:propertyName
  */
 commands.getComputedCss = function(element, cssProperty) {
@@ -1666,6 +1702,8 @@ commands.getComputedCSS = commands.getComputedCss;
 /**
  * equalsElement(element, other , cb) -> cb(err, value)
  *
+ * @param element
+ * @param other
  * @jsonWire GET /session/:sessionId/element/:id/equals/:other
  */
 commands.equalsElement = function(element, other) {
@@ -1735,6 +1773,8 @@ commands.flick = function() {
  * tapElement(element) -> cb(err)
  * Taps element
  *
+ * @param element
+ * @param cb
  * @jsonWire POST /session/:sessionId/touch/click
  */
 commands.tapElement = function(element, cb) {
@@ -1936,6 +1976,8 @@ commands.doubleclick = function() {
  * Type keys (all keys are up at the end of command).
  * special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
  *
+ * @param element
+ * @param keys
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
 commands.type = function(element, keys) {
@@ -1980,6 +2022,7 @@ commands.replace = function(element, keys) {
  * submit(element, cb) -> cb(err)
  * Submit a `FORM` element.
  *
+ * @param element
  * @jsonWire POST /session/:sessionId/element/:id/submit
  */
 commands.submit = function(element) {
@@ -1996,6 +2039,7 @@ commands.submit = function(element) {
  * Press keys (keys may still be down at the end of command).
  * special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
  *
+ * @param keys
  * @jsonWire POST /session/:sessionId/keys
  */
 commands.keys = function(keys) {
@@ -2020,6 +2064,7 @@ commands.keys = function(keys) {
 /**
  * clear(element, cb) -> cb(err)
  *
+ * @param element
  * @jsonWire POST /session/:sessionId/element/:id/clear
  */
 commands.clear = function(element) {
@@ -2099,6 +2144,8 @@ commands.text = function() {
  * textPresent(searchText, element, cb) -> cb(err, boolean)
  * element: specific element, 'body', or undefined
  *
+ * @param searchText
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/text
  * @docOrder 3
  */
@@ -2130,6 +2177,7 @@ commands.alertText = function() {
 /**
  * alertKeys(keys, cb) -> cb(err)
  *
+ * @param keys
  * @jsonWire POST /session/:sessionId/alert_text
  */
 commands.alertKeys = function(keys) {
@@ -2219,6 +2267,7 @@ commands.allCookies = function() {
  * Optional cookie fields:
  *  path, domain, secure, expiry
  *
+ * @param cookie
  * @jsonWire POST /session/:sessionId/cookie
  */
 commands.setCookie = function(cookie) {
@@ -2253,6 +2302,7 @@ commands.deleteAllCookies = function() {
 /**
  * deleteCookie(name, cb) -> cb(err)
  *
+ * @param name
  * @jsonWire DELETE /session/:sessionId/cookie/:name
  */
 commands.deleteCookie = function(name) {
@@ -2281,6 +2331,7 @@ commands.getOrientation = function() {
 /**
  * setOrientation(cb) -> cb(err, orientation)
  *
+ * @param orientation
  * @jsonWire POST /session/:sessionId/orientation
  */
 commands.setOrientation = function(orientation) {
@@ -2308,7 +2359,7 @@ commands.setLocalStorageKey = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.setItem(arguments[0], arguments[1])', [ key, value ], cb ],
+    [ 'localStorage.setItem(arguments[0], arguments[1])', [ key, value ], cb ]
   );
 };
 
@@ -2326,7 +2377,7 @@ commands.getLocalStorageKey = function() {
 
   commands.safeEval.apply(
     this,
-    [ "localStorage.getItem('" + key + "')", cb ],
+    [ "localStorage.getItem('" + key + "')", cb ]
   );
 };
 
@@ -2344,7 +2395,7 @@ commands.removeLocalStorageKey = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.removeItem(arguments[0])', [ key ], cb ],
+    [ 'localStorage.removeItem(arguments[0])', [ key ], cb ]
   );
 };
 
@@ -2361,7 +2412,7 @@ commands.clearLocalStorage = function() {
 
   commands.safeExecute.apply(
     this,
-    [ 'localStorage.clear()', cb ],
+    [ 'localStorage.clear()', cb ]
   );
 };
 
@@ -2408,6 +2459,7 @@ commands.isVisible = function() {
 /**
  * Retrieves the pageIndex element (added for Appium):
  * getPageIndex(element, cb) -> cb(err, pageIndex)
+ * @param element
  */
 commands.getPageIndex = function(element) {
   const cb = findCallback(arguments);
@@ -2421,6 +2473,7 @@ commands.getPageIndex = function(element) {
 /**
  * getLocation(element, cb) -> cb(err, location)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
 commands.getLocation = function(element) {
@@ -2435,6 +2488,7 @@ commands.getLocation = function(element) {
 /**
  * getLocationInView(element, cb) -> cb(err, location)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/location_in_view
  */
 commands.getLocationInView = function(element) {
@@ -2449,6 +2503,7 @@ commands.getLocationInView = function(element) {
 /**
  * getSize(element, cb) -> cb(err, size)
  *
+ * @param element
  * @jsonWire GET /session/:sessionId/element/:id/size
  */
 commands.getSize = function(element) {
@@ -2464,6 +2519,7 @@ commands.getSize = function(element) {
  * Uploads a local file using undocumented
  * POST /session/:sessionId/file
  * uploadFile(filepath, cb) -> cb(err, filepath)
+ * @param filepath
  */
 commands.uploadFile = function(filepath) {
   const cb = findCallback(arguments);
@@ -2492,7 +2548,7 @@ commands.uploadFile = function(filepath) {
   archive
     .append(
       fs.createReadStream(filepath),
-      { name: path.basename(filepath) },
+      { name: path.basename(filepath) }
     );
 
   archive.finalize(function(err) {
@@ -2562,6 +2618,8 @@ commands.waitForConditionInBrowser = function() {
 
 /**
  * sleep(ms, cb) -> cb(err)
+ * @param ms
+ * @param cb
  */
 commands.sleep = function(ms, cb) {
   cb = cb || function() {
@@ -2572,6 +2630,7 @@ commands.sleep = function(ms, cb) {
 
 /**
  * noop(cb) -> cb(err)
+ * @param cb
  */
 commands.noop = function(cb) {
   if (cb) {
@@ -3140,6 +3199,8 @@ commands.getAppStrings = function() {
 /**
  * setImmediateValueInApp(element, value, cb) -> cb(err)
  *
+ * @param element
+ * @param value
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 commands.setImmediateValueInApp = function(element, value) {
@@ -3269,6 +3330,7 @@ commands.availableIMEEngines = function() {
 /**
  * activateIMEEngine(cb, engine) -> cb(err)
  *
+ * @param engine
  * @jsonWire POST /session/:sessionId/ime/activate
  */
 commands.activateIMEEngine = function(engine) {

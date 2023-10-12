@@ -1,3 +1,5 @@
+'use strict';
+
 const __slice = Array.prototype.slice;
 const url = require('url');
 const SPECIAL_KEYS = require('webdriver-keycode');
@@ -89,7 +91,10 @@ const parseRemoteWdConfig = function(args) {
   return config;
 };
 
-let PromiseWebdriver, PromiseElement, PromiseChainWebdriver, PromiseChainElement;
+let PromiseWebdriver,
+  PromiseElement,
+  PromiseChainWebdriver,
+  PromiseChainElement;
 
 // Creates the Webdriver object
 // server parameters can be passed in 4 ways

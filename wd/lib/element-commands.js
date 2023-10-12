@@ -1,3 +1,5 @@
+'use strict';
+
 // Element object
 // Wrapper around browser methods
 const _ = require('./lodash');
@@ -15,6 +17,8 @@ const elementCommands = {};
 /**
  * element.type(keys, cb) -> cb(err)
  *
+ * @param keys
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
 elementCommands.type = function(keys, cb) {
@@ -24,6 +28,8 @@ elementCommands.type = function(keys, cb) {
 /**
  * element.keys(keys, cb) -> cb(err)
  *
+ * @param keys
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/value
  */
 elementCommands.keys = function(keys, cb) {
@@ -45,6 +51,8 @@ function _isLocalFile(path, cb) {
  * Equivalent to the python sendKeys binding. Upload file if
  * a local file is detected, otherwise behaves like type.
  * element.sendKeys(keys, cb) -> cb(err)
+ * @param keys
+ * @param cb
  */
 elementCommands.sendKeys = function(keys, cb) {
   const _this = this;
@@ -75,6 +83,8 @@ elementCommands.sendKeys = function(keys, cb) {
  * Equivalent to the python sendKeys binding, but replaces texts instead of keeping original. Upload file if
  * a local file is detected, otherwise behaves like type.
  * element.setText(keys, cb) -> cb(err)
+ * @param keys
+ * @param cb
  */
 elementCommands.setText = function(keys, cb) {
   const _this = this;
@@ -109,6 +119,7 @@ elementCommands.click = function() {
 /**
  * element.takeElementScreenshot(cb) -> cb(err)
  *
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/screenshot
  */
 elementCommands.screenshot = function(cb) {
@@ -118,6 +129,7 @@ elementCommands.screenshot = function(cb) {
 /**
  * element.tap(cb) -> cb(err)
  *
+ * @param cb
  * @jsonWire POST /session/:sessionId/touch/click
  */
 elementCommands.tap = function(cb) {
@@ -127,6 +139,7 @@ elementCommands.tap = function(cb) {
 /**
  * element.doubleClick(cb) -> cb(err)
  *
+ * @param cb
  * @jsonWire POST /session/:sessionId/doubleclick
  */
 elementCommands.doubleclick = function(cb) {
@@ -155,6 +168,10 @@ elementCommands.moveTo = function() {
 /**
  * element.flick(xoffset, yoffset, speed, cb) -> cb(err)
  *
+ * @param xoffset
+ * @param yoffset
+ * @param speed
+ * @param cb
  * @jsonWire POST /session/:sessionId/touch/flick
  */
 elementCommands.flick = function(xoffset, yoffset, speed, cb) {
@@ -164,6 +181,7 @@ elementCommands.flick = function(xoffset, yoffset, speed, cb) {
 /**
  * element.text(cb) -> cb(err, text)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/text
  * @docOrder 2
  */
@@ -174,6 +192,8 @@ elementCommands.text = function(cb) {
 /**
  * element.textPresent(searchText, cb) -> cb(err, boolean)
  *
+ * @param searchText
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/text
  * @docOrder 4
  */
@@ -184,6 +204,8 @@ elementCommands.textPresent = function(searchText, cb) {
 /**
  * element.getAttribute(attrName, cb) -> cb(err, value)
  *
+ * @param name
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/attribute/:name
  * @docOrder 2
  */
@@ -194,6 +216,8 @@ elementCommands.getAttribute = function(name, cb) {
 /**
  * element.getProperty(propertyName, cb) -> cb(err, value)
  *
+ * @param name
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/property/:name
  * @docOrder 2
  */
@@ -204,6 +228,7 @@ elementCommands.getProperty = function(name, cb) {
 /**
  * element.getRect(cb) -> cb(err, value)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/rect
  * @docOrder 2
  */
@@ -214,6 +239,7 @@ elementCommands.getRect = function(cb) {
 /**
  * element.getTagName(cb) -> cb(err, name)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/name
  */
 elementCommands.getTagName = function(cb) {
@@ -223,6 +249,7 @@ elementCommands.getTagName = function(cb) {
 /**
  * element.isDisplayed(cb) -> cb(err, displayed)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/displayed
  */
 elementCommands.isDisplayed = function(cb) {
@@ -234,6 +261,7 @@ elementCommands.displayed = elementCommands.isDisplayed;
 /**
  * element.isSelected(cb) -> cb(err, selected)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/selected
  */
 elementCommands.isSelected = function(cb) {
@@ -245,6 +273,7 @@ elementCommands.selected = elementCommands.isSelected;
 /**
   * element.isEnabled(cb) -> cb(err, enabled)
   *
+  * @param cb
   * @jsonWire GET /session/:sessionId/element/:id/enabled
   */
 elementCommands.isEnabled = function(cb) {
@@ -255,6 +284,7 @@ elementCommands.enabled = elementCommands.isEnabled;
 
 /**
  * isVisible(cb) -> cb(err, boolean)
+ * @param cb
  */
 elementCommands.isVisible = function(cb) {
   deprecator.warn('element.isVisible', 'element.isVisible has been deprecated, use element.isDisplayed instead.');
@@ -264,6 +294,7 @@ elementCommands.isVisible = function(cb) {
 /**
  * element.getLocation(cb) -> cb(err, location)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
 elementCommands.getLocation = function(cb) {
@@ -273,6 +304,7 @@ elementCommands.getLocation = function(cb) {
 /**
  * element.getLocationInView(cb) -> cb(err, location)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/location
  */
 elementCommands.getLocationInView = function(cb) {
@@ -282,6 +314,7 @@ elementCommands.getLocationInView = function(cb) {
 /**
  * element.getSize(cb) -> cb(err, size)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/size
  */
 elementCommands.getSize = function(cb) {
@@ -291,6 +324,7 @@ elementCommands.getSize = function(cb) {
 /**
  * element.getValue(cb) -> cb(err, value)
  *
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/attribute/:name
  * @docOrder 4
  */
@@ -301,6 +335,8 @@ elementCommands.getValue = function(cb) {
 /**
  * element.getComputedCss(cssProperty , cb) -> cb(err, value)
  *
+ * @param styleName
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/css/:propertyName
  */
 elementCommands.getComputedCss = function(styleName, cb) {
@@ -312,6 +348,7 @@ elementCommands.getComputedCSS = elementCommands.getComputedCss;
 /**
  * element.clear(cb) -> cb(err)
  *
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/clear
  */
 elementCommands.clear = function(cb) {
@@ -321,6 +358,7 @@ elementCommands.clear = function(cb) {
 /**
  * element.submit(cb) -> cb(err)
  *
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/submit
  */
 elementCommands.submit = function(cb) {
@@ -342,6 +380,8 @@ _.each(utils.elementFuncTypes, function(type) {
    * element.elementByAndroidUIAutomator(value, cb) -> cb(err, element)
    * element.elementByAccessibilityId(value, cb) -> cb(err, element)
    *
+   * @param value
+   * @param cb
    * @jsonWire POST /session/:sessionId/element/:id/element
    * @docOrder 2
    */
@@ -363,6 +403,8 @@ _.each(utils.elementFuncTypes, function(type) {
    * element.elementsByAndroidUIAutomator(value, cb) -> cb(err, elements)
    * element.elementsByAccessibilityId(value, cb) -> cb(err, elements)
    *
+   * @param value
+   * @param cb
    * @jsonWire POST /session/:sessionId/element/:id/elements
    * @docOrder 2
    */
@@ -374,6 +416,9 @@ _.each(utils.elementFuncTypes, function(type) {
 /**
  * element.element(using, value, cb) -> cb(err, element)
  *
+ * @param using
+ * @param value
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/element
  * @docOrder 1
  */
@@ -390,6 +435,9 @@ elementCommands.element = function(using, value, cb) {
 /**
  * element.elements(using, value, cb) -> cb(err, elements)
  *
+ * @param using
+ * @param value
+ * @param cb
  * @jsonWire POST /session/:sessionId/element/:id/elements
  * @docOrder 1
  */
@@ -406,6 +454,8 @@ elementCommands.elements = function(using, value, cb) {
 /**
  * element.equals(other, cb) -> cb(err, value)
  *
+ * @param other
+ * @param cb
  * @jsonWire GET /session/:sessionId/element/:id/equals/:other
  * @docOrder 1
  */
@@ -415,6 +465,8 @@ elementCommands.equals = function(other, cb) {
 
 /**
  * element.sleep(ms, cb) -> cb(err)
+ * @param ms
+ * @param cb
  */
 elementCommands.sleep = function(ms, cb) {
   cb = cb || function() {
@@ -425,6 +477,7 @@ elementCommands.sleep = function(ms, cb) {
 
 /**
  * element.noop(cb) -> cb(err)
+ * @param cb
  */
 elementCommands.noop = function(cb) {
   if (cb) { cb(); }
@@ -433,6 +486,8 @@ elementCommands.noop = function(cb) {
 /**
  * element.performMultiAction(actions) -> cb(err, touchStateObjects)
  *
+ * @param actions
+ * @param cb
  * @jsonWire POST /session/:sessionId/touch/multi/perform
  */
 elementCommands.performMultiAction = function(actions, cb) {
@@ -444,6 +499,8 @@ elementCommands.performMultiAction = function(actions, cb) {
  * opts is like the following:
  * {x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}
  *
+ * @param opts
+ * @param cb
  * @jsonWire POST /session/:sessionId/appium/device/rotate
  */
 elementCommands.rotate = function(opts, cb) {
@@ -481,6 +538,8 @@ elementCommands.touch = function() {
 /**
  * element.setImmediateValueInApp(value, cb) -> cb(err)
  *
+ * @param value
+ * @param cb
  * @jsonWire POST /session/:sessionId/appium/element/:elementId?/value
  */
 elementCommands.setImmediateValueInApp = function(value, cb) {

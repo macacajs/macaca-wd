@@ -1,3 +1,5 @@
+'use strict';
+
 // inspired by https://github.com/raszi/node-tmp, but only
 // provides tmp paths.
 

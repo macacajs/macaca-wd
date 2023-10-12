@@ -1,4 +1,4 @@
-
+'use strict';
 
 const assert = require('assert');
 
@@ -7,7 +7,8 @@ const { Server } = require('./helper');
 const wd = require('../lib/macaca-wd');
 
 describe('test/utility.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
   before(() => {
     server = new Server();
     server.start();
@@ -130,7 +131,7 @@ describe('test/utility.test.js', function() {
       });
       assert.equal(
         server.ctx.url,
-        '/wd/hub/session/sessionId/window/current/size',
+        '/wd/hub/session/sessionId/window/current/size'
       );
       assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.request.body, {

@@ -1,4 +1,4 @@
-
+'use strict';
 
 const assert = require('assert');
 
@@ -7,7 +7,8 @@ const { Server } = require('./helper');
 const wd = require('../lib/macaca-wd');
 
 describe('test/cookie.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
   before(() => {
     server = new Server();
     server.start();
@@ -71,7 +72,7 @@ describe('test/cookie.test.js', function() {
       await driver.deleteCookie('test_cookie');
       assert.equal(
         server.ctx.url,
-        '/wd/hub/session/sessionId/cookie/test_cookie',
+        '/wd/hub/session/sessionId/cookie/test_cookie'
       );
       assert.equal(server.ctx.method, 'DELETE');
       assert.deepEqual(server.ctx.request.body, {});

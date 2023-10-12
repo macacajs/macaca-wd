@@ -1,4 +1,4 @@
-
+'use strict';
 
 const assert = require('assert');
 
@@ -8,7 +8,8 @@ const { elFuncFullType, elFuncSuffix } = require('../wd/lib/utils');
 const wd = require('../lib/macaca-wd');
 
 describe('test/asserter.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
 
   const mockServer = async (mockKey, mockValue) => {
     server = new Server();
@@ -57,7 +58,7 @@ describe('test/asserter.test.js', function() {
         const { script, args } = server.ctx.request.body;
         assert.equal(
           script,
-          "return window.__macaca_current_element.getAttribute('class')",
+          "return window.__macaca_current_element.getAttribute('class')"
         );
         assert.equal(args.length, 0);
       });

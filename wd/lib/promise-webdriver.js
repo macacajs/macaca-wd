@@ -1,3 +1,5 @@
+'use strict';
+
 const __slice = Array.prototype.slice;
 const Q = require('q');
 const _ = require('./lodash');
@@ -281,6 +283,7 @@ module.exports = function(WebDriver, Element, chainable) {
    * Resolves the promise (promised driver only)
    * browser.resolve(promise)
    * element.resolve(promise)
+   * @param promise
    */
   PromiseWebdriver.prototype.resolve = function(promise) {
     const qPromise = new Q(promise);

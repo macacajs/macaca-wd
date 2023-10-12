@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('./lodash');
 const __slice = Array.prototype.slice;
 const utils = require('./utils');
@@ -19,12 +21,13 @@ const nonEmptyText = new Asserter(
       const satisfied = text && _(text).trim().value().length > 0;
       cb(null, satisfied, satisfied ? text : undefined);
     });
-  },
+  }
 );
 
 /**
  * asserters.textInclude(content) -> Asserter
  *
+ * @param content
  * @asserter
  */
 function textInclude(content) {
@@ -35,7 +38,7 @@ function textInclude(content) {
         const satisfied = text && _(text).includeString(content).value();
         cb(null, satisfied, satisfied ? text : undefined);
       });
-    },
+    }
   );
 }
 
@@ -50,14 +53,14 @@ const isDisplayed = new Asserter(
       if (err) { return cb(err); }
       cb(null, displayed);
     });
-  },
+  }
 );
 const isVisible = new Asserter(
   function() {
     deprecator.warn('isVisible asserter', 'isVisible asserter has been deprecated, use isDisplayed asserter instead.');
     const args = __slice.call(arguments, 0);
     isDisplayed.assert.apply(this, args);
-  },
+  }
 );
 
 /**
@@ -71,20 +74,22 @@ const isNotDisplayed = new Asserter(
       if (err) { return cb(err); }
       cb(null, !displayed);
     });
-  },
+  }
 );
 const isHidden = new Asserter(
   function() {
     deprecator.warn('isHidden asserter', 'isHidden asserter has been deprecated, use isNotDisplayed asserter instead.');
     const args = __slice.call(arguments, 0);
     isNotDisplayed.assert.apply(this, args);
-  },
+  }
 );
 
 /**
  * asserters.jsCondition(jsConditionExpr) -> Asserter
  * jsConditionExpr: js script expression, should evaluate as boolean.
  *
+ * @param jsConditionExpr
+ * @param safe
  * @asserter
  */
 function jsCondition(jsConditionExpr, safe) {
@@ -97,7 +102,7 @@ function jsCondition(jsConditionExpr, safe) {
         if (err) { return cb(err); }
         cb(null, res, res);
       } ]);
-    },
+    }
   );
 }
 

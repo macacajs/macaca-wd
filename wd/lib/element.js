@@ -1,3 +1,5 @@
+'use strict';
+
 // Element object
 // Wrapper around browser methods
 const __slice = Array.prototype.slice;

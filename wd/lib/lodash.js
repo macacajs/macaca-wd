@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 _.str = require('underscore.string');
 _.mixin(_.str.exports());

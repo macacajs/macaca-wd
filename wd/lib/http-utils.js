@@ -1,3 +1,5 @@
+'use strict';
+
 const request = require('request');
 const utils = require('./utils');
 const urllib = require('url');
@@ -14,7 +16,7 @@ exports.emit = function(browser, method, url, data) {
   if (typeof url === 'string') { url = urllib.parse(url); }
   browser.emit('http', method,
     url.path.replace(browser.sessionID, ':sessionID')
-      .replace(browser.configUrl.pathname, ''), data,
+      .replace(browser.configUrl.pathname, ''), data
   );
 };
 

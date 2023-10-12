@@ -1,3 +1,5 @@
+'use strict';
+
 const Args = require('vargs').Constructor;
 const _ = require('./lodash');
 const url = require('url');

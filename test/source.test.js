@@ -1,4 +1,4 @@
-
+'use strict';
 
 const assert = require('assert');
 
@@ -7,7 +7,8 @@ const { Server } = require('./helper');
 const wd = require('../lib/macaca-wd');
 
 describe('test/source.test.js', function() {
-  let driver, server;
+  let driver,
+    server;
   before(() => {
     server = new Server();
     server.start();

@@ -1,3 +1,5 @@
+'use strict';
+
 const EventEmitter = require('events').EventEmitter;
 const _ = require('./lodash');
 const util = require('util');
@@ -45,6 +47,7 @@ Webdriver.prototype.newElement = function(jsonWireElement) {
 /**
  * attach(sessionID, cb) -> cb(err)
  * Connect to an already-active session.
+ * @param sessionID
  */
 Webdriver.prototype.attach = function(sessionID) {
   const cb = findCallback(arguments);
