@@ -29,9 +29,10 @@ describe('test/window.test.js', function() {
     server.stop();
   });
 
+
   /**
-   * https://macacajs.github.io/macaca-wd/#close
-   */
+     * https://macacajs.github.io/macaca-wd/#close
+     */
   describe('close', async () => {
     it('should work', async () => {
       await driver.close();
@@ -47,8 +48,8 @@ describe('test/window.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#close
-   */
+     * https://macacajs.github.io/macaca-wd/#getWindowSize
+     */
   describe('getWindowSize', async () => {
     it('should work', async () => {
       await driver.getWindowSize();
@@ -64,8 +65,8 @@ describe('test/window.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#setWindowSize
-   */
+     * https://macacajs.github.io/macaca-wd/#setWindowSize
+     */
   describe('setWindowSize', async () => {
     it('should work', async () => {
       await driver.setWindowSize(800, 600);
@@ -84,8 +85,8 @@ describe('test/window.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#window
-   */
+     * https://macacajs.github.io/macaca-wd/#window
+     */
   describe('window', async () => {
     it('should work', async () => {
       await driver.window();
@@ -101,8 +102,8 @@ describe('test/window.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#windowHandle
-   */
+     * https://macacajs.github.io/macaca-wd/#windowHandle
+     */
   describe('windowHandle', async () => {
     it('should work', async () => {
       await driver.windowHandle();
@@ -118,14 +119,37 @@ describe('test/window.test.js', function() {
   });
 
   /**
-   * https://macacajs.github.io/macaca-wd/#windowHandles
-   */
+     * https://macacajs.github.io/macaca-wd/#windowHandles
+     */
   describe('windowHandles', async () => {
     it('should work', async () => {
       await driver.windowHandles();
       assert.equal(server.ctx.method, 'GET');
       assert.equal(server.ctx.url, '/wd/hub/session/window_handles');
       assert.deepEqual(server.ctx.request.body, {});
+      assert.deepEqual(server.ctx.response.body, {
+        sessionId: 'sessionId',
+        status: 0,
+        value: '',
+      });
+    });
+  });
+
+
+  /**
+   * https://macacajs.github.io/macaca-wd/#initWindow
+   */
+  describe('initWindow', async () => {
+    it('should work', async () => {
+      await driver.initWindow({
+        width: 800,
+        height: 600,
+      });
+      assert.equal(
+        server.ctx.url,
+        '/wd/hub/session'
+      );
+      assert.equal(server.ctx.method, 'POST');
       assert.deepEqual(server.ctx.response.body, {
         sessionId: 'sessionId',
         status: 0,
