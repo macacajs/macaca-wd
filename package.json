@@ -57,8 +57,7 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "test": "mocha",
-    "lint": "eslint --ext js,ts lib test wd/lib",
-    "lint:fix": "eslint --ext js,ts --fix lib test wd/lib",
+    "lint": "eslint --fix --ext js,ts lib test wd/lib",
     "contributor": "git-contributor"
   },
   "husky": {
